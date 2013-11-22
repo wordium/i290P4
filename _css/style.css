@@ -2,6 +2,11 @@
 
 /****** Colours ******
 
+  facebook blue: #425699; 66,86,153
+  light blue: DCE4FF 220,228,255
+  tan: A69995 166,153,149
+  green: 466622 70,102,34
+  light green: DAE5CD 218,229,205
 
 */
 
@@ -9,23 +14,45 @@
 
 /******* General ********/
 
+html {
+  background-color: #A69995;
+}
+
 body {
+
+  background-image: url(../_img/fabric_plaid_transparent.png);
 
 }
 
-h1,h2,h3,h4,h5,h6 {
+body, p, a, h1,h2,h3,h4,h5,h6 {
+  color: #425699;
 
 }
 
 /******* Basic Sections *********/
-#header {
+#header, #footer, #main {
+  padding: 1em;
+}
 
+#header, #footer {
+  text-align: center;
+  background-color: #466622;
+  color: #DAE5CD;
+}
+
+#header {
+  border-bottom: 20px solid #DAE5CD;
 }
 
 #footer {
+  border-top: 20px solid rgba(218,229,205,.5);
 
 }
 
 #main {
+
+  background-color: rgba(218,229,205,.5);
+  width: 80%;
+  margin: auto auto;
   
 }
