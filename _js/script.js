@@ -70,7 +70,7 @@ function birthdayQuestion() {
 
   //FQL query to get ids and names of all friends. The 'AND birthday' is to filter out people who didn't provide their birthday information to apps
   var getAllFriends = 'SELECT uid2 FROM friend WHERE uid1=me()';
-  var getNamesOfFriends = 'SELECT uid, name, birthday, sex FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND birthday';
+  var getNamesOfFriends = 'SELECT uid, name, birthday, sex, pic_square FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND birthday';
 
   FB.api('/fql',{q:{'query1':getAllFriends,'query2':getNamesOfFriends}}, function(response){
     console.log(response.data[1]);
@@ -81,7 +81,8 @@ function birthdayQuestion() {
     //REQUEST: Need to figure out how to pick one random friend, and use that for all subsequent functions (like a global variable)
     console.log(randomFriend);
 
-    $("#main").append("<p>Target of the Stalk is: " + randomFriend.name + ".</p>");
+    $("#main").append("<p>Target of the Stalk is: " + randomFriend.name + ".");
+    $("#main").append("<img src='" + randomFriend.pic_square + "'></p>");
     //change the way you refer to the target based on gender. defaults to his
     var gender = "his";
     if (randomFriend.sex == 'female') {
@@ -146,9 +147,6 @@ var query = 'SELECT about_me, activities,affiliations, birthday, books, current_
 
 //Adding the work field to 'query' results in a timeout. So we'd have to call it in a separate query
 var query2 = 'SELECT work FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me())';
-
-//all fields that seemed useful (will timeout if you run this because FQL can only return 5000 results)
-//var query = 'SELECT about_me, activities, affiliations, age_range, birthday, books, current_address, current_location, devices, education, email, hometown_location, inspirational_people, interests, languages, meeting_for, meeting_sex, mutual_friend_count, name, movies, music, pic_big, pic_cover, political, profile_blurb, profile_url, quotes, relationship_status, religion, significant_other_id, sports, status, tv, uid, username, website, work FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me())';
 
 FB.api('/fql',{q:query}, function(response){
   console.log(response.data);
