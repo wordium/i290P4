@@ -19,7 +19,6 @@
  Click on Below Image to start the demo: <br/>
 <img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
 </div>
-
   <div id="header"></div>
 
   <div id="main">
