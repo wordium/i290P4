@@ -15,13 +15,13 @@
 
 <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
 <div id="fb-root"></div>
-<div id="status">
- Click on Below Image to start the demo: <br/>
-<img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
-</div>
+<div id="status"></div>
   <div id="header"></div>
 
   <div id="main">
+    <div id="loadingStatus">
+
+    </div>
     <?php if (!loggedIn) {
       ?>
     <div id="notLoggedIn">
@@ -35,7 +35,7 @@
      ?>
     <div id="loggedIn">
       <p>Ready to stalk?</p>
-      <input type="submit" value="Go">
+      <input id="go" type="submit" value="Go">
       <div id="leaderBoard">
         <div class="leaderboardItem">
           your score on friends
@@ -44,6 +44,9 @@
           all time score
         </div>
         ?>
+      <div id="whoAmI">
+      </div>
+      <div id="questions"></div>
       </div>
     </div>
     <?php 
