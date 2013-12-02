@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	updateAllScores();
+	/*updateAllScores();
 
 	// insert row to db
 	$('#postbutton').click(function() {
@@ -21,7 +21,7 @@ $(document).ready(function(){
 				updateAllScores();
 				alert('done');
 			});
-	});
+	});*/
 
 
 	// get top individual scores
