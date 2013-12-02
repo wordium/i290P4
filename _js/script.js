@@ -6,7 +6,10 @@ var FIELDS_STALKERBOOK = ["activities", "affiliations","birthday_date","books", 
 //uid, name, pic_square, work, education are pulled by default
 var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "significant_other_id", "sports", "tv", "website"];
 
+//to store the information of the target
 var targetAnswer;
+//to store the uid of the player
+var playerID;
 $(document).ready(function()
 {
     //reference: http://hayageek.com/facebook-javascript-sdk/
@@ -42,9 +45,22 @@ $(document).ready(function()
       var uidGuess = $(this).attr('data-uid');
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
+        //placeholder score value
+        var score = 5;
         alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
+        $.post('db.php', {
+          action: 'newscore',
+          guesserid: playerID,
+          targetid: targetAnswer[0].uid,
+          score: score
+        }, function(data) {
+          console.log(data);
+          updateAllScores();
+          alert('done');
+        });
+
       } 
       else {
         alert("You are incorrect. Please keep guessing.");
@@ -90,6 +106,7 @@ function getUserInfo() {
     str +="<input type='button' value='Logout' onclick='Logout();'/>";
           //document.getElementById("status").innerHTML=str;
     $("#status").html(str);
+    playerID = response.id;
 
   });
 
