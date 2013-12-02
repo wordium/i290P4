@@ -67,8 +67,14 @@ h1 {
 
 }
 
+.photo, .name {
+  float: left;
+}
+
 .friend {
-  display: inline;
+  width: 150px;
+  margin: 15px;
+  padding: 5px;
 }
 
 .photo {

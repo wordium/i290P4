@@ -56,26 +56,67 @@
           <div id="friend1" data-name="Jenton Lee"><img src="" class="photo" alt=""></div>
 
         -->
-        <div id="friend1" data-name="test" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend2" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend3" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend4" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend5" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend6" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend7" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend8" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend9" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend10" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend11" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend12" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend13" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend14" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend15" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend16" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend17" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend18" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend19" data-name="" class="friend"><img src="" class="photo" alt=""></div>
-        <div id="friend20" data-name="" class="friend"><img src="" class="photo" alt=""></div>
+        <div id="friend1" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div>
+        </div>
+        <div id="friend2" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend3" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend4" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend5" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend6" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend7" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend8" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend9" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend10" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend11" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend12" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend13" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend14" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend15" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend16" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend17" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend18" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend19" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
+        <div id="friend20" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>
       </div>
 
     </div>

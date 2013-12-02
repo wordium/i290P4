@@ -168,12 +168,12 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         //draw the randomized friends grid on the page
         for (var i in friendsGrid){
           var id = parseInt(i)+1;
-          var friendIdJquery = 'friend' + id.toString();
-          $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
-          $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name)
-                                 .attr("data-uid", friendsGrid[i].uid);
+          var $friend = $('#friend' + id.toString()); // this is one friend
 
-          $('#' + friendIdJquery).append('<div class="friendName">' + friendsGrid[i].name + '</div>');
+          $friend.find("img").attr("src", friendsGrid[i].pic); // adding a photo
+          $friend.attr("data-name", friendsGrid[i].name) // adding data
+                 .attr("data-uid", friendsGrid[i].uid);
+          $friend.find('.name').text(friendsGrid[i].name); // adding name text
         }
         whoAmIPrintToHtml(questions);
         targetAnswer = friendTargetInfo;
