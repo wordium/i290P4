@@ -15,18 +15,25 @@
 /******* General ********/
 
 html {
-  background-color: #A69995;
+  background-color: #000;
+  background-image: url(../_img/diagmonds.png);
 }
 
 body {
-
-  background-image: url(../_img/fabric_plaid_transparent.png);
-
+  background-color: rgba(255,255,255,.075);
 }
 
 body, p, a, h1,h2,h3,h4,h5,h6 {
-  color: #425699;
+  color: #B1C0E0;
+  font-family: "Arimo", "Arial", sans-serif;
+}
 
+h1 {
+  font-size: 3em;
+}
+
+.hidden {
+  display: none;
 }
 
 /******* Basic Sections *********/
@@ -36,30 +43,30 @@ body, p, a, h1,h2,h3,h4,h5,h6 {
 
 #header, #footer {
   text-align: center;
-  background-color: #466622;
-  color: #DAE5CD;
+/*  background-color: #3B5998;
+  color: #DAE5CD;*/
 }
 
 #header {
-  border-bottom: 20px solid #DAE5CD;
+ /* border-bottom: 20px solid #DAE5CD;*/
 }
 
 #footer {
-  border-top: 20px solid rgba(218,229,205,.5);
+ /* border-top: 20px solid rgba(218,229,205,.5);*/
 
 }
 
 #main {
 
-  background-color: rgba(218,229,205,.5);
   width: 80%;
   margin: auto auto;
   
+  height: 1000px;
 }
 
 /******** Friend Grid **********/
 #friends {
-  
+
 }
 
 .friend {
