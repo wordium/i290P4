@@ -1,12 +1,38 @@
 <!doctype html>
 <html>
 	<head>
-		<!-- css file -->
-		<!-- .js files -->
 		<script src="_js/jquery-1.10.2.min.js"></script>
 		<script src="dbtest.js"></script>
+	<style>
+	* {
+		font-family: verdana;
+		font-size: 12px;
+		line-height: 150%;
+	}
+	</style>
 	</head>
 	<body>
 	<div id="text"></div>
+	<input type="text" id="guesserid" placeholder="guesser id">
+	<input type="text" id="targetid" placeholder="target id">
+	<input type="text" id="score" placeholder="score">
+	<input type="button" id="postbutton" value="post">
+
+	<br><br>
+	<input type="button" id="topscores" value="fetch top 20 individual scores">
+
+	<br><br>
+	<input type="text" id="myscores" placeholder="top scores for guesser">
+	<input type="button" id="myscoresbutton" value="fetch top scores for this guesser">
+
+	<br><br>
+	<input type="text" id="targetscores" placeholder="top scores for target">
+	<input type="button" id="targetscoresbutton" value="fetch top scores for this target">
+
+	<br><br>
+	<input type="button" id="toptotals" value="fetch top aggregate scores">
+
+	<div id="results"></div>
+
 	</body>
 </html>
