@@ -99,40 +99,6 @@ function whoAmIGameStart(){
     });
 }
 
-function selectRandomFriend(data) {
-  //generate a random number from 1 to the length of the friends array you pulled back
-  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length-1);
-  //randomFriend will be an object with all the called for fields in it
-  var randomFriend = data.fql_result_set[randomNumberFromFriendArray];
-  return randomFriend;
-
-}
-
-function printToHtml(questions){
-  //NOTE: significant other information doesn't populate until after the rest of the whoAmIGameStart() function has run because of the FB asynchronous calls. If we print all the questions to html right away, sig other won't show up. If call each key from the questions object one at a time, it will give the significant other information enough time to show up at the end of the questions object.
-
-  //printing out the information in the Questions Object
-  for (object in questions) {
-  //since work history is in an object, we need logic to print the contents
-  if (questions[object].questionType == "work") {
-    $("#questions").append("<div id='" + questions[object].questionNumber + "'><p>This is my work history: <br />");
-    for (item in questions[object].answer) {
-      $("#questions").append("Employer: " + questions[object].answer[item].employer + "<br />");      
-      $("#questions").append("Position: " + questions[object].answer[item].position + "<br />");      
-    }
-  } else if (questions[object].questionType == "education") {
-    $("#questions").append("<div id='" + questions[object].questionNumber + "'><p>This is my education history: <br />");
-    for (item in questions[object].answer) {
-      $("#questions").append("School Name: " + questions[object].answer[item].name + "<br />");      
-      $("#questions").append("Type of School: " + questions[object].answer[item].type + "<br />");      
-    }      
-  } else {
-    $("#questions").append("<div id='" + questions[object].questionNumber + "'><p>" + questions[object].answer + "</p>");  
-  }
-  }
-}
-
-
 function whoAmICreateQuestions(data){
   //console.log(data);
   var questionCounter = 0;
@@ -144,11 +110,10 @@ function whoAmICreateQuestions(data){
     console.log(response);
   });*/
   var targetFriend = data;
-  console.log(targetFriend);
   for (key in targetFriend[0]) {
     //console.log(key);
     //console.log(targetFriend[0][key]);
-    
+    console.log("Question Counter: " + questionCounter);
     //if the field is empty, skip it
     if (!targetFriend[0][key] || targetFriend[0][key].length === 0) {
       console.log("No information, skipping: " + key);
@@ -162,55 +127,77 @@ function whoAmICreateQuestions(data){
           var answerString = "These are my favorite activities: " + targetFriend[0][key];
           var questionType = "activities";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "birthday_date":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my birthday: " + convertBirthdayDateToBirthday(targetFriend[0][key]);
           var questionType = "birthday";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "books":            
           var questionString = "q" + questionCounter;
           var answerString = "These are my favorite books: " + targetFriend[0][key];
           var questionType = "books";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "current_location":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my current location: " + targetFriend[0][key].name;
           var questionType = "current_location";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "hometown_location":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my hometown location: " + targetFriend[0][key].name;
           var questionType = "hometown_location";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break; 
         case "education":      
-          var educationArray = [];
-          for (var i in targetFriend[0][key]) {
-            if (targetFriend[0][key][i].type) {
-              educationArray.push({ "name" : targetFriend[0][key][i].school.name , "type" : targetFriend[0][key][i].type});
-            } else {
-              educationArray.push({ "name" : targetFriend[0][key][i].school.name});
-              } 
-          }
           var questionString = "q" + questionCounter;
           var questionType = "education";
-          questions.push({ "questionNumber" : questionString, "answer" : educationArray, "questionType" : questionType});
+          var educationArray = targetFriend[0][key];
+          console.log(educationArray);
+          for (var i in educationArray) {
+            if (educationArray[i].type) {
+              var answerString = "I have previously attended (or currently attend): " + educationArray[i].school.name + " " + educationArray[i].type;
+              questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+              questionCounter += 1;              
+            } else {
+              var answerString = "I have previously attended (or currently attend): " + educationArray[i].employer.name;
+              questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+              questionCounter += 1;
+              }
+          }          
+          //this method picks one random work position and adds it to the question
+          /*var questionString = "q" + questionCounter;
+          var questionType = "education";
+          var selectRandomEducation = targetFriend[0][key][getRandomInt(0,targetFriend[0][key].length-1)];
+          if (selectRandomEducation.type) {
+              var answerString = "I have previously attended (or currently attend): " + selectRandomEducation.school.name + " " + selectRandomEducation.type;
+            } else {
+              var answerString = "I have previously attended (or currently attend): " + selectRandomEducation.school.name;
+              }
+          questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});   
+          questionCounter += 1;*/
           break;
         case "interests":            
           var questionString = "q" + questionCounter;
           var answerString = "These are my interests: " + targetFriend[0][key];
           var questionType = "interests";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "sex":            
           var questionString = "q" + questionCounter;
           var answerString = "This my identified gender: " + targetFriend[0][key];
           var questionType = "sex";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "languages":      
           var languageArray = [];
@@ -222,24 +209,28 @@ function whoAmICreateQuestions(data){
           var answerString = "These are the languages I speak: " + languagesSpokenString;
           var questionType = "language";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "movies":            
           var questionString = "q" + questionCounter;
           var answerString = "These are my favorite movies: " + targetFriend[0][key];
           var questionType = "movies";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "music":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my favorite music: " + targetFriend[0][key];
           var questionType = "music";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "mutual_friend_count":            
           var questionString = "q" + questionCounter;
           var answerString = "This is how many mutual friends we have: " + targetFriend[0][key];
           var questionType = "mutual_friend_count";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "name":            
           var answerString = targetFriend[0][key];
@@ -256,6 +247,7 @@ function whoAmICreateQuestions(data){
           var answerString = "This is my political affiliation: " + targetFriend[0][key];
           var questionType = "political";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "profile_url":            
           var answerString = targetFriend[0][key];
@@ -267,12 +259,14 @@ function whoAmICreateQuestions(data){
           var answerString = "This is my relationship status: " + targetFriend[0][key];
           var questionType = "relationship_status";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "religion":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my religion: " + targetFriend[0][key];
           var questionType = "religion";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "significant_other_id":            
           var query = 'SELECT name FROM user WHERE uid=' + targetFriend[0][key];
@@ -284,45 +278,60 @@ function whoAmICreateQuestions(data){
             var questionType = "significant_other_id";
             questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           });
+          questionCounter += 1;
           break;
         case "sports":            
           var questionString = "q" + questionCounter;
           var answerString = "This are the sports I play: " + targetFriend[0][key];
           var questionType = "sports";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "tv":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my favorite TV shows: " + targetFriend[0][key];
           var questionType = "tv";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "website":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my website(s): " + targetFriend[0][key];
           var questionType = "website";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+          questionCounter += 1;
           break;
         case "work":      
-          var workArray = [];
-          for (var i in targetFriend[0][key]) {
-            if (targetFriend[0][key][i].position) {
-            workArray.push({ "employer" : targetFriend[0][key][i].employer.name , "position" : targetFriend[0][key][i].position.name});
-            } else {
-              workArray.push({ "employer" : targetFriend[0][key][i].employer.name});
-            };
-          };
           var questionString = "q" + questionCounter;
           var questionType = "work";
-          questions.push({ "questionNumber" : questionString, "answer" : workArray, "questionType" : questionType});
-          break;
+          var workArray = targetFriend[0][key];
+          console.log(workArray);
+          for (var i in workArray) {
+            if (workArray[i].position) {
+              var answerString = "This is a job I once had (or currently have): " + workArray[i].position.name + " at " + workArray[i].employer.name;
+              questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+              questionCounter += 1;
+              
+            } else {
+              var answerString = "This is a company I once worked at (or am currently at): " + workArray[i].employer.name;
+              questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+              questionCounter += 1;
+              }
+          }
+          //this method picks one random work position and adds it to the question
+          /*var selectRandomWork = targetFriend[0][key][getRandomInt(0,targetFriend[0][key].length-1)];
+          if (selectRandomWork.position) {
+              var answerString = "This is a job I once had (or currently have): " + selectRandomWork.position.name + " at " + selectRandomWork.employer.name;
+            } else {
+              var answerString = "This is a company I once worked at am currently at: " + selectRandomWork.employer.name;
+              }
+          questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});         */
+          break;          
       };
-      questionCounter += 1;
+      //questionCounter += 1;
     };
   };
 
-  console.log(questions);
-  console.log(targetFriendInfo);
   //If the questions object has less than 4 bits of information, pick another friend
   if (questions.length < 5) {
     whoAmIGameStart();
@@ -341,7 +350,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
   fields.sort( function() {return 0.5 - Math.random() });
   var randomFields = fields.slice(0,fieldsMax).toString().replace(/\,/g, ', ');
 
-  console.log("These are the randomly selected fields that we'll be requesting from the user table data. uid, name, pic_square, work, and education are all pulled by default.")
+  console.log("These are the fields we are requesting from the tarrandomly selected fields that we'll be requesting from the user table data. (in addition to uid, name, pic_square, work, and education are all pulled by default).")
   console.log(randomFields);
   
   //this will try to grab a facebook friend who has shared at least their work, education, AND gender
@@ -361,7 +370,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       var friendTargetInfo = gameData[1];
       console.log(questions);
       console.log(friendTargetInfo);
-      printToHtml(questions);
+      whoAmIPrintToHtml(questions);
       }
   });
 
@@ -401,6 +410,23 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
 }
 
 
+function whoAmIPrintToHtml(questions){
+  //NOTE: significant other information doesn't populate until after the rest of the whoAmIGameStart() function has run because of the FB asynchronous calls. If we print all the questions to html right away, sig other won't show up. If call each key from the questions object one at a time, it will give the significant other information enough time to show up at the end of the questions object.
+
+  //printing out the information in the Questions Object
+  for (object in questions) {
+    $("#questions").append("<div id='" + questions[object].questionNumber + "'><p>" + questions[object].answer + "</p>");  
+  }
+}
+
+function selectRandomFriend(data) {
+  //generate a random number from 1 to the length of the friends array you pulled back
+  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length-1);
+  //randomFriend will be an object with all the called for fields in it
+  var randomFriend = data.fql_result_set[randomNumberFromFriendArray];
+  return randomFriend;
+
+}
 
 //this function randomly sorts the FIELDS array and it selects the first 8 elements to act as the 5 questions for the game
 function stalkerBookGenerateRandomFields(fields, randomFields){
