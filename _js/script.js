@@ -101,7 +101,7 @@ function whoAmIGameStart(){
 
 function whoAmICreateQuestions(data){
   //console.log(data);
-  var questionCounter = 0;
+  var questionCounter = 1;
   var questions = [];
   var targetFriendInfo = [];
   //getting mutual friends - apparently you can't get a mutual friends list unless the target friend approved this specific application
@@ -111,9 +111,6 @@ function whoAmICreateQuestions(data){
   });*/
   var targetFriend = data;
   for (key in targetFriend[0]) {
-    //console.log(key);
-    //console.log(targetFriend[0][key]);
-    console.log("Question Counter: " + questionCounter);
     //if the field is empty, skip it
     if (!targetFriend[0][key] || targetFriend[0][key].length === 0) {
       console.log("No information, skipping: " + key);
@@ -161,7 +158,6 @@ function whoAmICreateQuestions(data){
           var questionString = "q" + questionCounter;
           var questionType = "education";
           var educationArray = targetFriend[0][key];
-          console.log(educationArray);
           for (var i in educationArray) {
             if (educationArray[i].type) {
               var answerString = "I have previously attended (or currently attend): " + educationArray[i].school.name + " " + educationArray[i].type;
@@ -315,7 +311,6 @@ function whoAmICreateQuestions(data){
           var questionString = "q" + questionCounter;
           var questionType = "work";
           var workArray = targetFriend[0][key];
-          console.log(workArray);
           for (var i in workArray) {
             if (workArray[i].position) {
               var answerString = "This is a job I once had (or currently have): " + workArray[i].position.name + " at " + workArray[i].employer.name;
@@ -363,15 +358,12 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
   fields.sort( function() {return 0.5 - Math.random() });
   var randomFields = fields.slice(0,fieldsMax).toString().replace(/\,/g, ', ');
 
-  console.log("These are the fields we are requesting from the tarrandomly selected fields that we'll be requesting from the user table data. (in addition to uid, name, pic_square, work, and education are all pulled by default).")
-  console.log(randomFields);
+  console.log("Pulling the following profile fields: uid, name, pic, work, education, " + randomFields);
   
   //this will try to grab a facebook friend who has shared at least their work, education, AND gender
   var getTargetProfileInfo = 'SELECT uid, name, pic, pic_square, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid=' + targetUid + ' AND work AND education AND sex';
-  console.log(getTargetProfileInfo);
 
   FB.api('/fql',{q:getTargetProfileInfo}, function(response){
-    console.log(response.data);
     //if the returning array is empty, try another user
     if (response.data.length == 0) {
       console.log("Friend did not have enough information shared. Grabbing another random friend.");
@@ -381,11 +373,13 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       var gameData = whoAmICreateQuestions(response.data);
       var questions = gameData[0];
       var friendTargetInfo = gameData[1];
+      console.log("Game Questions:");
       console.log(questions);
+      console.log("Target Friend Info:");
       console.log(friendTargetInfo);
 
+      //this is the query to get 20 random fb profile pictures
       var getFriendsGridQuery = "SELECT uid, name, pic_square, pic, profile_url FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) ORDER BY rand() limit 20";
-      console.log(getFriendsGridQuery);
       FB.api('/fql',{q:getFriendsGridQuery}, function(response){
         friendsGrid = response.data;
         for (key in friendsGrid){
@@ -394,68 +388,38 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
           }
         }
         friendsGrid.push({"uid" : friendTargetInfo[0].uid, "name" : friendTargetInfo[1].name, "pic" : friendTargetInfo[2].pic, "pic_square" : friendTargetInfo[3].pic_square, "profile_url" : friendTargetInfo[4].profile_url, "answer" : 1});
+        console.log("this is the friends grid and the info in contains");
         console.log(friendsGrid);
 
         //randomize the friends grid
         friendsGrid.sort( function() {return 0.5 - Math.random() });
         //draw the randomized friends grid on the page
         for (var i in friendsGrid){
-          console.log(i);
           var id = parseInt(i)+1;
           var friendIdJquery = 'friend' + id.toString();
           $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
           $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name);
-          $('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
-          i++;
+          //$('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
         }
+        whoAmIPrintToHtml(questions);
 
       });
-      //whoAmIPrintToHtml(questions);
+      
       }
   });
-
- /* console.log("The following fields MUST have information listed or the friend will not be pulled back.");
-  console.log(nullFilter);
-  
-  //turning nullFilter array into a FQL query compatible string
-  nullFilterString = nullFilter.toString().replace(/\,/g, ' AND ');
-  console.log(nullFilterString); */ 
-
-  //FQL query string to get ids and names of all friends with the data we need. The 'AND birthday' is to filter out people who didn't provide their birthday information to apps
-  //var getAllFriends = 'SELECT uid2 FROM friend WHERE uid1=me()';
-  //this FQL query string will give you an object of your friends with the fields specified in the SELECT area. The AND modifier makes the query only pull back results that have information listed in the specified fields.
-  //var getEligibleFriends = 'SELECT uid, name, pic, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid=' + ' AND work AND education AND significant_other_id';
-  
-  // var getEligibleFriends = 'SELECT uid, name, pic_square, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND ' + nullFilterString;
-  
-//FQL query
-
-/*  FB.api('/fql',{q:{'query1':getAllFriends,'query2':getEligibleFriends}}, function(response){
-    console.log(response.data[1].fql_result_set.length);
-    data = response.data[1];
-    $("#questions").html("");
-    //if the friends array is empty, get another 5 random fields
-    if (response.data[1].fql_result_set.length == 0) {
-      $("#loadingStatus").html("<p>Still reticulating splines, just sit tight.</p>");
-      whoAmIGameStart();
-    } else {
-      var gameData = whoAmICreateQuestions(response.data[1]);
-      
-    }
-  });*/
-
-  //console.log(getAllFriends);
-  //console.log(getEligibleFriends);
-  //return [getAllFriends, getEligibleFriends];
 }
 
 
 function whoAmIPrintToHtml(questions){
   //NOTE: significant other information doesn't populate until after the rest of the whoAmIGameStart() function has run because of the FB asynchronous calls. If we print all the questions to html right away, sig other won't show up. If call each key from the questions object one at a time, it will give the significant other information enough time to show up at the end of the questions object.
 
+  //randomize the questions array
+  questions.sort( function() {return 0.5 - Math.random() });
   //printing out the information in the Questions Object
   for (object in questions) {
-    $("#questions").append("<div id='" + questions[object].questionNumber + "'><p>" + questions[object].answer + "</p>");  
+    var questionId = parseInt(object) + 1;
+    $("#questions").append("<div id='q" + questionId + "'><p>" + questions[object].answer + "</p>"); 
+    object++; 
   }
 }
 
