@@ -46,6 +46,8 @@
         ?>
       <div id="whoAmI">
       </div>
+      <div id="stalkerBook">
+      </div>
       <div id="questions"></div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 var APP_TOKEN = "CAACev9gswDsBAA0xAa2KTcluFFw6wuUSZARKEYJ14CVLiPGULnDi3zNjqZCMJS4ah8JGPjT3mld2m7mHeuaryk5ZATRSOT2icFkPRJS0GWbJyAIRxhTAxuP0goaQElC8wezR5cP3nEdQIuiabLTiewZBkmcOCc8kYLx9rpeBf2qSG2TE38ZCEDQ6K1QfYljvOr8xQZC7tkiAZDZD";
 var randomFriendID;
 
-var FIELDS = ["activities", "affiliations", "age_range","birthday","birthday_date","books", "current_location", "education", "friend_count", "hometown_location", "inspirational_people", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "quotes", "relationship_status", "religion", "significant_other_id", "sports", "tv", "website", "work"];
+var FIELDS_STALKERBOOK = ["activities", "affiliations","birthday_date","books", "current_location", "friend_count", "hometown_location", "inspirational_people", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "quotes", "relationship_status", "religion", "significant_other_id", "sports", "tv", "website"];
 
 //uid, name, pic_square, work, education are pulled by default
 var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "significant_other_id", "sports", "tv", "website"];
@@ -91,6 +91,7 @@ function whoAmIGameStart(){
   var getEligibleFriends = data[1];
 
   //FQL query
+
   FB.api('/fql',{q:{'query1':getAllFriends,'query2':getEligibleFriends}}, function(response){
     console.log(response.data[1].fql_result_set.length);
     data = response.data[1];
@@ -322,6 +323,7 @@ function whoAmICreateQuestions(data){
     };
   };
 
+
   //If the questions object has less than 4 bits of information, pick another friend
   if (questions.length < 5) {
     whoAmIGameStart();
@@ -419,7 +421,7 @@ function stalkerGameStart(){
   var data = {};
 
   //generate 5 random fields
-  data = generateRandomFields(FIELDS, randomFields);  
+  data = stalkerBookGenerateRandomFields(FIELDS_STALKERBOOK, randomFields);  
   var getAllFriends = data[0];
   var getEligibleFriends = data[1];
 
@@ -429,85 +431,281 @@ function stalkerGameStart(){
     data = response.data[1];
     //if the friends array is empty, get another 5 random fields
     if (response.data[1].fql_result_set.length == 0) {
-      $("#loadingStatus").html("<p>Still reticulating splines, just sit tight.</p>");
+      $("#loadingStatus").html("<p>Still reticulating splines, please sit tight.</p>");
       stalkerGameStart();
     } else {
-      createQuestions(response.data[1]);
+      stalkerBookCreateQuestions(response.data[1]);
     }
   });
 }
 
-function createQuestions(data){
+function stalkerBookCreateQuestions(data){
   console.log(data);
   var targetFriend = selectRandomFriend(data);
+  var questionCounter = 0;
+  var questions = [];
+  var targetFriendInfo = [];
   console.log(targetFriend);
+
+  //add targetFriend object to database via AJAX call
+/*  $.ajax({
+    type:"post",
+    url:"phpDatabaseScript.php",
+    data:"action=post"+"&targetFriend="+JSON.stringify(targetFriend),
+    success:function(data){
+      console.log("Success");
+      console.log(data);
+    }
+  });*/
+  for (key in targetFriend) {
+    //console.log(key);
+    //console.log(targetFriend[key]);
+    
+    //if the field is empty, skip it
+    if (!targetFriend[key] || targetFriend[key].length === 0) {
+      console.log("No information, skipping: " + key);
+    }
+    //otherwise, start populating the questions object.
+    else {
+      // This switch statement will compare every field in the targetFriend object and create the appropriate questions provided we have the data.
+      switch (key) {
+        case "activities":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What are my favorite activities? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "activities";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "birthday_date":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "When is my birthday? ";
+          var correctAnswer = convertBirthdayDateToBirthday(targetFriend[key]);
+          var questionType = "birthday";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "books":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What are my favorite books? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "books";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "current_location":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my current location? " 
+          var correctAnswer = targetFriend[key].name;
+          var questionType = "current_location";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "hometown_location":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my hometown location? "
+          var correctAnswer = targetFriend[key].name;
+          var questionType = "hometown_location";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break; 
+        case "education":      
+          console.log(getRandomInt(0,targetFriend[key].length-1));
+          var selectRandomEducation = targetFriend[key][getRandomInt(0,targetFriend[key].length-1)];
+          console.log(selectRandomEducation);
+          if (selectRandomEducation.type) {
+              var questionString = "Which " + selectRandomEducation.type + " did I go to?";
+            } else {
+              var questionString = "Which school did I go to?";              
+              } 
+          var questionNumber = "q" + questionCounter;
+          var questionType = "education";
+          var correctAnswer = selectRandomEducation.school.name;          
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "friend_count":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "How many facebook friends do I have? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "friend_count";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;        
+        case "interests":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What are my interests? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "interests";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "inspirational_people":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "Which people do I find inspirational? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "inspirational_people";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;        
+        case "languages":      
+          var languageArray = [];
+          for (var i in targetFriend[key]) {
+            languageArray.push(targetFriend[key][i].name);
+          }
+          var languagesSpokenString = languageArray.toString().replace(/\,/g, ' | ');
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What languages do I speak? "
+          var correctAnswer = languagesSpokenString;
+          var questionType = "language";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+       case "movies":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What are my favorite movies? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "movies";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "music":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my favorite music? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "music";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "mutual_friend_count":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "How many mutual friends do we have? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "mutual_friend_count";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "name":            
+          var answerString = targetFriend[key];
+          var questionType = "name";
+          targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
+          break;
+        case "pic":            
+          var answerString = targetFriend[key];
+          var questionType = "pic";
+          targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
+          break;
+        case "political":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my political affiliation? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "political";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "profile_url":            
+          var answerString = targetFriend[key];
+          var questionType = "profile_url";
+          targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
+          break;   
+        case "quotes":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "Which are my favorite quotes? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "quotes";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;             
+        case "relationship_status":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my relationship status? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "relationship_status";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "religion":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my religious affiliation? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "religion";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "significant_other_id":            
+          var query = 'SELECT name FROM user WHERE uid=' + targetFriend[key];
+          FB.api('/fql',{q:query}, function(response){
+            console.log("sig fig response");
+            console.log(response);
+            var questionNumber = "q" + questionCounter;
+            var questionString = "Who is my significant other? ";
+            var correctAnswer = response.data[0].name;
+            var questionType = "significant_other_id";
+            questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          });
+          break;
+        case "sports":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What sports do I like? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "sports";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "tv":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What are my favorite TV shows? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "tv";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "website":            
+          var questionNumber = "q" + questionCounter;
+          var questionString = "What is my website? ";
+          var correctAnswer = targetFriend[key];
+          var questionType = "website";
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+        case "work":      
+          console.log(getRandomInt(0,targetFriend[key].length-1));
+          var selectRandomWork = targetFriend[key][getRandomInt(0,targetFriend[key].length-1)];
+          console.log(selectRandomWork);
+          if (selectRandomWork.position) {
+              var questionString = "Which job is associated with me? "
+              var correctAnswer = selectRandomWork.position.name + " at " + selectRandomWork.employer.name;
+            } else {
+              var questionString = "Which employer is in my work history? "
+              var correctAnswer = selectRandomWork.employer.name;
+              } 
+          var questionNumber = "q" + questionCounter;
+          var questionType = "work";          
+          questions.push({ "questionNumber" : questionNumber, "questionString" : questionString, "answer" : correctAnswer, "questionType" : questionType});
+          break;
+      };
+      questionCounter += 1;
+    };
+  };
+  console.log(questions);
+  //If the questions object has less than 3 bits of information, pick another friend
+  if (questions.length < 1) {
+    $("#stalkerBook").html("<p>Selected User: " + targetFriend['name'] + " isn't sharing enough information. Selecting another user. Please wait</p>");
+    stalkerGameStart();
+  } else {      
+    $("#stalkerBook").html("<p>How well do you know: " + targetFriend.name + "?</p><img src='" + targetFriend.pic_big + "'>");
+    return [questions, targetFriendInfo];
+    }
+  
 }
 
 function selectRandomFriend(data) {
   //generate a random number from 1 to the length of the friends array you pulled back
-  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length);
+  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length-1);
   //randomFriend will be an object with all the called for fields in it
   var randomFriend = data.fql_result_set[randomNumberFromFriendArray];
   return randomFriend;
 
 
 }
-//this function randomly sorts the FIELDS array and it selects the first 5 elements to act as the 5 questions for the game
-function generateRandomFields(fields, randomFields){
+//this function randomly sorts the FIELDS array and it selects the first 8 elements to act as the 5 questions for the game
+function stalkerBookGenerateRandomFields(fields, randomFields){
   var nullFilterString;
   var nullFilter = [];
+  //how many additional fields to pull from the facebook tables
+  var fieldsMax = 4;
   fields.sort( function() {return 0.5 - Math.random() });
-  randomFields = fields[0] + ", " + fields[1] + ", " + fields[2] + ", " + fields[3] + ", " + fields[4];
+  randomFields = fields.slice(0,fieldsMax).toString().replace(/\,/g, ', ');
+
+  console.log("These are the randomly selected fields that we'll be requesting from the user table data. uid, name, pic_square, work, and education are all pulled by default.")
   console.log(randomFields);
+  nullFilter = randomFields.toString().replace(/\,/g, ' OR');
   
-  //some fields like 'significant_other_id' don't neccesarily have to have information filled in it. If the user doesn't have a sig other, that could be useful info too. 
-  //These switches will remove the pertinent fields from the notNullFilter string so a user could still be selected, even though he doesn't have a sigO listed.
-  switch (fields[0]) {
-    case "significant_other_id":
-      nullFilter[0] = "";
-      break;
-    default:
-      nullFilter[0] = fields[0] + " AND ";
-  };
-
-  switch (fields[1]) {
-    case "significant_other_id":
-      nullFilter[1] = "";
-      break;
-    default:
-      nullFilter[1] = fields[1] + " AND ";
-  };
-  
-  switch (fields[2]) {
-    case "significant_other_id":
-      nullFilter[2] = "";
-      break;
-    default:
-      nullFilter[2] = fields[2] + " AND ";
-  };
-  
-  switch (fields[3]) {
-    case "significant_other_id":
-      nullFilter[3] = "";
-      break;
-    default:
-      nullFilter[3] = fields[3] + " AND ";
-  };
-  
-  switch (fields[4]) {
-    case "significant_other_id":
-      nullFilter[4] = "";
-      break;
-    default:
-      nullFilter[4] = fields[4];
-  };
-  
-  nullFilterString = nullFilter[0] + nullFilter[1] + nullFilter[2] + nullFilter[3] + nullFilter[4];
-
   //FQL query string to get ids and names of all friends with the data we need. The 'AND birthday' is to filter out people who didn't provide their birthday information to apps
   var getAllFriends = 'SELECT uid2 FROM friend WHERE uid1=me()';
   //this FQL query string will give you an object of friends who have valid information in the 5 random fields
-  var getEligibleFriends = 'SELECT uid, name, pic_square, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND ' + nullFilterString;
+  //var getEligibleFriends = 'SELECT uid, name, pic_big, education, work, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND (education AND work) AND (' + nullFilter + ')';
+  //var getEligibleFriends = 'SELECT uid, name, pic_big, education, work FROM user WHERE uid IN (SELECT uid2 FROM #query1)';
   
   console.log(getAllFriends);
   console.log(getEligibleFriends);
@@ -648,7 +846,7 @@ function convertBirthdayDateToBirthday(birthdate) {
   var myDate;
   var myFormatDate;
   var t = birthdate.split("/");
-  console.log(t);
+  //console.log(t);
   if(t[2]) {
     myDate = new Date(t[2], t[0] - 1, t[1]);
     myFormatDate = MONTHS[myDate.getMonth()] + ", " + myDate.getDate() + ", " + myDate.getFullYear();
