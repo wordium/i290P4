@@ -382,11 +382,18 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       var getFriendsGridQuery = "SELECT uid, name, pic_square, pic, profile_url FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) ORDER BY rand() limit 20";
       FB.api('/fql',{q:getFriendsGridQuery}, function(response){
         friendsGrid = response.data;
+        
+        //this checks to make sure the target uid has not been randomly selected
         for (key in friendsGrid){
           if (friendsGrid[key].uid == friendTargetInfo[0].uid) {
             friendsGrid.splice(key, 1);
           }
         }
+        //making sure we have 19 friends in the friend grid before we push the target user into it
+        if (friendsGrid.length == 20) {
+          friendsGrid.pop();
+        }
+        //adding the target profile picture into the friendsgrid
         friendsGrid.push({"uid" : friendTargetInfo[0].uid, "name" : friendTargetInfo[1].name, "pic" : friendTargetInfo[2].pic, "pic_square" : friendTargetInfo[3].pic_square, "profile_url" : friendTargetInfo[4].profile_url, "answer" : 1});
         console.log("this is the friends grid and the info in contains");
         console.log(friendsGrid);
