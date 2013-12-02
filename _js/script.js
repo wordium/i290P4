@@ -51,7 +51,6 @@ function Login()
     /*FB.api('/oauth/access_token?client_id=174546802753595&client_secret=91a7f8987db5ce5a179937047be09533&grant_type=client_credentials',function(response){
     console.log(response);
     });*/
-
   } else 
   {
    console.log('User cancelled login or did not fully authorize.');
@@ -82,34 +81,23 @@ function whoAmIGameStart(){
   
   $("#questions").html("");
   $("#questions").html("<p>Reticulating splines, please wait.</p>");  
-  var randomFields;
-  var data = {};
+  var friendsUidList;
 
-  //generate 5 random fields
-  data = whoAmIGenerateRandomFields(FIELDS_WHOAMI, randomFields);  
-  var getAllFriends = data[0];
-  var getEligibleFriends = data[1];
+  FB.api('/fql',{q:'SELECT uid2 FROM friend WHERE uid1=me()'}, function(response){
+      friendsUidList = response.data;
+      //console.log(friendsUidList);
+      //generate 5 random fields
+      data = whoAmIGenerateRandomFields(FIELDS_WHOAMI, friendsUidList);  
+    });
+}
 
-  //FQL query
+function selectRandomFriend(data) {
+  //generate a random number from 1 to the length of the friends array you pulled back
+  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length-1);
+  //randomFriend will be an object with all the called for fields in it
+  var randomFriend = data.fql_result_set[randomNumberFromFriendArray];
+  return randomFriend;
 
-  FB.api('/fql',{q:{'query1':getAllFriends,'query2':getEligibleFriends}}, function(response){
-    console.log(response.data[1].fql_result_set.length);
-    data = response.data[1];
-    $("#questions").html("");
-    //if the friends array is empty, get another 5 random fields
-    if (response.data[1].fql_result_set.length == 0) {
-      $("#loadingStatus").html("<p>Still reticulating splines, just sit tight.</p>");
-      whoAmIGameStart();
-    } else {
-      var gameData = whoAmICreateQuestions(response.data[1]);
-      var questions = gameData[0];
-      var friendTargetInfo = gameData[1];
-      console.log(questions);
-      console.log(friendTargetInfo);
-      $("#whoAmI").html("<form id='whoAmIGuess'>Who am I? <input id='guess' type='text'><br /><button type='submit'>Guess</form>");
-      printToHtml(questions);
-    }
-  });
 }
 
 function printToHtml(questions){
@@ -135,9 +123,10 @@ function printToHtml(questions){
   }
   }
 }
+
+
 function whoAmICreateQuestions(data){
-  console.log(data);
-  var targetFriend = selectRandomFriend(data);
+  //console.log(data);
   var questionCounter = 0;
   var questions = [];
   var targetFriendInfo = [];
@@ -146,13 +135,14 @@ function whoAmICreateQuestions(data){
   FB.api('/fql', {q:mutualFriendQuery}, function(response){
     console.log(response);
   });*/
+  var targetFriend = data;
   console.log(targetFriend);
-  for (key in targetFriend) {
-    console.log(key);
-    console.log(targetFriend[key]);
+  for (key in targetFriend[0]) {
+    //console.log(key);
+    //console.log(targetFriend[0][key]);
     
     //if the field is empty, skip it
-    if (!targetFriend[key] || targetFriend[key].length === 0) {
+    if (!targetFriend[0][key] || targetFriend[0][key].length === 0) {
       console.log("No information, skipping: " + key);
     }
     //otherwise, start populating the questions object.
@@ -161,41 +151,41 @@ function whoAmICreateQuestions(data){
       switch (key) {
         case "activities":            
           var questionString = "q" + questionCounter;
-          var answerString = "These are my favorite activities: " + targetFriend[key];
+          var answerString = "These are my favorite activities: " + targetFriend[0][key];
           var questionType = "activities";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "birthday_date":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my birthday: " + convertBirthdayDateToBirthday(targetFriend[key]);
+          var answerString = "This is my birthday: " + convertBirthdayDateToBirthday(targetFriend[0][key]);
           var questionType = "birthday";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "books":            
           var questionString = "q" + questionCounter;
-          var answerString = "These are my favorite books: " + targetFriend[key];
+          var answerString = "These are my favorite books: " + targetFriend[0][key];
           var questionType = "books";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "current_location":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my current location: " + targetFriend[key].name;
+          var answerString = "This is my current location: " + targetFriend[0][key].name;
           var questionType = "current_location";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "hometown_location":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my hometown location: " + targetFriend[key].name;
+          var answerString = "This is my hometown location: " + targetFriend[0][key].name;
           var questionType = "hometown_location";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break; 
         case "education":      
           var educationArray = [];
-          for (var i in targetFriend[key]) {
-            if (targetFriend[key][i].type) {
-              educationArray.push({ "name" : targetFriend[key][i].school.name , "type" : targetFriend[key][i].type});
+          for (var i in targetFriend[0][key]) {
+            if (targetFriend[0][key][i].type) {
+              educationArray.push({ "name" : targetFriend[0][key][i].school.name , "type" : targetFriend[0][key][i].type});
             } else {
-              educationArray.push({ "name" : targetFriend[key][i].school.name});
+              educationArray.push({ "name" : targetFriend[0][key][i].school.name});
               } 
           }
           var questionString = "q" + questionCounter;
@@ -204,20 +194,20 @@ function whoAmICreateQuestions(data){
           break;
         case "interests":            
           var questionString = "q" + questionCounter;
-          var answerString = "These are my interests: " + targetFriend[key];
+          var answerString = "These are my interests: " + targetFriend[0][key];
           var questionType = "interests";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "sex":            
           var questionString = "q" + questionCounter;
-          var answerString = "This my identified gender: " + targetFriend[key];
+          var answerString = "This my identified gender: " + targetFriend[0][key];
           var questionType = "sex";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "languages":      
           var languageArray = [];
-          for (var i in targetFriend[key]) {
-            languageArray.push(targetFriend[key][i].name);
+          for (var i in targetFriend[0][key]) {
+            languageArray.push(targetFriend[0][key][i].name);
           }
           var languagesSpokenString = languageArray.toString().replace(/\,/g, ' | ');
           var questionString = "q" + questionCounter;
@@ -227,57 +217,57 @@ function whoAmICreateQuestions(data){
           break;
         case "movies":            
           var questionString = "q" + questionCounter;
-          var answerString = "These are my favorite movies: " + targetFriend[key];
+          var answerString = "These are my favorite movies: " + targetFriend[0][key];
           var questionType = "movies";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "music":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my favorite music: " + targetFriend[key];
+          var answerString = "This is my favorite music: " + targetFriend[0][key];
           var questionType = "music";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "mutual_friend_count":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is how many mutual friends we have: " + targetFriend[key];
+          var answerString = "This is how many mutual friends we have: " + targetFriend[0][key];
           var questionType = "mutual_friend_count";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "name":            
-          var answerString = targetFriend[key];
+          var answerString = targetFriend[0][key];
           var questionType = "name";
           targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
           break;
         case "pic":            
-          var answerString = targetFriend[key];
+          var answerString = targetFriend[0][key];
           var questionType = "pic";
           targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
           break;
         case "political":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my political affiliation: " + targetFriend[key];
+          var answerString = "This is my political affiliation: " + targetFriend[0][key];
           var questionType = "political";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "profile_url":            
-          var answerString = targetFriend[key];
+          var answerString = targetFriend[0][key];
           var questionType = "profile_url";
           targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
           break;        
         case "relationship_status":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my relationship status: " + targetFriend[key];
+          var answerString = "This is my relationship status: " + targetFriend[0][key];
           var questionType = "relationship_status";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "religion":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my religion: " + targetFriend[key];
+          var answerString = "This is my religion: " + targetFriend[0][key];
           var questionType = "religion";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "significant_other_id":            
-          var query = 'SELECT name FROM user WHERE uid=' + targetFriend[key];
+          var query = 'SELECT name FROM user WHERE uid=' + targetFriend[0][key];
           FB.api('/fql',{q:query}, function(response){
             console.log("sig fig response");
             console.log(response);
@@ -289,29 +279,29 @@ function whoAmICreateQuestions(data){
           break;
         case "sports":            
           var questionString = "q" + questionCounter;
-          var answerString = "This are the sports I play: " + targetFriend[key];
+          var answerString = "This are the sports I play: " + targetFriend[0][key];
           var questionType = "sports";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "tv":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my favorite TV shows: " + targetFriend[key];
+          var answerString = "This is my favorite TV shows: " + targetFriend[0][key];
           var questionType = "tv";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "website":            
           var questionString = "q" + questionCounter;
-          var answerString = "This is my website(s): " + targetFriend[key];
+          var answerString = "This is my website(s): " + targetFriend[0][key];
           var questionType = "website";
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           break;
         case "work":      
           var workArray = [];
-          for (var i in targetFriend[key]) {
-            if (targetFriend[key][i].position) {
-            workArray.push({ "employer" : targetFriend[key][i].employer.name , "position" : targetFriend[key][i].position.name});
+          for (var i in targetFriend[0][key]) {
+            if (targetFriend[0][key][i].position) {
+            workArray.push({ "employer" : targetFriend[0][key][i].employer.name , "position" : targetFriend[0][key][i].position.name});
             } else {
-              workArray.push({ "employer" : targetFriend[key][i].employer.name});
+              workArray.push({ "employer" : targetFriend[0][key][i].employer.name});
             };
           };
           var questionString = "q" + questionCounter;
@@ -323,7 +313,8 @@ function whoAmICreateQuestions(data){
     };
   };
 
-
+  console.log(questions);
+  console.log(targetFriendInfo);
   //If the questions object has less than 4 bits of information, pick another friend
   if (questions.length < 5) {
     whoAmIGameStart();
@@ -333,79 +324,99 @@ function whoAmICreateQuestions(data){
   
 }
 
-function whoAmIGenerateRandomFields(fields, randomFields){
+function whoAmIGenerateRandomFields(fields, friendsUidList){
+  var nullFilterString;
+  var nullFilter = [];
+  var targetUid = friendsUidList[getRandomInt(0, friendsUidList.length-1)].uid2;
+  //how many additional fields to pull from the facebook tables
+  var fieldsMax = 10;
+  fields.sort( function() {return 0.5 - Math.random() });
+  var randomFields = fields.slice(0,fieldsMax).toString().replace(/\,/g, ', ');
+
+  console.log("These are the randomly selected fields that we'll be requesting from the user table data. uid, name, pic_square, work, and education are all pulled by default.")
+  console.log(randomFields);
+  
+  //this will try to grab a facebook friend who has shared at least their work, education, AND gender
+  var getTargetProfileInfo = 'SELECT uid, name, pic, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid=' + targetUid + ' AND work AND education AND sex';
+  console.log(getTargetProfileInfo);
+
+  FB.api('/fql',{q:getTargetProfileInfo}, function(response){
+    console.log(response.data);
+    //if the returning array is empty, try another user
+    if (response.data.length == 0) {
+      console.log("Friend did not have enough information shared. Grabbing another random friend.");
+      $("#loadingStatus").html("<p>Still reticulating splines, just sit tight.</p>");
+      whoAmIGameStart();
+    } else {   
+      var gameData = whoAmICreateQuestions(response.data);
+      var questions = gameData[0];
+      var friendTargetInfo = gameData[1];
+      console.log(questions);
+      console.log(friendTargetInfo);
+      printToHtml(questions);
+      }
+  });
+
+ /* console.log("The following fields MUST have information listed or the friend will not be pulled back.");
+  console.log(nullFilter);
+  
+  //turning nullFilter array into a FQL query compatible string
+  nullFilterString = nullFilter.toString().replace(/\,/g, ' AND ');
+  console.log(nullFilterString); */ 
+
+  //FQL query string to get ids and names of all friends with the data we need. The 'AND birthday' is to filter out people who didn't provide their birthday information to apps
+  //var getAllFriends = 'SELECT uid2 FROM friend WHERE uid1=me()';
+  //this FQL query string will give you an object of your friends with the fields specified in the SELECT area. The AND modifier makes the query only pull back results that have information listed in the specified fields.
+  //var getEligibleFriends = 'SELECT uid, name, pic, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid=' + ' AND work AND education AND significant_other_id';
+  
+  // var getEligibleFriends = 'SELECT uid, name, pic_square, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND ' + nullFilterString;
+  
+//FQL query
+
+/*  FB.api('/fql',{q:{'query1':getAllFriends,'query2':getEligibleFriends}}, function(response){
+    console.log(response.data[1].fql_result_set.length);
+    data = response.data[1];
+    $("#questions").html("");
+    //if the friends array is empty, get another 5 random fields
+    if (response.data[1].fql_result_set.length == 0) {
+      $("#loadingStatus").html("<p>Still reticulating splines, just sit tight.</p>");
+      whoAmIGameStart();
+    } else {
+      var gameData = whoAmICreateQuestions(response.data[1]);
+      
+    }
+  });*/
+
+  //console.log(getAllFriends);
+  //console.log(getEligibleFriends);
+  //return [getAllFriends, getEligibleFriends];
+}
+
+
+
+//this function randomly sorts the FIELDS array and it selects the first 8 elements to act as the 5 questions for the game
+function stalkerBookGenerateRandomFields(fields, randomFields){
   var nullFilterString;
   var nullFilter = [];
   //how many additional fields to pull from the facebook tables
-  var fieldsMax = 8;
+  var fieldsMax = 4;
   fields.sort( function() {return 0.5 - Math.random() });
   randomFields = fields.slice(0,fieldsMax).toString().replace(/\,/g, ', ');
 
   console.log("These are the randomly selected fields that we'll be requesting from the user table data. uid, name, pic_square, work, and education are all pulled by default.")
   console.log(randomFields);
+  nullFilter = randomFields.toString().replace(/\,/g, ' OR');
   
-/*  
-//the nullFilterString builds a string of fields to that filters out friends that have NULL in the specified fields. (probably don't need it cause we can just default to filtering out Education and Work empty field. There's a better chance that friends who share their work and education information will have other fields filled out too. This way we can grab a random friend from a larger pool too)
-//some fields like 'significant_other_id' don't neccesarily have to have information filled in it. If the user doesn't have a sig other, that could be useful info too. 
-  //These switches will remove the pertinent fields from the notNullFilter string so a user could still be selected, even though he doesn't have a sigO listed.
-  for (var j=0; j<fieldsMax; j++) {
-    if (j == fieldsMax-1) {
-      switch (fields[j]) {
-        case "significant_other_id":          
-          break;
-        case "activities":
-          break;
-        case "interests":
-          break;
-        case "languages":
-          break;
-        case "website":
-          break;
-        case "sports":
-          break;
-        default:
-          nullFilter.push(fields[j]);
-      };  
-    } else {
-        switch (fields[j]) {
-          case "significant_other_id":            
-            break;
-          case "activities":            
-            break;
-          case "interests":
-            break;
-          case "languages":
-            break;
-          case "website":
-            break;
-          case "sports":
-            break;          
-          default:
-            nullFilter.push(fields[j]);
-        };  
-      }
-  };
-  
-  console.log("The following fields MUST have information listed or the friend will not be pulled back.");
-  console.log(nullFilter);
-  
-  //turning nullFilter array into a FQL query compatible string
-  nullFilterString = nullFilter.toString().replace(/\,/g, ' AND ');
-  console.log(nullFilterString);  
-  */
-
   //FQL query string to get ids and names of all friends with the data we need. The 'AND birthday' is to filter out people who didn't provide their birthday information to apps
   var getAllFriends = 'SELECT uid2 FROM friend WHERE uid1=me()';
-  //this FQL query string will give you an object of your friends with the fields specified in the SELECT area. The AND modifier makes the query only pull back results that have information listed in the specified fields.
-  var getEligibleFriends = 'SELECT uid, name, pic, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND work AND education AND significant_other_id';
-  
-  // var getEligibleFriends = 'SELECT uid, name, pic_square, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND ' + nullFilterString;
+  //this FQL query string will give you an object of friends who have valid information in the 5 random fields
+  //var getEligibleFriends = 'SELECT uid, name, pic_big, education, work, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND (education AND work) AND (' + nullFilter + ')';
+  //var getEligibleFriends = 'SELECT uid, name, pic_big, education, work FROM user WHERE uid IN (SELECT uid2 FROM #query1)';
   
   console.log(getAllFriends);
   console.log(getEligibleFriends);
   return [getAllFriends, getEligibleFriends];
 }
-
 
 /* SPECS for Friend Stalker Quiz Game
 //generate 5 random questions about a friend
@@ -679,38 +690,7 @@ function stalkerBookCreateQuestions(data){
   
 }
 
-function selectRandomFriend(data) {
-  //generate a random number from 1 to the length of the friends array you pulled back
-  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length-1);
-  //randomFriend will be an object with all the called for fields in it
-  var randomFriend = data.fql_result_set[randomNumberFromFriendArray];
-  return randomFriend;
 
-
-}
-//this function randomly sorts the FIELDS array and it selects the first 8 elements to act as the 5 questions for the game
-function stalkerBookGenerateRandomFields(fields, randomFields){
-  var nullFilterString;
-  var nullFilter = [];
-  //how many additional fields to pull from the facebook tables
-  var fieldsMax = 4;
-  fields.sort( function() {return 0.5 - Math.random() });
-  randomFields = fields.slice(0,fieldsMax).toString().replace(/\,/g, ', ');
-
-  console.log("These are the randomly selected fields that we'll be requesting from the user table data. uid, name, pic_square, work, and education are all pulled by default.")
-  console.log(randomFields);
-  nullFilter = randomFields.toString().replace(/\,/g, ' OR');
-  
-  //FQL query string to get ids and names of all friends with the data we need. The 'AND birthday' is to filter out people who didn't provide their birthday information to apps
-  var getAllFriends = 'SELECT uid2 FROM friend WHERE uid1=me()';
-  //this FQL query string will give you an object of friends who have valid information in the 5 random fields
-  //var getEligibleFriends = 'SELECT uid, name, pic_big, education, work, ' + randomFields + ' FROM user WHERE uid IN (SELECT uid2 FROM #query1) AND (education AND work) AND (' + nullFilter + ')';
-  //var getEligibleFriends = 'SELECT uid, name, pic_big, education, work FROM user WHERE uid IN (SELECT uid2 FROM #query1)';
-  
-  console.log(getAllFriends);
-  console.log(getEligibleFriends);
-  return [getAllFriends, getEligibleFriends];
-}
 
 
 //this function is a sample of how we could ask a birthday question
