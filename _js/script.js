@@ -36,6 +36,14 @@ $(document).ready(function()
       
     });
 
+    $('.friend').on('click', function(e) {
+      // this will get the name of the friend, which we can stick into data-name
+      // if it's useful to have ID numbers, we can put those in, too.
+      var friend = $(this).attr('data-name');
+      console.log('Your guess is: ' + friend + '.');
+
+    });
+
 });
 
 function Login()
