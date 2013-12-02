@@ -173,7 +173,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
           $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name)
                                  .attr("data-uid", friendsGrid[i].uid);
 
-          //$('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
+          $('#' + friendIdJquery).append('<div class="friendName">' + friendsGrid[i].name + '</div>');
         }
         whoAmIPrintToHtml(questions);
         targetAnswer = friendTargetInfo;
