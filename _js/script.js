@@ -6,6 +6,7 @@ var FIELDS_STALKERBOOK = ["activities", "affiliations","birthday_date","books", 
 //uid, name, pic_square, work, education are pulled by default
 var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "significant_other_id", "sports", "tv", "website"];
 
+var targetAnswer;
 $(document).ready(function()
 {
     //reference: http://hayageek.com/facebook-javascript-sdk/
@@ -40,7 +41,14 @@ $(document).ready(function()
       // this will get the name of the friend, which we can stick into data-name
       // if it's useful to have ID numbers, we can put those in, too.
       var friend = $(this).attr('data-name');
+      var uidGuess = $(this).attr('data-uid');
       console.log('Your guess is: ' + friend + '.');
+      if (uidGuess == targetAnswer[0].uid){
+        alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
+      } else{
+        alert("You are incorrect. Please keep guessing.");
+        }
+      console.log(targetAnswer);
 
     });
 
@@ -86,7 +94,7 @@ function getUserInfo() {
 }
 
 function whoAmIGameStart(){
-  
+  var data;
   $("#questions").html("");
   $("#questions").html("<p>Reticulating splines, please wait.</p>");  
   var friendsUidList;
@@ -97,6 +105,7 @@ function whoAmIGameStart(){
       //generate 5 random fields
       data = whoAmIGenerateRandomFields(FIELDS_WHOAMI, friendsUidList);  
     });
+  return data;
 }
 
 function whoAmICreateQuestions(data){
@@ -350,6 +359,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
   var nullFilterString;
   var nullFilter = [];
   var friendsGrid;
+  var friendTargetInfo;
   var targetUid = friendsUidList[getRandomInt(0, friendsUidList.length-1)].uid2;
 
 
@@ -372,7 +382,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
     } else {   
       var gameData = whoAmICreateQuestions(response.data);
       var questions = gameData[0];
-      var friendTargetInfo = gameData[1];
+      friendTargetInfo = gameData[1];
       console.log("Game Questions:");
       console.log(questions);
       console.log("Target Friend Info:");
@@ -406,14 +416,17 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
           var friendIdJquery = 'friend' + id.toString();
           $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
           $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name);
+          $('#' + friendIdJquery).attr("data-uid", friendsGrid[i].uid);
           //$('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
         }
         whoAmIPrintToHtml(questions);
-
+        targetAnswer = friendTargetInfo 
       });
       
       }
   });
+
+return friendTargetInfo;
 }
 
 
