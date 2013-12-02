@@ -405,6 +405,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
           var friendIdJquery = 'friend' + id.toString();
           $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
           $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name);
+          $('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
           i++;
         }
 
