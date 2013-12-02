@@ -1,6 +1,7 @@
 <?php
 // connects to my ischool mysql database. username: jenton, password: qwerty, database: jenton
-$con = mysqli_connect("localhost", "dantos_ischool", "o2lb_awsIS", "dantos_dantsai");
+//$con = mysqli_connect("localhost", "dantos_ischool", "o2lb_awsIS", "dantos_dantsai");
+  $con = mysqli_connect("localhost", "jenton", "qwerty", "jenton");
  
 // Failure check
 if (mysqli_connect_errno($con))
@@ -11,7 +12,7 @@ if (mysqli_connect_errno($con))
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if($_GET['action'] == 'getall') {
 		$result = mysqli_query($con,"SELECT * FROM facebook");
-		echo "scoreid guesserid targetid score<br>";
+		echo "scoreid guesserid guesserusername targetid targetusername score<br>";
 		while($row = mysqli_fetch_array($result)) {
 			echo $row[0] . ' ' . $row[1] . ' ' . $row[2] . ' ' . $row[3] . ' ' . $row[4] . '<br>';
 		}
@@ -58,9 +59,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 if($_POST['action'] == 'newscore') {
 	$guesserid = $_POST['guesserid'];
+	$guesserusername = $_POST['guesserusername'];
 	$targetid = $_POST['targetid'];
+	$targetusername = $_POST['targetusername'];
 	$score = $_POST['score'];
-	$result = mysqli_query($con,"INSERT INTO facebook (guesserid, targetid, score) VALUES ($guesserid, $targetid, $score)");
+	$result = mysqli_query($con,"INSERT INTO facebook (guesserid, guesserusername, targetid, targetusername, score) VALUES ($guesserid, $guesserusername, $targetid, $targetusername, $score)");
 	echo 'done';
 }
 
