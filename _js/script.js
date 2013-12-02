@@ -235,12 +235,17 @@ function whoAmICreateQuestions(data){
         case "name":            
           var answerString = targetFriend[0][key];
           var questionType = "name";
-          targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
+          targetFriendInfo.push({ "name" : answerString});
           break;
         case "pic":            
           var answerString = targetFriend[0][key];
           var questionType = "pic";
-          targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
+          targetFriendInfo.push({ "pic" : answerString});
+          break;
+        case "pic_square":            
+          var answerString = targetFriend[0][key];
+          var questionType = "pic_square";
+          targetFriendInfo.push({ "pic_square" : answerString});
           break;
         case "political":            
           var questionString = "q" + questionCounter;
@@ -252,7 +257,7 @@ function whoAmICreateQuestions(data){
         case "profile_url":            
           var answerString = targetFriend[0][key];
           var questionType = "profile_url";
-          targetFriendInfo.push({ "answer" : answerString, "questionType" : questionType});
+          targetFriendInfo.push({ "profile_url" : answerString});
           break;        
         case "relationship_status":            
           var questionString = "q" + questionCounter;
@@ -294,6 +299,11 @@ function whoAmICreateQuestions(data){
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
           questionCounter += 1;
           break;
+        case "uid":            
+          var answerString = targetFriend[0][key];
+          var questionType = "uid";
+          targetFriendInfo.push({ "uid" : answerString});
+          break;        
         case "website":            
           var questionString = "q" + questionCounter;
           var answerString = "This is my website(s): " + targetFriend[0][key];
@@ -344,7 +354,10 @@ function whoAmICreateQuestions(data){
 function whoAmIGenerateRandomFields(fields, friendsUidList){
   var nullFilterString;
   var nullFilter = [];
+  var friendsGrid;
   var targetUid = friendsUidList[getRandomInt(0, friendsUidList.length-1)].uid2;
+
+
   //how many additional fields to pull from the facebook tables
   var fieldsMax = 10;
   fields.sort( function() {return 0.5 - Math.random() });
@@ -354,7 +367,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
   console.log(randomFields);
   
   //this will try to grab a facebook friend who has shared at least their work, education, AND gender
-  var getTargetProfileInfo = 'SELECT uid, name, pic, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid=' + targetUid + ' AND work AND education AND sex';
+  var getTargetProfileInfo = 'SELECT uid, name, pic, pic_square, profile_url, work, education, current_location, sex, ' + randomFields + ' FROM user WHERE uid=' + targetUid + ' AND work AND education AND sex';
   console.log(getTargetProfileInfo);
 
   FB.api('/fql',{q:getTargetProfileInfo}, function(response){
@@ -370,7 +383,33 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       var friendTargetInfo = gameData[1];
       console.log(questions);
       console.log(friendTargetInfo);
-      whoAmIPrintToHtml(questions);
+
+      var getFriendsGridQuery = "SELECT uid, name, pic_square, pic, profile_url FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) ORDER BY rand() limit 20";
+      console.log(getFriendsGridQuery);
+      FB.api('/fql',{q:getFriendsGridQuery}, function(response){
+        friendsGrid = response.data;
+        for (key in friendsGrid){
+          if (friendsGrid[key].uid == friendTargetInfo[0].uid) {
+            friendsGrid.splice(key, 1);
+          }
+        }
+        friendsGrid.push({"uid" : friendTargetInfo[0].uid, "name" : friendTargetInfo[1].name, "pic" : friendTargetInfo[2].pic, "pic_square" : friendTargetInfo[3].pic_square, "profile_url" : friendTargetInfo[4].profile_url, "answer" : 1});
+        console.log(friendsGrid);
+
+        //randomize the friends grid
+        friendsGrid.sort( function() {return 0.5 - Math.random() });
+        //draw the randomized friends grid on the page
+        for (var i in friendsGrid){
+          console.log(i);
+          var id = parseInt(i)+1;
+          var friendIdJquery = 'friend' + id.toString();
+          $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
+          $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name);
+          i++;
+        }
+
+      });
+      //whoAmIPrintToHtml(questions);
       }
   });
 
