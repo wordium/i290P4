@@ -22,10 +22,6 @@ $(document).ready(function()
 
     $("#go").on("click", function() {
       Login();
-      //getPhotosOfFriend();
-      //pullLotsOfFriendData();
-      //birthdayQuestion();
-      //stalkerGameStart();
 
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
       whoAmIGameStart();
@@ -34,7 +30,6 @@ $(document).ready(function()
 
 // we can get rid of this, right?
     $("#whoAmIGuess").on("submit", function(e) {
-      //BUG how to stop page from refreshing after clicking submit?
       e.preventDefault();
       var guess = $("#guess").val();
       console.log("your guess is" + guess);
@@ -181,7 +176,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
           //$('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
         }
         whoAmIPrintToHtml(questions);
-        targetAnswer = friendTargetInfo 
+        targetAnswer = friendTargetInfo;
       });
       
       }
