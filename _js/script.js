@@ -26,9 +26,13 @@ $(document).ready(function()
       //pullLotsOfFriendData();
       //birthdayQuestion();
       //stalkerGameStart();
+
+      $('.wrong').removeClass('wrong');  // resetting any greyed out images
       whoAmIGameStart();
     });
 
+
+// we can get rid of this, right?
     $("#whoAmIGuess").on("submit", function(e) {
       //BUG how to stop page from refreshing after clicking submit?
       e.preventDefault();
@@ -36,18 +40,21 @@ $(document).ready(function()
       console.log("your guess is" + guess);
       
     });
+// ******************************
 
     $('.friend').on('click', function(e) {
-      // this will get the name of the friend, which we can stick into data-name
-      // if it's useful to have ID numbers, we can put those in, too.
       var friend = $(this).attr('data-name');
       var uidGuess = $(this).attr('data-uid');
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
         alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
-      } else{
+        //TODO: add feedback that isn't an alert
+        //TODO: add/change scoring
+      } 
+      else {
         alert("You are incorrect. Please keep guessing.");
-        }
+        $(this).addClass('wrong');
+      }
       console.log(targetAnswer);
 
     });
@@ -414,9 +421,10 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         for (var i in friendsGrid){
           var id = parseInt(i)+1;
           var friendIdJquery = 'friend' + id.toString();
-          $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
-          $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name);
-          $('#' + friendIdJquery).attr("data-uid", friendsGrid[i].uid);
+          $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic)
+                                 .attr("data-name", friendsGrid[i].name)
+                                 .attr("data-uid", friendsGrid[i].uid);
+
           //$('#' + friendIdJquery).append("<p>" + friendsGrid[i].name + "</p>");
         }
         whoAmIPrintToHtml(questions);
@@ -428,7 +436,6 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
 
 return friendTargetInfo;
 }
-
 
 function whoAmIPrintToHtml(questions){
   //NOTE: significant other information doesn't populate until after the rest of the whoAmIGameStart() function has run because of the FB asynchronous calls. If we print all the questions to html right away, sig other won't show up. If call each key from the questions object one at a time, it will give the significant other information enough time to show up at the end of the questions object.

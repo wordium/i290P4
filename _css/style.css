@@ -60,8 +60,6 @@ h1 {
 
   width: 80%;
   margin: auto auto;
-  
-  height: 1000px;
 }
 
 /******** Friend Grid **********/
@@ -76,4 +74,8 @@ h1 {
 .photo {
   height: 100px;
   width: 100px;
+}
+
+.wrong {
+  opacity: 0.25;
 }
