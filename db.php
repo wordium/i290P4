@@ -1,6 +1,7 @@
 <?php
 // connects to my ischool mysql database. username: jenton, password: qwerty, database: jenton
-$con = mysqli_connect("localhost", "dantos_ischool", "o2lb_awsIS", "dantos_dantsai");
+//$con = mysqli_connect("localhost", "dantos_ischool", "o2lb_awsIS", "dantos_dantsai");
+  $con = mysqli_connect("localhost", "jenton", "qwerty", "jenton");
  
 // Failure check
 if (mysqli_connect_errno($con))
