@@ -48,9 +48,6 @@ $(document).ready(function()
         //TODO: add/change scoring
         //placeholder score value
         var score = 5;
-        alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
-        //TODO: add feedback that isn't an alert
-        //TODO: add/change scoring
         $.post('db.php', {
           action: 'newscore',
           guesserid: playerInfo[0].uid,
