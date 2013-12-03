@@ -45,7 +45,6 @@ $(document).ready(function()
       var uidGuess = $(this).attr('data-uid');
       console.log('Your guess is: ' + friend + '.');
       console.log(playerInfo);
-      console.log(playerInfo[0].name);
       if (uidGuess == targetAnswer[0].uid){
         //placeholder score value
         var score = 5;
@@ -54,8 +53,8 @@ $(document).ready(function()
         //TODO: add/change scoring
         $.post('db.php', {
           action: 'newscore',
-          guesserid: playerInfo[0].uid,
-          guesserusername: playerInfo[0].name,
+          guesserid: playerInfo.uid,
+          guesserusername: playerInfo.name,
           targetid: targetAnswer[0].uid,
           targetusername: targetAnswer[1].name,
           score: score
@@ -110,7 +109,7 @@ function getUserInfo() {
     str +="<input type='button' value='Logout' onclick='Logout();'/>";
           //document.getElementById("status").innerHTML=str;
     $("#status").html(str);
-    playerInfo.push({uid: response.id, name: response.name, link: response.link});
+    playerInfo.push({uid: response.id, name: response.username, link: response.link});
 
   });
 
@@ -189,12 +188,12 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         //draw the randomized friends grid on the page
         for (var i in friendsGrid){
           var id = parseInt(i)+1;
-          var friendIdJquery = 'friend' + id.toString();
-          $('#' + friendIdJquery).find("img").attr("src", friendsGrid[i].pic);
-          $('#' + friendIdJquery).attr("data-name", friendsGrid[i].name)
-                                 .attr("data-uid", friendsGrid[i].uid);
+          var $friend = $('#friend' + id.toString()); // this is one friend
 
-          $('#' + friendIdJquery).append('<div class="friendName">' + friendsGrid[i].name + '</div>');
+          $friend.find("img").attr("src", friendsGrid[i].pic); // adding a photo
+          $friend.attr("data-name", friendsGrid[i].name) // adding data
+                 .attr("data-uid", friendsGrid[i].uid);
+          $friend.find('.name').text(friendsGrid[i].name); // adding name text
         }
         whoAmIPrintToHtml(questions);
         targetAnswer = friendTargetInfo;
@@ -207,7 +206,7 @@ return friendTargetInfo;
 }
 
 function whoAmICreateQuestions(data){
-  console.log(data[0].sports);
+  //console.log(data);
   var questionCounter = 1;
   var questions = [];
   var targetFriendInfo = [];
