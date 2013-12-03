@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="_css/style.css" />
   <script type="text/javascript" src="_js/jquery-1.10.2.min.js"></script>
   <script type="text/javascript" src="_js/script.js"></script>
-  <script type="text/javascript" src="_js/dbtest.js"></script>
   <title></title>
 </head>
 
