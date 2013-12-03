@@ -7,6 +7,7 @@ var FIELDS_STALKERBOOK = ["activities", "affiliations","birthday_date","books", 
 var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "significant_other_id", "sports", "tv", "website"];
 
 var targetAnswer;
+var playerInfo = [];
 $(document).ready(function()
 {
     //reference: http://hayageek.com/facebook-javascript-sdk/
@@ -107,7 +108,7 @@ function getUserInfo() {
     str +="<input type='button' value='Logout' onclick='Logout();'/>";
           //document.getElementById("status").innerHTML=str;
     $("#status").html(str);
-
+    playerInfo.push({uid: response.id, name: response.name, link: response.link});
   });
 
 }
