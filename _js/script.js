@@ -10,6 +10,8 @@ var targetAnswer;
 var playerInfo = [];
 $(document).ready(function()
 {
+
+  $("#go").prop("disabled",true);
     //reference: http://hayageek.com/facebook-javascript-sdk/
     window.fbAsyncInit = function() {
       FB.init({
@@ -21,21 +23,17 @@ $(document).ready(function()
     });
     };
 
-    $("#go").on("click", function() {
+    $("#login").on("click", function() {
       Login();
+    });
 
+    $("#go").on("click", function() {
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
+      //disables the 'Go' button until the game is ready to play
+      $(this).prop("disabled",true);
       whoAmIGameStart();
     });
 
-
-// we can get rid of this, right?
-    $("#whoAmIGuess").on("submit", function(e) {
-      e.preventDefault();
-      var guess = $("#guess").val();
-      console.log("your guess is" + guess);
-      
-    });
 // ******************************
 
     $('.friend').on('click', function(e) {
@@ -48,6 +46,7 @@ $(document).ready(function()
         //TODO: add/change scoring
         //placeholder score value
         var score = 5;
+        //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
         $.post('db.php', {
           action: 'newscore',
           guesserid: playerInfo[0].uid,
@@ -78,6 +77,8 @@ function Login()
    if (response.authResponse) 
    {
     getUserInfo();
+    $("#go").prop("disabled",false);
+    $("#login").hide();
 
     //getting the access token (shouldn't need to run this as I've already grabbed it) 
     //Also, we should delete this code if we go live because the secret key is in here
@@ -94,26 +95,30 @@ function Login()
 
 function getUserInfo() {
   FB.api('/me', function(response) {
-
-    var str="<b>Name</b> : "+response.name+"<br>";
-    str +="<b>Link: </b>"+response.link+"<br>";
-    str +="<b>Username:</b> "+response.username+"<br>";
-    str +="<b>id: </b>"+response.id+"<br>";
-    str +="<b>Email:</b> "+response.email+"<br>";
-    str +="<b>Hometown:</b> "+response.hometown.name+"<br>";
-    str +="<input type='button' value='Get Photo' onclick='getPhoto();'/>";
-    str +="<input type='button' value='Logout' onclick='Logout();'/>";
-          //document.getElementById("status").innerHTML=str;
-    $("#status").html(str);
+    var str="Facebook login successful!<br> Welcome <b>"+response.name+"</b><br>";
     playerInfo.push({uid: response.id, name: response.name, link: response.link});
+    $("#status").html(str);
+    FB.api('/me/picture?type=normal', function(response) {
+      var picture="<img src='"+response.data.url+"'/>";
+      $("#status").append(picture);
+      $("#status").append("<br>How well do you know your friends?");
+      $("#status").append("<br><input type='button' value='Logout' onclick='Logout();'/>");
+    }); 
   });
-
 }
 
 function whoAmIGameStart(){
   var data;
   $("#questions").html("");
   $("#questions").html("<p>Reticulating splines, please wait.</p>");  
+  //clearing the fb friends pictures
+  for (var i = 1; i <= 20; i++){
+    var $friend = $('#friend' + i.toString()); // this is one friend
+    $friend.find("img").attr("src", ""); // adding a photo
+    $friend.attr("data-name", "") // adding data
+           .attr("data-uid", "");
+    $friend.find('.name').text(""); // adding name text
+  };
   var friendsUidList;
 
   FB.api('/fql',{q:'SELECT uid2 FROM friend WHERE uid1=me()'}, function(response){
@@ -147,7 +152,6 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
     //if the returning array is empty, try another user
     if (response.data.length == 0) {
       console.log("Friend did not have enough information shared. Grabbing another random friend.");
-      $("#loadingStatus").html("<p>Still reticulating splines, just sit tight.</p>");
       whoAmIGameStart();
     } else {   
       var gameData = whoAmICreateQuestions(response.data);
@@ -192,11 +196,12 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         }
         whoAmIPrintToHtml(questions);
         targetAnswer = friendTargetInfo;
+        $("#go").prop("disabled", false);
+
       });
       
       }
   });
-
 return friendTargetInfo;
 }
 
@@ -205,11 +210,7 @@ function whoAmICreateQuestions(data){
   var questionCounter = 1;
   var questions = [];
   var targetFriendInfo = [];
-  //getting mutual friends - apparently you can't get a mutual friends list unless the target friend approved this specific application
-  /*var mutualFriendQuery = 'SELECT uid, first_name, last_name, pic_small FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND uid IN (SELECT uid2 FROM friend WHERE uid1=' + targetFriend.uid + ')';
-  FB.api('/fql', {q:mutualFriendQuery}, function(response){
-    console.log(response);
-  });*/
+
   var targetFriend = data;
   for (key in targetFriend[0]) {
     //if the field is empty, skip it
@@ -383,11 +384,15 @@ function whoAmICreateQuestions(data){
           questionCounter += 1;
           break;
         case "sports":            
+          console.log(targetFriend[0][key]);
           var questionString = "q" + questionCounter;
-          var answerString = "This are the sports I play: " + targetFriend[0][key];
           var questionType = "sports";
-          questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
-          questionCounter += 1;
+          var sportsArray = targetFriend[0][key];
+          for (var i in sportsArray) {
+            var answerString = "This is a sport I play: " + sportsArray[i].name;
+            questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
+              questionCounter += 1;            
+          } 
           break;
         case "tv":            
           var questionString = "q" + questionCounter;
@@ -434,12 +439,11 @@ function whoAmICreateQuestions(data){
           questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});         */
           break;          
       };
-      //questionCounter += 1;
     };
   };
 
-  //If the questions object has less than 4 bits of information, pick another friend
-  if (questions.length < 5) {
+  //If the questions object has less than 10 hints, pick another friend
+  if (questions.length < 10) {
     whoAmIGameStart();
   } else {      
     return [questions, targetFriendInfo];
@@ -447,9 +451,9 @@ function whoAmICreateQuestions(data){
   
 }
 
+//this function prints the hints to the HTML
 function whoAmIPrintToHtml(questions){
-  //NOTE: significant other information doesn't populate until after the rest of the whoAmIGameStart() function has run because of the FB asynchronous calls. If we print all the questions to html right away, sig other won't show up. If call each key from the questions object one at a time, it will give the significant other information enough time to show up at the end of the questions object.
-
+  $("#questions").html("");
   //randomize the questions array
   questions.sort( function() {return 0.5 - Math.random() });
   //printing out the information in the Questions Object
@@ -458,15 +462,6 @@ function whoAmIPrintToHtml(questions){
     $("#questions").append("<div id='q" + questionId + "'><p>" + questions[object].answer + "</p>"); 
     object++; 
   }
-}
-
-function selectRandomFriend(data) {
-  //generate a random number from 1 to the length of the friends array you pulled back
-  var randomNumberFromFriendArray = getRandomInt(0, data.fql_result_set.length-1);
-  //randomFriend will be an object with all the called for fields in it
-  var randomFriend = data.fql_result_set[randomNumberFromFriendArray];
-  return randomFriend;
-
 }
 
 function Logout()
@@ -478,20 +473,6 @@ function Logout()
 // Using Math.round() will give you a non-uniform distribution!
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-//generates a random birthday
-//code courtesy of http://codereview.stackexchange.com/questions/15022/random-month-day-with-js-jquery
-function randomBirthday() {
-  var days_array = [31,29,31,30,31,30,31,31,30,31,30,31];
-  var month_array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  var m = randNum(12);
-  var monthName = month_array[m-1];
-  var m_limit = days_array[m-1];
-  var d = randNum(m_limit);
-  var birthdate = monthName + " " + d + ", " + getRandomInt(1970,1995);
-  return birthdate;
-  function randNum(limit){return Math.floor(Math.random()*limit)+1;}
 }
 
 //courtesy of http://stackoverflow.com/questions/8533357/convert-string-as-mm-dd-yyyy-to-day-of-week-month-name-year-in-javascript

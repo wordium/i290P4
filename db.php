@@ -63,8 +63,9 @@ if($_POST['action'] == 'newscore') {
 	$targetid = $_POST['targetid'];
 	$targetusername = $_POST['targetusername'];
 	$score = $_POST['score'];
-	$result = mysqli_query($con,"INSERT INTO facebook (guesserid, targetid, score, targetusername, guesserusername) VALUES ($guesserid, $targetid, $score, $targetusername, $guesserusername)");
-	echo 'done';
+	$query = "INSERT INTO facebook (guesserid, targetid, score, targetusername, guesserusername) VALUES ('$guesserid', '$targetid', '$score', '$targetusername', '$guesserusername')";
+	$result = mysqli_query($con,$query);
+	echo $query;
 }
 
 ?>

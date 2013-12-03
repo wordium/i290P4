@@ -21,6 +21,7 @@
   <div id="header"></div>
 
   <div id="main">
+  <input id="login" type="submit" value="Login to Facebook">
     <div id="loadingStatus">
 
     </div>
@@ -30,6 +31,7 @@
       <p>Login with your Facebook account.</p>
       <p>Be a professional stalker like Jenton.</p>
       <div id="facebookbutton">
+
       </div>
     </div>
     <?
@@ -37,7 +39,7 @@
      ?>
     <div id="loggedIn">
       <p>Ready to stalk?</p>
-      <input id="go" type="submit" value="Go">
+      <input id="go" type="submit" value="Play">
       <div id="leaderBoard">
         <div class="leaderboardItem">
           your score on friends
