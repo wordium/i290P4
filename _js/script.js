@@ -45,6 +45,23 @@ $(document).ready(function()
         alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
+        //placeholder score value
+        var score = 5;
+        alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
+        //TODO: add feedback that isn't an alert
+        //TODO: add/change scoring
+        $.post('db.php', {
+          action: 'newscore',
+          guesserid: playerInfo[0].uid,
+          guesserusername: playerInfo[0].name,
+          targetid: targetAnswer[0].uid,
+          targetusername: targetAnswer[1].name,
+          score: score
+        }, function(data) {
+          console.log(data);
+          updateAllScores();
+          //alert('done');
+        });        
       } 
       else {
         alert("You are incorrect. Please keep guessing.");
