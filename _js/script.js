@@ -206,13 +206,12 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
                  .attr("data-uid", friendsGrid[i].uid);
           $friend.find('.name').text(friendsGrid[i].name); // adding name text
         }
-<<<<<<< Updated upstream
-        whoAmIPrintToHtml();
-=======
+
+
         $('#friends').removeClass('hidden');
         $('#lives').removeClass('hidden');
-        whoAmIPrintToHtml(questions);
->>>>>>> Stashed changes
+        whoAmIPrintToHtml();
+
         targetAnswer = friendTargetInfo;
         $("#go").prop("disabled", false);
 
