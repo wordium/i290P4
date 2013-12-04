@@ -8,6 +8,8 @@ var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown
 
 var targetAnswer;
 var playerInfo = [];
+var scoring = {};
+
 $(document).ready(function()
 {
 
@@ -44,31 +46,61 @@ $(document).ready(function()
         alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
-        //placeholder score value
-        var score = 5;
+
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
-        $.post('db.php', {
-          action: 'newscore',
-          guesserid: playerInfo[0].uid,
-          guesserusername: playerInfo[0].name,
-          targetid: targetAnswer[0].uid,
-          targetusername: targetAnswer[1].name,
-          score: score
-        }, function(data) {
-          console.log(data);
-          updateAllScores();
-          //alert('done');
-        });        
+        updateScore();
+        abortTimer();
+        postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
       else {
-        alert("You are incorrect. Please keep guessing.");
-        $(this).addClass('wrong');
+        // when user got wrong, subtract points.
+        if (scoring['trial'] == 0) {
+          // first try
+          scoring['trial'] += 1;
+          scoring['score'] -= 30;
+
+          alert("You are incorrect. Please keep guessing.");
+          $(this).addClass('wrong');
+        } else if (scoring['trial'] == 1) {
+          // second try
+          scoring['trial'] += 1;
+          scoring['score'] -= 25;
+
+          alert("You are incorrect. Please keep guessing.");
+          $(this).addClass('wrong');
+        } else {
+          // game over. YOU LOST!!
+          scoring['trial'] += 1;
+          scoring['score'] = 0;
+          updateScore();
+          abortTimer();
+          alert("You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.");
+          postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
+        }
       }
       console.log(targetAnswer);
 
     });
 
 });
+
+function postNewScore(guesserid, guesserusername, targetid, targetusername) {
+
+  if (scoring['score'] < 0) {
+    scoring['score'] = 0;
+  }
+  $.post('db.php', {
+    action: 'newscore',
+    guesserid: guesserid,
+    guesserusername: guesserusername,
+    targetid: targetid,
+    targetusername: targetusername,
+    score: scoring['score']
+  }, function(data) {
+    console.log(data);
+    //alert('done');
+  });  
+}
 
 function Login()
 {
@@ -107,6 +139,22 @@ function getUserInfo() {
   });
 }
 
+function timerCode() {
+  // subtract 1pt per second
+  if (scoring['score'] > 0) {
+    scoring['score'] -= 1;
+    updateScore();
+  }
+}
+
+function updateScore() {
+  $('#score_board').html('<p>Your current score is ' + scoring['score'] + '</p>');
+}
+
+function abortTimer() {
+  clearInterval(scoring['timer']);
+}
+
 function whoAmIGameStart(){
   var data;
   $("#questions").html("");
@@ -126,6 +174,12 @@ function whoAmIGameStart(){
       //console.log(friendsUidList);
       //generate 5 random fields
       data = whoAmIGenerateRandomFields(FIELDS_WHOAMI, friendsUidList);  
+
+      // when game starts, timer for scoring starts as well.
+      abortTimer();
+      scoring['score'] = 100;
+      scoring['trial'] = 0;
+      scoring['timer'] = setInterval(timerCode, 1000);
     });
   return data;
 }

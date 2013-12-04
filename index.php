@@ -47,7 +47,8 @@
           friends score A -> B
           all time score
         </div>
-        ?>
+      <div id="score_board">
+      </div>
       <div id="whoAmI">
       </div>
       <div id="stalkerBook">
