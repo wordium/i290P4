@@ -59,7 +59,6 @@ $(document).ready(function()
         abortTimer();
         postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
-<<<<<<< HEAD
       else {
         // when user got wrong, subtract points.
         if (scoring['trial'] == 0) {
