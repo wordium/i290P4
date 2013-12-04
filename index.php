@@ -51,35 +51,27 @@
       </div>
       <div id="whoAmI">
       </div>
+      <div id="lives" class="hidden">
+        <img src="_img/heart.png" id="life1">
+        <img src="_img/heart.png" id="life2">
+        <img src="_img/heart.png" id="life3">
+      </div>
       <div id="stalkerBook">
       </div>
       <div id="questions"></div>
       </div>
 
-      <div id="friends">
+      <div id="friends" class="hidden">
         <!-- example 
           <div id="friend1" data-name="Jenton Lee"><img src="" class="photo" alt=""></div>
 
         -->
-        <div id="friend1" data-name="" class="friend">
-          <img src="" class="photo" alt="">
-          <div class="name"></div>
-        </div>
-        <div id="friend2" data-name="" class="friend">
-          <img src="" class="photo" alt="">
-          <div class="name"></div></div>
-        <div id="friend3" data-name="" class="friend">
-          <img src="" class="photo" alt="">
-          <div class="name"></div></div>
-        <div id="friend4" data-name="" class="friend">
-          <img src="" class="photo" alt="">
-          <div class="name"></div></div>
-        <div id="friend5" data-name="" class="friend">
-          <img src="" class="photo" alt="">
-          <div class="name"></div></div>
-        <div id="friend6" data-name="" class="friend">
-          <img src="" class="photo" alt="">
-          <div class="name"></div></div>
+        <div id="friend1" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
+        <div id="friend2" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
+        <div id="friend3" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
+        <div id="friend4" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
+        <div id="friend5" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
+        <div id="friend6" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
         <div id="friend7" data-name="" class="friend">
           <img src="" class="photo" alt="">
           <div class="name"></div></div>

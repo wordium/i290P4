@@ -1,5 +1,7 @@
+var questions = [];
 var APP_TOKEN = "CAACev9gswDsBAA0xAa2KTcluFFw6wuUSZARKEYJ14CVLiPGULnDi3zNjqZCMJS4ah8JGPjT3mld2m7mHeuaryk5ZATRSOT2icFkPRJS0GWbJyAIRxhTAxuP0goaQElC8wezR5cP3nEdQIuiabLTiewZBkmcOCc8kYLx9rpeBf2qSG2TE38ZCEDQ6K1QfYljvOr8xQZC7tkiAZDZD";
 var randomFriendID;
+// var guesses = 0;
 
 var FIELDS_STALKERBOOK = ["activities", "affiliations","birthday_date","books", "current_location", "friend_count", "hometown_location", "inspirational_people", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "quotes", "relationship_status", "religion", "significant_other_id", "sports", "tv"];
 
@@ -31,6 +33,8 @@ $(document).ready(function()
 
     $("#go").on("click", function() {
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
+      $('#friends').addClass('hidden'); // hiding the friendGrid again.
+      $('#lives').addClass('hidden');
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
       whoAmIGameStart();
@@ -41,9 +45,11 @@ $(document).ready(function()
     $('.friend').on('click', function(e) {
       var friend = $(this).attr('data-name');
       var uidGuess = $(this).attr('data-uid');
+      // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
         alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
+
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
 
@@ -61,6 +67,8 @@ $(document).ready(function()
 
           alert("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
+          // append another hint
+          whoAmIAddHint();
         } else if (scoring['trial'] == 1) {
           // second try
           scoring['trial'] += 1;
@@ -68,6 +76,8 @@ $(document).ready(function()
 
           alert("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
+          // append another hint
+          whoAmIAddHint();
         } else {
           // game over. YOU LOST!!
           scoring['trial'] += 1;
@@ -209,7 +219,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       whoAmIGameStart();
     } else {   
       var gameData = whoAmICreateQuestions(response.data);
-      var questions = gameData[0];
+      questions = gameData[0];
       friendTargetInfo = gameData[1];
       console.log("Game Questions:");
       console.log(questions);
@@ -248,7 +258,12 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
                  .attr("data-uid", friendsGrid[i].uid);
           $friend.find('.name').text(friendsGrid[i].name); // adding name text
         }
-        whoAmIPrintToHtml(questions);
+
+
+        $('#friends').removeClass('hidden');
+        $('#lives').removeClass('hidden');
+        whoAmIPrintToHtml();
+
         targetAnswer = friendTargetInfo;
         $("#go").prop("disabled", false);
 
@@ -262,7 +277,7 @@ return friendTargetInfo;
 function whoAmICreateQuestions(data){
   //console.log(data);
   var questionCounter = 1;
-  var questions = [];
+  questions = [];
   var targetFriendInfo = [];
 
   var targetFriend = data;
@@ -506,16 +521,30 @@ function whoAmICreateQuestions(data){
 }
 
 //this function prints the hints to the HTML
-function whoAmIPrintToHtml(questions){
+function whoAmIPrintToHtml(){
   $("#questions").html("");
   //randomize the questions array
   questions.sort( function() {return 0.5 - Math.random() });
-  //printing out the information in the Questions Object
-  for (object in questions) {
-    var questionId = parseInt(object) + 1;
-    $("#questions").append("<div id='q" + questionId + "'><p>" + questions[object].answer + "</p>"); 
-    object++; 
+
+
+  // print out first three questions, then remove them from the array.
+  for(var i = 0 ; i < 3 ; ++i) {
+	  var currentQuestion = questions.pop();
+      $("#questions").append("<div id='" + currentQuestion.questionNumber + "'><p>" + currentQuestion.answer + "</p>");
   }
+
+  // //printing out the information in the Questions Object
+  // for (object in questions) {
+  //   var questionId = parseInt(object) + 1;
+  //   $("#questions").append("<div id='q" + questionId + "'><p>" + questions[object].answer + "</p>"); 
+  //   object++; 
+  // }
+}
+
+// adds another hint
+function whoAmIAddHint(){
+  var currentQuestion = questions.pop();
+  $("#questions").append("<div id='" + currentQuestion.questionNumber + "'><p>" + currentQuestion.answer + "</p>");
 }
 
 function Logout()
