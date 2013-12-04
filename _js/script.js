@@ -45,6 +45,7 @@ $(document).ready(function()
     $('.friend').on('click', function(e) {
       var friend = $(this).attr('data-name');
       var uidGuess = $(this).attr('data-uid');
+
       // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
@@ -58,6 +59,7 @@ $(document).ready(function()
         abortTimer();
         postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
+<<<<<<< HEAD
       else {
         // when user got wrong, subtract points.
         if (scoring['trial'] == 0) {
@@ -67,6 +69,7 @@ $(document).ready(function()
 
           alert("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
+          $('#life' + guesses).addClass('wrong');
           // append another hint
           whoAmIAddHint();
         } else if (scoring['trial'] == 1) {
@@ -76,6 +79,7 @@ $(document).ready(function()
 
           alert("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
+          $('#life' + guesses).addClass('wrong');
           // append another hint
           whoAmIAddHint();
         } else {
