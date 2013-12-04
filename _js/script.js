@@ -44,6 +44,7 @@ $(document).ready(function()
       var friend = $(this).attr('data-name');
       var uidGuess = $(this).attr('data-uid');
       guesses++;
+      console.log(guesses);
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
         alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
@@ -72,6 +73,7 @@ $(document).ready(function()
       } else {
         alert("You are incorrect. Please keep guessing.");
         $(this).addClass('wrong');
+        $('#life' + guesses).addClass('wrong');
 
         // append another hint
         whoAmIAddHint();
