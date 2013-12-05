@@ -18,13 +18,11 @@
     <h1>Who Am I?</h1>
   </div>
 
-<!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
-<div id="fb-root"></div>
-<div id="status"></div>
-
   <div id="main">
-      <div id="score_board">
-      </div>
+    <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
+    <div id="fb-root"></div>
+    <div id="status"></div>
+    <div id="score_board"></div>
   <input id="login" type="submit" value="Login to Facebook">
     <div id="loadingStatus">
 
