@@ -49,7 +49,7 @@ $(document).ready(function()
       // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
-        alert("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
+        $("#header").append("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
 
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
@@ -66,7 +66,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] -= 30;
 
-          alert("You are incorrect. Please keep guessing.");
+          $("#header").append("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
@@ -76,7 +76,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] -= 25;
 
-          alert("You are incorrect. Please keep guessing.");
+          $("#header").append("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
@@ -88,7 +88,7 @@ $(document).ready(function()
           $('#life' + scoring['trial']).addClass('wrong');
           updateScore();
           abortTimer();
-          alert("You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.");
+          $("#header").append("You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.");
           postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
         }
       }
