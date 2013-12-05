@@ -518,7 +518,7 @@ function whoAmICreateQuestions(data){
   };
 
   //If the questions object has less than 10 hints, pick another friend
-  if (questions.length < 10) {
+  if (questions.length < 5) {
     whoAmIGameStart();
   } else {      
     return [questions, targetFriendInfo];

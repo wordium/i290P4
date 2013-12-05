@@ -45,10 +45,6 @@
       <input id="go" type="submit" value="Play">
       <div id="leaderBoard">
         <div class="leaderboardItem">
-          your score on friends
-          scores on your profile
-          friends score A -> B
-          all time score
         </div>
       <div id="whoAmI">
       </div>
