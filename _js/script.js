@@ -47,7 +47,7 @@ $(document).ready(function()
       // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
-        $("#header").append("You've guessed correctly! You were looking for: " + targetAnswer[1].name);
+        $("#gameResponse").html("<p>You've guessed correctly! You were looking for: " + targetAnswer[1].name + "</p>");
 
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
@@ -64,7 +64,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] -= 30;
 
-          $("#header").append("You are incorrect. Please keep guessing.");
+          $("#gameResponse").html("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
@@ -74,7 +74,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] -= 25;
 
-          $("#header").append("You are incorrect. Please keep guessing.");
+          $("#gameResponse").append("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
@@ -86,7 +86,7 @@ $(document).ready(function()
           $('#life' + scoring['trial']).addClass('wrong');
           updateScore();
           abortTimer();
-          $("#header").append("You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.");
+          $("#gameResponse").html("<p>You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.</p>");
           postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
         }
       }
