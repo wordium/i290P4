@@ -4,7 +4,7 @@ var randomFriendID;
 // var guesses = 0;
 
 //uid, name, pic_square, work, education are pulled by default
-var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "significant_other_id", "sports", "tv"];
+var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "sports", "tv"];
 
 var targetAnswer;
 var playerInfo = [];
@@ -33,11 +33,21 @@ $(document).ready(function()
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
       $('#friends').addClass('hidden'); // hiding the friendGrid again.
       $('#gameplay').addClass('hidden');
+      $('#gameResponse').html("");
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
       whoAmIGameStart();
     });
 
+    // share to facebook
+    $('#share').on('click', function(e) {
+      FB.ui({
+          method: 'feed',
+          link: 'http://people.ischool.berkeley.edu/~jenton/i290P4/',
+          caption: 'Play the Facebook Friend Guessing Game!',
+          message: "HOOWHA"
+          }, function(response){});
+    });
 // ******************************
 
     $('.friend').on('click', function(e) {
@@ -47,7 +57,9 @@ $(document).ready(function()
       // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
-        $("#gameResponse").html("<p>You've guessed correctly! You were looking for: " + targetAnswer[1].name + "</p>");
+        $("#gameResponse").append("<p>You've guessed correctly! You were looking for: " + targetAnswer[1].name + "<img src='" + targetAnswer[2].pic + "'></p>");
+        $('#share').removeClass('hidden');
+
 
         //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
@@ -225,8 +237,8 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       console.log("Target Friend Info:");
       console.log(friendTargetInfo);
 
-      //this is the query to get 20 random fb profile pictures
-      var getFriendsGridQuery = "SELECT uid, name, pic_square, pic, profile_url FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) ORDER BY rand() limit 20";
+      //this is the query to get 21 random fb profile pictures
+      var getFriendsGridQuery = "SELECT uid, name, pic_square, pic, profile_url FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) ORDER BY rand() limit 21";
       FB.api('/fql',{q:getFriendsGridQuery}, function(response){
         friendsGrid = response.data;
         
@@ -236,8 +248,8 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
             friendsGrid.splice(key, 1);
           }
         }
-        //making sure we have 19 friends in the friend grid before we push the target user into it
-        if (friendsGrid.length == 20) {
+        //making sure we have 20 friends in the friend grid before we push the target user into it
+        if (friendsGrid.length == 21) {
           friendsGrid.pop();
         }
         //adding the target profile picture into the friendsgrid

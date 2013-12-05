@@ -53,7 +53,7 @@
           <img src="_img/heart.png" id="life2">
           <img src="_img/heart.png" id="life3">
         </div>
-        <div id="gameResponse"></div>
+        <div id="gameResponse"><input class="hidden" id='share' type='submit' value='Share'></div>
       </div>
 
       <div id="questions"></div>
