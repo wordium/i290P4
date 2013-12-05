@@ -56,7 +56,7 @@
           <img src="_img/heart.png" id="life2">
           <img src="_img/heart.png" id="life3">
         </div>
-        <div id="JENTARD"></div>
+        <div id="gameResponse"></div>
       </div>
       <div id="stalkerBook">
       </div>
