@@ -46,8 +46,7 @@
       <div id="leaderBoard">
         <div class="leaderboardItem">
         </div>
-      <div id="whoAmI">
-      </div>
+
       <div id="gameplay" class="hidden">
         <div id="score"></div>
         <div id="timeBonus"></div>
@@ -58,8 +57,7 @@
         </div>
         <div id="JENTARD"></div>
       </div>
-      <div id="stalkerBook">
-      </div>
+
       <div id="questions"></div>
       </div>
 
@@ -123,6 +121,11 @@
       }
     ?>
 
+    <!-- user profile link goes here -->
+    <div id="target">
+    </div>
+
+    <!-- leaderboards go here. both pre and post game ones? -->
     <div id="leaderboards">
     </div>
 
