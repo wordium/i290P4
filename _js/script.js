@@ -34,7 +34,7 @@ $(document).ready(function()
     $("#go").on("click", function() {
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
       $('#friends').addClass('hidden'); // hiding the friendGrid again.
-      $('#lives').addClass('hidden');
+      $('#gameplay').addClass('hidden');
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
       whoAmIGameStart();
@@ -262,7 +262,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
 
 
         $('#friends').removeClass('hidden');
-        $('#lives').removeClass('hidden');
+        $('#gameplay').removeClass('hidden');
         whoAmIPrintToHtml();
 
         targetAnswer = friendTargetInfo;

@@ -14,13 +14,13 @@
 </head>
 
 <body>
+  <div id="header">
+    <h1>Who Am I?</h1>
+  </div>
 
 <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
 <div id="fb-root"></div>
 <div id="status"></div>
-  <div id="header">
-    <h1>Who Am I?</h1>
-  </div>
 
   <div id="main">
       <div id="score_board">
@@ -48,10 +48,15 @@
         </div>
       <div id="whoAmI">
       </div>
-      <div id="lives" class="hidden">
-        <img src="_img/heart.png" id="life1">
-        <img src="_img/heart.png" id="life2">
-        <img src="_img/heart.png" id="life3">
+      <div id="gameplay" class="hidden">
+        <div id="score"></div>
+        <div id="timeBonus"></div>
+        <div id="lives">
+          <img src="_img/heart.png" id="life1">
+          <img src="_img/heart.png" id="life2">
+          <img src="_img/heart.png" id="life3">
+        </div>
+        <div id="JENTARD"></div>
       </div>
       <div id="stalkerBook">
       </div>
@@ -117,6 +122,10 @@
     <?php 
       }
     ?>
+
+    <div id="leaderboards">
+    </div>
+
   </div>
 
   <div id="footer"></div>
