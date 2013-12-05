@@ -68,7 +68,7 @@ $(document).ready(function()
 
           alert("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
-          $('#life' + guesses).addClass('wrong');
+          $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
           whoAmIAddHint();
         } else if (scoring['trial'] == 1) {
@@ -78,13 +78,14 @@ $(document).ready(function()
 
           alert("You are incorrect. Please keep guessing.");
           $(this).addClass('wrong');
-          $('#life' + guesses).addClass('wrong');
+          $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
           whoAmIAddHint();
         } else {
           // game over. YOU LOST!!
           scoring['trial'] += 1;
           scoring['score'] = 0;
+          $('#life' + scoring['trial']).addClass('wrong');
           updateScore();
           abortTimer();
           alert("You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.");
@@ -140,12 +141,13 @@ function Login()
 
 function getUserInfo() {
   FB.api('/me', function(response) {
-    var str="Facebook login successful!<br> Welcome <b>"+response.name+"</b><br>";
+    // var str="Facebook login successful!<br> Welcome <b>"+response.name+"</b><br>";
+    var str="Welcome <b>"+response.name+"</b>";
     playerInfo.push({uid: response.id, name: response.name, link: response.link});
     $("#status").html(str);
     FB.api('/me/picture?type=normal', function(response) {
       var picture="<img src='"+response.data.url+"'/>";
-      $("#status").append(picture);
+      // $("#status").append(picture);
       $("#status").append("<br>How well do you know your friends?");
       $("#status").append("<br><input type='button' value='Logout' onclick='Logout();'/>");
     }); 
@@ -156,8 +158,10 @@ function timerCode() {
   // subtract 1pt per second
   if (scoring['score'] > 0) {
     scoring['score'] -= 1;
-    updateScore();
+  } else {
+    scoring['score'] = 0;
   }
+  updateScore();
 }
 
 function updateScore() {
@@ -187,12 +191,6 @@ function whoAmIGameStart(){
       //console.log(friendsUidList);
       //generate 5 random fields
       data = whoAmIGenerateRandomFields(FIELDS_WHOAMI, friendsUidList);  
-
-      // when game starts, timer for scoring starts as well.
-      abortTimer();
-      scoring['score'] = 100;
-      scoring['trial'] = 0;
-      scoring['timer'] = setInterval(timerCode, 1000);
     });
   return data;
 }
@@ -270,6 +268,11 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         targetAnswer = friendTargetInfo;
         $("#go").prop("disabled", false);
 
+        // when game starts, timer for scoring starts as well.
+        abortTimer();
+        scoring['score'] = 100;
+        scoring['trial'] = 0;
+        scoring['timer'] = setInterval(timerCode, 1000);
       });
       
       }

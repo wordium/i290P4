@@ -18,7 +18,10 @@
 <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
 <div id="fb-root"></div>
 <div id="status"></div>
-  <div id="header"></div>
+  <div id="header">
+      <div id="score_board">
+      </div>
+  </div>
 
   <div id="main">
   <input id="login" type="submit" value="Login to Facebook">
@@ -47,8 +50,6 @@
           friends score A -> B
           all time score
         </div>
-      <div id="score_board">
-      </div>
       <div id="whoAmI">
       </div>
       <div id="lives" class="hidden">

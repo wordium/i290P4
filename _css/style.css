@@ -95,3 +95,7 @@ h1 {
 .wrong {
   opacity: 0.25;
 }
+
+#score_board p {
+  color: #F92770;
+}
