@@ -19,11 +19,12 @@
 <div id="fb-root"></div>
 <div id="status"></div>
   <div id="header">
-      <div id="score_board">
-      </div>
+    <h1>Who Am I?</h1>
   </div>
 
   <div id="main">
+      <div id="score_board">
+      </div>
   <input id="login" type="submit" value="Login to Facebook">
     <div id="loadingStatus">
 
@@ -41,7 +42,6 @@
     } else {
      ?>
     <div id="loggedIn">
-      <p>Ready to stalk?</p>
       <input id="go" type="submit" value="Play">
       <div id="leaderBoard">
         <div class="leaderboardItem">
