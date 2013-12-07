@@ -54,7 +54,7 @@
           <img src="_img/heart.png" id="life3">
         </div>
         <div id="gameResponse"></div>
-        <div id="share" class="hidden"><input type='submit' value='Share'></div>
+        <div id="share" class="hidden"><input type='submit' value='Share to Facebook'></div>
       </div>
 
       <div id="questions"></div>
