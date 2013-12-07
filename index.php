@@ -53,7 +53,8 @@
           <img src="_img/heart.png" id="life2">
           <img src="_img/heart.png" id="life3">
         </div>
-        <div id="gameResponse"><input class="hidden" id='share' type='submit' value='Share'></div>
+        <div id="gameResponse"></div>
+        <div id="share" class="hidden"><input type='submit' value='Share'></div>
       </div>
 
       <div id="questions"></div>
@@ -112,6 +113,9 @@
         <div id="friend20" data-name="" class="friend">
           <img src="" class="photo" alt="">
           <div class="name"></div></div>
+        <div id="friend21" data-name="" class="friend">
+          <img src="" class="photo" alt="">
+          <div class="name"></div></div>          
       </div>
 
     </div>

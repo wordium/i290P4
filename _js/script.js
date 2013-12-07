@@ -45,7 +45,9 @@ $(document).ready(function()
           method: 'feed',
           link: 'http://people.ischool.berkeley.edu/~jenton/i290P4/',
           caption: 'Play the Facebook Friend Guessing Game!',
-          message: "HOOWHA"
+          message: "HOOWHA",
+          description: "How well do you know your friends? Play our Facebook Friend Guessing game and find out!",
+          //picture: "something.jpg"
           }, function(response){});
     });
 // ******************************
