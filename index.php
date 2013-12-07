@@ -23,7 +23,7 @@
     <div id="fb-root"></div>
     <div id="status"></div>
     <div id="score_board"></div>
-  <input id="login" type="submit" value="Login to Facebook">
+    <div id="loginBtnDiv"><input id="login" type="submit" value="Login to Facebook"></div>
     <div id="loadingStatus">
 
     </div>
@@ -40,7 +40,9 @@
     } else {
      ?>
     <div id="loggedIn">
-      <input id="go" type="submit" value="Play">
+      <div id="goBtnDiv">
+        <input id="go" type="submit" value="Play">
+      </div>
       <div id="leaderBoard">
         <div class="leaderboardItem">
         </div>
