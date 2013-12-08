@@ -22,20 +22,15 @@
     <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
     <div id="fb-root"></div>
     <div id="status"></div>
-    <div id="score_board"></div>
     <div id="loginBtnDiv"><input id="login" type="button" value="Login to Facebook"></div>
-    <div id="loadingStatus">
-
-    </div>
+    <div id="loadingStatus"></div>
     <?php if (!loggedIn) {
       ?>
-    <div id="notLoggedIn">
-      <p>Login with your Facebook account.</p>
-      <p>Be a professional stalker like Jenton.</p>
-      <div id="facebookbutton">
-
+      <div id="notLoggedIn">
+        <p>Login with your Facebook account.</p>
+        <p>Be a professional stalker like Jenton.</p>
+        <div id="facebookbutton"></div>
       </div>
-    </div>
     <?
     } else {
      ?>
@@ -43,9 +38,11 @@
       <div id="goBtnDiv">
         <input id="go" type="button" value="Play">
       </div>
+      <div id="score_board" class="clearfix"></div>
       <div id="leaderBoard">
         <div class="leaderboardItem">
         </div>
+      </div>
 
       <div id="gameplay" class="hidden">
         <div id="score"></div>

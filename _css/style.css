@@ -30,6 +30,7 @@ body, p, a, h1,h2,h3,h4,h5,h6 {
 
 h1 {
   font-size: 3em;
+  color: #F92770;
 }
 
 .hidden {
@@ -48,6 +49,12 @@ input[type="button"] {
 input[type="button"]:disabled {
   background: none;
   color: transparent;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /******* Basic Sections *********/
@@ -85,16 +92,13 @@ input[type="button"]:disabled {
   border-radius: 5px;
 }
 
-#header h1, #score_board p {
-  color: #F92770;
-}
-
 /********* Questions ***********/
 #goBtnDiv, #loginBtnDiv {
   text-align: center;
 }
 
-#score_board {
+#score_board p {
+  color: #F92770;
   float: right;
 }
 
