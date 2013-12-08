@@ -77,7 +77,7 @@ input[type="button"]:disabled {
 
 }
 
-#main {
+#main, #leaderboards {
 
   width: 80%;
   margin: auto auto;
@@ -150,6 +150,10 @@ input[type="button"]:disabled {
   opacity: 0.25;
 }
 
+#target, #share {
+  text-align: center;
+}
 
-/*** ***/
+
+/******** Leaderboards ********/
 

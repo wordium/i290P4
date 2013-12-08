@@ -33,6 +33,8 @@ $(document).ready(function()
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
       $('#friends').addClass('hidden'); // hiding the friendGrid again.
       $('#gameplay').addClass('hidden');
+      $('#target').html('');
+      $('#share').addClass('hidden');
       $('#gameResponse').html("");
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
@@ -59,11 +61,9 @@ $(document).ready(function()
       // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
-        $("#gameResponse").append("<p>You've guessed correctly! You were looking for: " + targetAnswer[1].name + "</p><img src='" + targetAnswer[2].pic + "'>");
-        $('#share').removeClass('hidden');
+        $("#target").html("<p>You've guessed correctly!</p");
+        showTarget();
 
-
-        //TODO: add feedback that isn't an alert
         //TODO: add/change scoring
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
@@ -78,7 +78,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] -= 30;
 
-          $("#gameResponse").html("<p>You are incorrect. Please keep guessing.</p>");
+          $("#target").html("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
@@ -88,7 +88,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] -= 25;
 
-          $("#gameResponse").append("<p>You are incorrect. Please keep guessing.</p>");
+          $("#target").append("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
@@ -100,15 +100,21 @@ $(document).ready(function()
           $('#life' + scoring['trial']).addClass('wrong');
           updateScore();
           abortTimer();
-          $("#gameResponse").html("<p>You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.</p>");
+          $("#target").html("<p>You lost this stalking!\nYou need more practice to be like the stalking master Jen**n.</p>");
+          showTarget();
           postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
         }
       }
       console.log(targetAnswer);
-
     });
 
 });
+
+// Shows the target and share button; call when the game has ended.
+function showTarget() {
+  $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><img src="' + targetAnswer[2].pic + '">');
+  $('#share').removeClass('hidden');
+}
 
 function postNewScore(guesserid, guesserusername, targetid, targetusername) {
 
