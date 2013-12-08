@@ -59,7 +59,7 @@ $(document).ready(function()
       // guesses++;
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
-        $("#gameResponse").append("<p>You've guessed correctly! You were looking for: " + targetAnswer[1].name + "<img src='" + targetAnswer[2].pic + "'></p>");
+        $("#gameResponse").append("<p>You've guessed correctly! You were looking for: " + targetAnswer[1].name + "</p><img src='" + targetAnswer[2].pic + "'>");
         $('#share').removeClass('hidden');
 
 

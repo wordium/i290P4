@@ -92,6 +92,17 @@ input[type="button"]:disabled {
   border-radius: 5px;
 }
 
+#status input[type="button"] {
+  background: none;
+}
+
+#share input[type="button"] {
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: .75em;
+}
+
 /********* Questions ***********/
 #goBtnDiv, #loginBtnDiv {
   text-align: center;
