@@ -546,7 +546,7 @@ function whoAmICreateQuestions(data){
 
 //this function prints the hints to the HTML
 function whoAmIPrintToHtml(){
-  $("#questions").html("");
+  $("#questions").html("<ul></ul>");
   //randomize the questions array
   questions.sort( function() {return 0.5 - Math.random() });
 
@@ -554,7 +554,7 @@ function whoAmIPrintToHtml(){
   // print out first three questions, then remove them from the array.
   for(var i = 0 ; i < 3 ; ++i) {
 	  var currentQuestion = questions.pop();
-      $("#questions").append("<div id='" + currentQuestion.questionNumber + "'><p>" + currentQuestion.answer + "</p>");
+      $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
   }
 
   // //printing out the information in the Questions Object
@@ -568,7 +568,7 @@ function whoAmIPrintToHtml(){
 // adds another hint
 function whoAmIAddHint(){
   var currentQuestion = questions.pop();
-  $("#questions").append("<div id='" + currentQuestion.questionNumber + "'><p>" + currentQuestion.answer + "</p>");
+  $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
 }
 
 function Logout()
