@@ -36,6 +36,20 @@ h1 {
   display: none;
 }
 
+input[type="button"] {
+  padding: 10px;
+  background-color: rgba(100,100,100,.5);
+  border: none;
+  border-radius: 1px;
+  color: #B1C0E0;
+  min-width: 125px;
+}
+
+input[type="button"]:disabled {
+  background: none;
+  color: transparent;
+}
+
 /******* Basic Sections *********/
 #header, #footer, #main {
   padding: 1em;

@@ -23,7 +23,7 @@
     <div id="fb-root"></div>
     <div id="status"></div>
     <div id="score_board"></div>
-    <div id="loginBtnDiv"><input id="login" type="submit" value="Login to Facebook"></div>
+    <div id="loginBtnDiv"><input id="login" type="button" value="Login to Facebook"></div>
     <div id="loadingStatus">
 
     </div>
@@ -41,7 +41,7 @@
      ?>
     <div id="loggedIn">
       <div id="goBtnDiv">
-        <input id="go" type="submit" value="Play">
+        <input id="go" type="button" value="Play">
       </div>
       <div id="leaderBoard">
         <div class="leaderboardItem">
@@ -56,7 +56,7 @@
           <img src="_img/heart.png" id="life3">
         </div>
         <div id="gameResponse"></div>
-        <div id="share" class="hidden"><input type='submit' value='Share to Facebook'></div>
+        <div id="share" class="hidden"><input type='button' value='Share to Facebook'></div>
       </div>
 
       <div id="questions"></div>
