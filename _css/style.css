@@ -76,8 +76,8 @@ input[type="button"] {
 }
 
 input[type="button"]:disabled {
-  background: none;
-  color: transparent;
+  opacity: 0.5;
+  filter:alpha(opacity=50)
 }
 
 li {
@@ -152,6 +152,13 @@ li {
 /********* Questions ***********/
 #goBtnDiv, #loginBtnDiv {
   text-align: center;
+  position: relative;
+}
+
+
+img#loader {
+  position: absolute;
+  margin-left: 10px;
 }
 
 #score_board p, #lives p {

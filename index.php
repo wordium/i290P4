@@ -32,6 +32,7 @@
       <input id="login" type="button" value="Login to Facebook">
       <div id="goBtnDiv" class="hidden">
 	    <input id="go" type="button" value="Play">
+	    <img src="_img/loader.gif" id="loader" class="hidden">
       </div>
     </div>
     <div id="loadingStatus"></div>
@@ -60,6 +61,8 @@
           <div id="gameResponse"></div>
         </div>
 
+        <div id="overlay" class="hidden"></div>
+        <div id="progressbar"></div>
         <div id="questions"></div>
       </div>
 
@@ -126,7 +129,7 @@
     <p>
       THIS WAS MADE BY US. WE DID THIS. 
       <a href="http://www.jentonlee.com">JENTRON LEE</a>, 
-      <a href="http://www.dantsai.com/">DAN THE MAN TSAI</a>, 
+      <a href="http://www.dantsai.com/">DANTOS</a>, 
       <a href="http://www.jooddang.com/">FUNKWANG JOO</a>, 
       <a href="http://www.wordium.com">SANDRAWR HELSLEY</a>
     </p>
