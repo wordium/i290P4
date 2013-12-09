@@ -672,7 +672,18 @@ function whoAmIPrintToHtml(){
 // adds another hint
 function whoAmIAddHint(){
   var currentQuestion = questions.pop();
-  $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
+  // $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
+
+
+  var event_height = $('#questions').height() + $('#questions ul li').height();
+  $('#questions').animate({
+          left: '+=50'
+          ,height: event_height
+        }
+        , 2000
+        , function() {
+          $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
+      });
 }
 
 function Logout()
