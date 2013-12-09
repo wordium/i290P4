@@ -110,8 +110,8 @@ li {
 #footer {
   width: 100%;
   margin: 0;
+  margin-top: 15px;
   background-color: rgba(249, 39, 112, 0.25);
-  color: #333;
 }
 
 #main, #leaderboards {
