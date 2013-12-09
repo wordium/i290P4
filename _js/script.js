@@ -12,6 +12,21 @@ var scoring = {};
 
 $(document).ready(function()
 {
+  // on page load, show the all time individual high score leaderboard
+  $.get('db.php', {action: 'topscores'}, function(data) {
+    var values = JSON.parse(data);
+    var resultshtml = '';
+    var leaderboard = $('#leaderboards');
+    leaderboard.append('<h1 class="leaderboardTitle">All Time High Scores</h1><table class="leaderboardTable">')
+    for(var i = 0 ; i < values.length ; ++i) {
+      var v = values[i];
+      leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+        + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
+        + '<td class="leaderboardScore">' + v.score + '</td></tr>');
+    }
+    leaderboard.append('</table>')
+  });
+
 
   $("#go").prop("disabled",true);
     //reference: http://hayageek.com/facebook-javascript-sdk/
