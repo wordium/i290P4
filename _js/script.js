@@ -13,20 +13,7 @@ var scoring = {};
 $(document).ready(function()
 {
   // on page load, show the all time individual high score leaderboard
-  $.get('db.php', {action: 'topscores'}, function(data) {
-    var values = JSON.parse(data);
-    var resultshtml = '';
-    var leaderboard = $('#leaderboards');
-    leaderboard.append('<h1 class="leaderboardTitle">All Time High Scores</h1><table class="leaderboardTable">')
-    for(var i = 0 ; i < values.length ; ++i) {
-      var v = values[i];
-      leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
-        + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
-        + '<td class="leaderboardScore">' + v.score + '</td></tr>');
-    }
-    leaderboard.append('</table>')
-  });
-
+  addLeaderboard('topscores');
 
   $("#go").prop("disabled",true);
     //reference: http://hayageek.com/facebook-javascript-sdk/
@@ -132,7 +119,6 @@ function showTarget() {
 }
 
 function postNewScore(guesserid, guesserusername, targetid, targetusername) {
-
   if (scoring['score'] < 0) {
     scoring['score'] = 0;
   }
@@ -145,29 +131,34 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
     score: scoring['score']
   }, function(data) {
     console.log(data);
+
+    // clear leaderboard and add target leaderboard
+    clearLeaderboards();
+    addLeaderboard('targetscores');
+
     //alert('done');
-  });  
+  });
 }
 
 function Login()
 {
 
   FB.login(function(response) {
-   if (response.authResponse) 
-   {
-    getUserInfo();
-    $("#go").prop("disabled",false);
-    $("#login").hide();
+    if (response.authResponse) 
+    {
+      getUserInfo();
+      $("#go").prop("disabled",false);
+      $("#login").hide();
 
-    //getting the access token (shouldn't need to run this as I've already grabbed it) 
-    //Also, we should delete this code if we go live because the secret key is in here
-    /*FB.api('/oauth/access_token?client_id=174546802753595&client_secret=91a7f8987db5ce5a179937047be09533&grant_type=client_credentials',function(response){
-    console.log(response);
-    });*/
-  } else 
-  {
-   console.log('User cancelled login or did not fully authorize.');
- }
+      //getting the access token (shouldn't need to run this as I've already grabbed it) 
+      //Also, we should delete this code if we go live because the secret key is in here
+      /*FB.api('/oauth/access_token?client_id=174546802753595&client_secret=91a7f8987db5ce5a179937047be09533&grant_type=client_credentials',function(response){
+      console.log(response);
+      });*/
+    } else 
+    {
+     console.log('User cancelled login or did not fully authorize.');
+    }
 },{scope: 'email,user_photos,user_videos,friends_about_me,friends_activities,friends_birthday,friends_checkins,friends_education_history,friends_events,friends_games_activity,friends_groups,friends_hometown,friends_interests,friends_likes,friends_location,friends_notes,friends_online_presence,friends_photo_video_tags,friends_photos,friends_questions,friends_relationship_details,friends_relationships,friends_religion_politics,friends_status,friends_subscriptions,friends_videos,friends_website,friends_work_history, user_work_history'});
 
 }
@@ -177,6 +168,10 @@ function getUserInfo() {
     // var str="Facebook login successful!<br> Welcome <b>"+response.name+"</b><br>";
     var str="Welcome <b>"+response.name+"</b>";
     playerInfo.push({uid: response.id, name: response.name, link: response.link});
+
+    // now that we're logged in, add My High Scores
+    addLeaderboard('myscores');
+
     $("#status").html(str);
     FB.api('/me/picture?type=normal', function(response) {
       var picture="<img src='"+response.data.url+"'/>";
@@ -186,6 +181,67 @@ function getUserInfo() {
     }); 
   });
 }
+
+/* leaderboards */
+// TODO : what if the list of scores is empty?
+function addLeaderboard(type) {
+  switch(type) {
+    case 'topscores':
+      $.get('db.php', {action: 'topscores'}, function(data) {
+        var values = JSON.parse(data);
+        var resultshtml = '';
+        var leaderboard = $('#leaderboards');
+        leaderboard.append('<h1 class="leaderboardTitle">All Time High Scores</h1><table class="leaderboardTable"><tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>')
+        for(var i = 0 ; i < values.length ; ++i) {
+          var v = values[i];
+          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+            + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
+            + '<td class="leaderboardScore">' + v.score + '</td></tr>');
+        }
+        leaderboard.append('</table>')
+      });
+      break;
+
+    case 'myscores':
+      $.get('db.php', {action: 'myscores', guesserid: playerInfo[0].uid}, function(data) {
+        var values = JSON.parse(data);
+        var resultshtml = '';
+        var leaderboard = $('#leaderboards');
+        leaderboard.append('<h1 class="leaderboardTitle">Your High Scores</h1><table class="leaderboardTable"><tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>')
+        for(var i = 0 ; i < values.length ; ++i) {
+          var v = values[i];
+          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+            + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
+            + '<td class="leaderboardScore">' + v.score + '</td></tr>');
+        }
+        leaderboard.append('</table>')
+      });
+      break;
+
+    case 'targetscores':
+      $.get('db.php', {action: 'myscores', targetid: targetAnswer[0].uid}, function(data) {
+        var values = JSON.parse(data);
+        var resultshtml = '';
+        var leaderboard = $('#leaderboards');
+        leaderboard.append('<h1 class="leaderboardTitle">High Scores</h1><table class="leaderboardTable"><tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>')
+        for(var i = 0 ; i < values.length ; ++i) {
+          var v = values[i];
+          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+            + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
+            + '<td class="leaderboardScore">' + v.score + '</td></tr>');
+        }
+        leaderboard.append('</table>')
+      });
+      break;
+  }
+}
+
+function clearLeaderboards() {
+  $('#leaderboards').children().fadeOut(250, function() {
+    // $('#leaderboards').children().remove();
+  });
+}
+
 
 function timerCode() {
   // subtract 1pt per second
