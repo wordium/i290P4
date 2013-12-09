@@ -14,6 +14,8 @@ $(document).ready(function()
 {
   // on page load, show the all time individual high score leaderboard
   addLeaderboard('topscores');
+  $('#playerTableSection').hide();
+  $('#targetTableSection').hide();
 
   $("#go").prop("disabled",true);
     //reference: http://hayageek.com/facebook-javascript-sdk/
@@ -136,8 +138,6 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
     // clear leaderboard and add target leaderboard
     clearLeaderboards();
     addLeaderboard('targetscores');
-
-    //alert('done');
   });
 }
 
@@ -201,10 +201,11 @@ function addLeaderboard(type) {
         var leaderboard = $('#allTimeTable').find('tbody');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.append('<tr class="leaderboardRow"><td>' + (i+1) + '<td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
+        $('#allTimeSection').fadeIn();
       });
       break;
 
@@ -215,10 +216,11 @@ function addLeaderboard(type) {
         var leaderboard = $('#playerTable').find('tbody');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.append('<tr class="leaderboardRow"><td>' + (i+1) + '<td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
+        $('#playerTableSection').fadeIn();
       });
       break;
 
@@ -227,12 +229,14 @@ function addLeaderboard(type) {
         var values = JSON.parse(data);
         var resultshtml = '';
         var leaderboard = $('#targetTable').find('tbody');
+        leaderboard.find('.leaderboardRow').remove();
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.append('<tr class="leaderboardRow"><td>' + (i+1) + '<td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
+        $('#targetTableSection').fadeIn();
       });
       break;
   }
@@ -256,7 +260,7 @@ function timerCode() {
 }
 
 function updateScore() {
-  $('#score_board').html('<p>Your current score is ' + scoring['score'] + '</p>');
+  $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
 }
 
 function abortTimer() {

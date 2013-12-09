@@ -95,20 +95,26 @@
 
     <!-- leaderboards go here. both pre and post game ones? -->
     <div id="leaderboards">
-      <h2 class="leaderboardTitle">All Time High Scores</h2>
-      <table class="leaderboardTable" id="allTimeTable">
-        <tr class="leaderboardHeader"><th>Stalker</th><th>Target</th><th>Score</th></tr>
-      </table>
+	    <div id="allTimeSection">
+	      <h2 class="leaderboardTitle">All Time High Scores</h2>
+	      <table class="leaderboardTable" id="allTimeTable">
+	        <tr class="leaderboardHeader"><th></th><th>Stalker</th><th>Target</th><th>Score</th></tr>
+	      </table>
+	    </div>
 
-      <h2 class="leaderboardTitle">Your High Scores</h2>
-      <table class="leaderboardTable" id="playerTable">
-        <tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>
-      </table>
+	    <div id="playerTableSection">
+	      <h2 class="leaderboardTitle">Your High Scores</h2>
+	      <table class="leaderboardTable" id="playerTable">
+	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+	      </table>
+	    </div>
 
-      <h2 class="leaderboardTitle">High Scores</h2>
-      <table class="leaderboardTable" id="targetTable">
-        <tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>
-      </table>
+	    <div id="targetTableSection">
+	      <h2 class="leaderboardTitle">High Scores</h2>
+	      <table class="leaderboardTable" id="targetTable">
+	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+	      </table>
+	    </div>
     </div>
 
   </div>
