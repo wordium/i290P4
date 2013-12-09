@@ -223,12 +223,18 @@ th:last-of-type, td:last-of-type {
   text-align: right;
 }
 
+#targetTableSection {
+  margin-left: 25px;
+  margin-bottom: 2em;
+}
+
 #allTimeSection, #playerTableSection {
+  margin-left: 25px;
+  margin-bottom: 2em;
   float: left;
 }
 
 #playerTableSection {
-  margin-left: 50px;
   padding-right: 60px;
 }
 
