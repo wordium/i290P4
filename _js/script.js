@@ -67,8 +67,6 @@ $(document).ready(function()
         $("#target").html("<p>You've guessed correctly!</p");
         showTarget();
 
-        //TODO: add/change scoring
-
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
         if (scoring['trial'] == 0) {
           updateScore(300, scoring['score']);
@@ -293,7 +291,8 @@ function abortTimer() {
 
 function whoAmIGameStart(){
   var data;
-  $("#questions").html("<p>Reticulating splines, please wait.</p>");  
+  $("#loader").removeClass("hidden");
+
   //clearing the fb friends pictures
   for (var i = 1; i <= 20; i++){
     var $friend = $('#friend' + i.toString()); // this is one friend
@@ -386,6 +385,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         targetAnswer = friendTargetInfo;
         $("#go").prop("disabled", false);
         $("#go").prop('value', 'Start Over');
+        $("#loader").addClass("hidden");
 
         // when game starts, timer for scoring starts as well.
         abortTimer();
@@ -670,7 +670,18 @@ function whoAmIPrintToHtml(){
 // adds another hint
 function whoAmIAddHint(){
   var currentQuestion = questions.pop();
-  $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
+  // $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
+
+
+  var event_height = $('#questions').height() + $('#questions ul li').height();
+  $('#questions').animate({
+          left: '+=50'
+          ,height: event_height
+        }
+        , 250
+        , function() {
+          $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
+      });
 }
 
 function Logout()
