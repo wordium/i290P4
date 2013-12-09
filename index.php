@@ -40,7 +40,7 @@
       ?>
       <div id="notLoggedIn">
         <p>Login with your Facebook account.</p>
-        <p>Be a professional stalker like Jenton.</p>
+        <p>Be a professional stalker like Jentard.</p>
         <div id="facebookbutton"></div>
       </div>
     <?
@@ -58,6 +58,9 @@
             <img src="_img/heart.png" id="life2">
             <img src="_img/heart.png" id="life3">
           </div>
+          <!--div id="guessNotification">
+            <h3>GUESS AGAIN!</h3>
+          </div-->
           <div id="gameResponse"></div>
         </div>
 
@@ -111,14 +114,14 @@
 	    <div id="allTimeSection">
 	      <h2 class="leaderboardTitle">All Time High Scores</h2>
 	      <table class="leaderboardTable" id="allTimeTable">
-	        <tr class="leaderboardHeader"><th></th><th>Stalker</th><th>Target</th><th>Score</th></tr>
+	        <tr class="leaderboardHeader"><th>Rank</th><th>Stalker</th><th>Target</th><th>Score</th></tr>
 	      </table>
 	    </div>
 
 	    <div id="playerTableSection">
 	      <h2 class="leaderboardTitle">Your High Scores</h2>
 	      <table class="leaderboardTable" id="playerTable">
-	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+	        <tr class="leaderboardHeader"><th>Rank</th><th>Guesser</th><th>Target</th><th>Score</th></tr>
 	      </table>
 	    </div>
     </div>
