@@ -45,9 +45,6 @@
           <input id="go" type="button" value="Play">
         </div>
         <div id="score_board" class="clearfix"></div>
-        <div id="leaderBoard">
-          <div class="leaderboardItem"></div>
-        </div>
 
         <div id="gameplay" class="hidden">
           <div id="score"></div>
@@ -87,6 +84,16 @@
         <div id="friend21" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>        
       </div>
 
+      <!-- the hack that needs to happen if we can't get appropriately sized square images:
+        <img class="photo"> needs to be in a separate div from the name
+        That div needs this styling: 
+          height:  100px;
+          width:  100px;
+          overflow:  hidden;
+          margin-left:  12px;
+        Remove height/width styling for .photo
+      -->
+
       <?php 
         }
       ?>    
@@ -99,8 +106,18 @@
     <!-- leaderboards go here. both pre and post game ones? -->
     <div id="leaderboards">
       <h2 class="leaderboardTitle">All Time High Scores</h2>
-      <table class="leaderboardTable">
+      <table class="leaderboardTable" id="allTimeTable">
         <tr class="leaderboardHeader"><th>Stalker</th><th>Target</th><th>Score</th></tr>
+      </table>
+
+      <h2 class="leaderboardTitle">Your High Scores</h2>
+      <table class="leaderboardTable" id="playerTable">
+        <tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>
+      </table>
+
+      <h2 class="leaderboardTitle">High Scores</h2>
+      <table class="leaderboardTable" id="targetTable">
+        <tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>
       </table>
     </div>
 

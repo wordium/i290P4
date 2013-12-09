@@ -198,7 +198,7 @@ function addLeaderboard(type) {
       $.get('db.php', {action: 'topscores'}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
-        var leaderboard = $('#leaderboards');
+        var leaderboard = $('#allTimeTable');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
           leaderboard.find('tbody').append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
@@ -212,15 +212,13 @@ function addLeaderboard(type) {
       $.get('db.php', {action: 'myscores', guesserid: playerInfo[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
-        var leaderboard = $('#leaderboards');
-        leaderboard.append('<h1 class="leaderboardTitle">Your High Scores</h1><table class="leaderboardTable"><tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>')
+        var leaderboard = $('#playerTable');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.find('tbody').append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
-        leaderboard.append('</table>')
       });
       break;
 
@@ -228,15 +226,14 @@ function addLeaderboard(type) {
       $.get('db.php', {action: 'targetscores', targetid: targetAnswer[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
-        var leaderboard = $('#leaderboards');
-        leaderboard.append('<h1 class="leaderboardTitle">High Scores</h1><table class="leaderboardTable"><tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>')
+        var leaderboard = $('#targetTable');
+        leaderboard.append('')
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
           leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
-        leaderboard.append('</table>')
       });
       break;
   }
