@@ -434,7 +434,8 @@ function whoAmICreateQuestions(data){
           var educationArray = targetFriend[0][key];
           for (var i in educationArray) {
             if (educationArray[i].type) {
-              var answerString = "I have previously attended (or currently attend): " + educationArray[i].school.name + " " + educationArray[i].type;
+              var answerString = "I have previously attended (or currently attend): " + educationArray[i].school.name;
+              // answerString +=  " " + educationArray[i].type;
               questions.push({ "questionNumber" : questionString, "answer" : answerString, "questionType" : questionType});
               questionCounter += 1;              
             } else {
