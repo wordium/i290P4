@@ -37,6 +37,10 @@ $(document).ready(function()
       $('#target').html('');
       $('#share').addClass('hidden');
       $('#gameResponse').html("");
+
+      // hide target leaderboard until another game has finished
+      $('#targetTableSection').fadeOut();
+
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
       whoAmIGameStart();
@@ -66,7 +70,16 @@ $(document).ready(function()
         //TODO: add/change scoring
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
-        updateScore();
+        if (scoring['trial'] == 0) {
+          updateScore(300, scoring['score']);
+          scoring['score'] += 300;
+        } else if (scoring['trial'] == 1) {
+          updateScore(200, scoring['score']);
+          scoring['score'] += 200;
+        } else if (scoring['trial'] == 2) {
+          updateScore(100, scoring['score']);
+          scoring['score'] += 100;
+        }
         abortTimer();
         postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
@@ -75,7 +88,6 @@ $(document).ready(function()
         if (scoring['trial'] == 0) {
           // first try
           scoring['trial'] += 1;
-          scoring['score'] -= 30;
 
           $("#target").html("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
@@ -86,7 +98,6 @@ $(document).ready(function()
         } else if (scoring['trial'] == 1) {
           // second try
           scoring['trial'] += 1;
-          scoring['score'] -= 25;
 
           $("#target").append("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
@@ -98,7 +109,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] = 0;
           $('#life' + scoring['trial']).addClass('wrong');
-          updateScore();
+          updateScore(0, 0);
           abortTimer();
           $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought. Maybe you should unfriend them?</p>');
           showTarget();
@@ -118,7 +129,7 @@ function showTarget() {
   $("#questions").html("");
   $('#gameplay').addClass('hidden');
   $('#friends').addClass('hidden'); // hiding the friendGrid again.
-  $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><img src="' + targetAnswer[2].pic + '" class="photo">');
+  $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><a target="_blank" href="' + targetAnswer[4].profile_url + '"><img src="' + targetAnswer[2].pic + '" class="photo"></a>');
   $('#share').removeClass('hidden');
 }
 
@@ -136,8 +147,7 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
   }, function(data) {
     console.log(data);
 
-    // clear leaderboard and add target leaderboard
-    clearLeaderboards();
+    // add target leaderboard
     addLeaderboard('targetscores');
   });
 }
@@ -161,8 +171,9 @@ function Login()
     {
      console.log('User cancelled login or did not fully authorize.');
     }
-},{scope: 'email,user_photos,user_videos,friends_about_me,friends_activities,friends_birthday,friends_checkins,friends_education_history,friends_events,friends_games_activity,friends_groups,friends_hometown,friends_interests,friends_likes,friends_location,friends_notes,friends_online_presence,friends_photo_video_tags,friends_photos,friends_questions,friends_relationship_details,friends_relationships,friends_religion_politics,friends_status,friends_subscriptions,friends_videos,friends_website,friends_work_history, user_work_history'});
+},{scope: 'email,user_photos,friends_about_me,friends_activities,friends_birthday,friends_education_history,friends_groups,friends_hometown,friends_interests,friends_likes,friends_location,friends_photos,friends_relationship_details,friends_relationships,friends_religion_politics,friends_website,friends_work_history,user_work_history'});
 
+//old scope - scope: 'email,user_photos,user_videos,friends_about_me,friends_activities,friends_birthday,friends_checkins,friends_education_history,friends_events,friends_games_activity,friends_groups,friends_hometown,friends_interests,friends_likes,friends_location,friends_notes,friends_online_presence,friends_photo_video_tags,friends_photos,friends_questions,friends_relationship_details,friends_relationships,friends_religion_politics,friends_status,friends_subscriptions,friends_videos,friends_website,friends_work_history, user_work_history'
 }
 
 function getUserInfo() {
@@ -265,8 +276,15 @@ function timerCode() {
   updateScore();
 }
 
-function updateScore() {
-  $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
+function updateScore(guess_score, bonus_score) {
+  if (guess_score !== undefined) {
+    $('#score_board').html('<p>Your total score is ' + (guess_score + bonus_score) + '</p>');
+    if (guess_score !== 0) {
+      $('#score_board').append('<p>' + guess_score + ' + ' + bonus_score + '(bonus)</p>');
+    }
+  } else {
+    $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
+  }
 }
 
 function abortTimer() {

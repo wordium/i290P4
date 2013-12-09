@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Arimo:400,700);
+@import url(http://fonts.googleapis.com/css?family=Rationale|Press+Start+2P|Iceberg);
 
 @font-face {
     font-family: '8bit_wondernominal';
@@ -45,7 +46,7 @@ body, p {
   font-family: "Arimo", "Arial", sans-serif;
 }
 
-a,h1,h2,h3,h4,h5,h6 {
+a,h1,h2,h3,h4,h5,h6,th {
  color: #F92770;
 }
 
@@ -167,6 +168,14 @@ li {
   width: 30px;
 }
 
+#guessNotification {
+  position: absolute;
+  top: 300px;
+  width: 80%;
+  text-align: center;
+  background-color: #eee;
+}
+
 /******** Friend Grid **********/
 #friends {
 
@@ -185,6 +194,10 @@ li {
   padding: 5px;
   display: inline-block;
   vertical-align: top;
+}
+
+.photo:hover {
+  background-color: rgba(102,102,102,.5);
 }
 
 .photo {
@@ -232,7 +245,52 @@ th:last-of-type, td:last-of-type {
   padding-right: 60px;
 }
 
+.leaderboardTable {
+  text-transform: uppercase;
+  font-family: "Press Start 2P", "Rationale", "Iceberg";
+  font-size: 0.3em;
+}
+
 .leaderboardRow {
-  font-family: "frucade", "Arimo", "Arial", sans-serif;
+  /*font-family: "frucade", "Arimo", "Arial", sans-serif;*/
   font-size: 1em;
+}
+
+
+/****** fixes for smaller screen sizes ******/
+
+@media screen and (min-width:480px) and (max-width:999px) {
+  .friend {
+    width: 100px;
+    height: 120px;
+  }
+
+  .photo {
+    height: 75px;
+    width: 75px;
+  }
+
+  .photo img {
+    min-height: 75px;
+    min-width: 75px;
+  }
+
+}
+
+
+@media screen and (min-width:100px) and (max-width:1199px) {
+  .friend {
+    width: 115px;
+    height: 130px;
+  }
+
+  .photo {
+    height: 90px;
+    width: 90px;
+  }
+
+  .photo img {
+    min-height: 90px;
+    min-width: 90px;
+  }
 }
