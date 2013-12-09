@@ -678,7 +678,7 @@ function whoAmIAddHint(){
           left: '+=50'
           ,height: event_height
         }
-        , 2000
+        , 250
         , function() {
           $("#questions ul").append("<li id='" + currentQuestion.questionNumber + "'>" + currentQuestion.answer + "</li>");
       });
