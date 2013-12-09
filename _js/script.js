@@ -250,6 +250,10 @@ function clearLeaderboards() {
   });
 }
 
+function nameToInitials(name) {
+  return name.replace(/[^A-Z]/g, '');
+}
+
 
 function timerCode() {
   // subtract 1pt per second
