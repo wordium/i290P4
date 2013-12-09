@@ -70,7 +70,16 @@ $(document).ready(function()
         //TODO: add/change scoring
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
-        updateScore();
+        if (scoring['trial'] == 0) {
+          updateScore(300, scoring['score']);
+          scoring['score'] += 300;
+        } else if (scoring['trial'] == 1) {
+          updateScore(200, scoring['score']);
+          scoring['score'] += 200;
+        } else if (scoring['trial'] == 2) {
+          updateScore(100, scoring['score']);
+          scoring['score'] += 100;
+        }
         abortTimer();
         postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
@@ -79,7 +88,6 @@ $(document).ready(function()
         if (scoring['trial'] == 0) {
           // first try
           scoring['trial'] += 1;
-          scoring['score'] -= 30;
 
           $("#target").html("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
@@ -90,7 +98,6 @@ $(document).ready(function()
         } else if (scoring['trial'] == 1) {
           // second try
           scoring['trial'] += 1;
-          scoring['score'] -= 25;
 
           $("#target").append("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
@@ -102,7 +109,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] = 0;
           $('#life' + scoring['trial']).addClass('wrong');
-          updateScore();
+          updateScore(0, 0);
           abortTimer();
           $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought. Maybe you should unfriend them?</p>');
           showTarget();
@@ -269,8 +276,15 @@ function timerCode() {
   updateScore();
 }
 
-function updateScore() {
-  $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
+function updateScore(guess_score, bonus_score) {
+  if (guess_score !== undefined) {
+    $('#score_board').html('<p>Your total score is ' + (guess_score + bonus_score) + '</p>');
+    if (guess_score !== 0) {
+      $('#score_board').append('<p>' + guess_score + ' + ' + bonus_score + '(bonus)</p>');
+    }
+  } else {
+    $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
+  }
 }
 
 function abortTimer() {
