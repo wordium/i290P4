@@ -40,7 +40,7 @@
       ?>
       <div id="notLoggedIn">
         <p>Login with your Facebook account.</p>
-        <p>Be a professional stalker like Jenton.</p>
+        <p>Be a professional stalker like Jentard.</p>
         <div id="facebookbutton"></div>
       </div>
     <?
@@ -58,9 +58,9 @@
             <img src="_img/heart.png" id="life2">
             <img src="_img/heart.png" id="life3">
           </div>
-          <div id="guessNotification">
+          <!--div id="guessNotification">
             <h3>GUESS AGAIN!</h3>
-          </div>
+          </div-->
           <div id="gameResponse"></div>
         </div>
 

@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Arimo:400,700);
 @import url(http://fonts.googleapis.com/css?family=Rationale|Press+Start+2P|Iceberg);
 
+/*
 @font-face {
     font-family: '8bit_wondernominal';
     src: url('../_fonts/8-bit_wonder-webfont.eot');
@@ -22,6 +23,7 @@
     font-weight: normal;
     font-style: normal;
 }
+*/
 
 /****** Colours ******
   facebook blue: #425699; 66,86,153
@@ -233,9 +235,10 @@ img#loader {
 
 /******** Leaderboards ********/
 td, th {
-  padding-right: 50px;
+  padding-right: $0px;
   font-size: 0.9em;
   border-bottom: 1px solid #333;
+  max-width: 140px;
 }
 
 th:last-of-type, td:last-of-type {
@@ -260,7 +263,7 @@ th:last-of-type, td:last-of-type {
 
 .leaderboardTable {
   text-transform: uppercase;
-  font-family: "Press Start 2P", "Rationale", "Iceberg";
+  font-family: "Press Start 2P", monospace;
   font-size: 0.3em;
 }
 
