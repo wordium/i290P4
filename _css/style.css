@@ -23,16 +23,11 @@
 }
 
 /****** Colours ******
-
   facebook blue: #425699; 66,86,153
-  light blue: DCE4FF 220,228,255
-  tan: A69995 166,153,149
-  green: 466622 70,102,34
-  light green: DAE5CD 218,229,205
-
+  light blue: B1C0E0 177,192,224
+  pink: F92770 249, 39, 112
+  grey: #333
 */
-
-
 
 /******* General ********/
 
@@ -72,11 +67,12 @@ h3 {
 
 input[type="button"] {
   padding: 10px;
-  background-color: rgba(100,100,100,.5);
+  background-color: rgba(102,102,102,.5);
   border: none;
-  border-radius: 1px;
+  border-radius: 3px;
   color: #B1C0E0;
   min-width: 125px;
+  margin-bottom: 5px;
 }
 
 input[type="button"]:disabled {
@@ -89,7 +85,7 @@ li {
 }
 
 .clearfix:after {
-    content: "";
+    content: " ";
     display: table;
     clear: both;
 }
@@ -112,8 +108,10 @@ li {
 }
 
 #footer {
-  
-
+  width: 100%;
+  margin: 0;
+  background-color: rgba(249, 39, 112, 0.25);
+  color: #333;
 }
 
 #main, #leaderboards {
@@ -156,9 +154,9 @@ li {
   text-align: center;
 }
 
-#score_board p {
+#score_board p, #lives p {
   color: #F92770;
-  float: right;
+  text-align: right;
 }
 
 #lives {
@@ -209,12 +207,29 @@ li {
   text-align: center;
 }
 
+#target img {
+  margin: 10px auto;
+}
 
 /******** Leaderboards ********/
 td, th {
+  padding-right: 50px;
+  font-size: 0.9em;
+  border-bottom: 1px solid #333;
+}
+
+th:last-of-type, td:last-of-type {
+  padding-right: 0;
+  text-align: right;
+}
+
+#allTimeSection, #playerTableSection {
+  float: left;
+}
+
+#playerTableSection {
+  margin-left: 50px;
   padding-right: 60px;
-  font-family: "frucade", "Arimo", "Arial", sans-serif;
-  font-size: 1em;
 }
 
 .leaderboardRow {
