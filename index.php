@@ -21,7 +21,13 @@
   <div id="main">
     <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
     <div id="fb-root"></div>
-    <div id="status"></div>
+    <div id="status">
+      <p>
+        Welcome<span id="playerName"></span>!
+        <span id="loginPrompt">Log in with Facebook to play!</span>
+        <span id="playPrompt" class="hidden">How well do you know your friends?</span>
+      </p>
+    </div>
     <div id="loginBtnDiv"><input id="login" type="button" value="Login to Facebook"></div>
     <div id="loadingStatus"></div>
     <?php if (!loggedIn) {
