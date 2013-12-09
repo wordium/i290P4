@@ -171,6 +171,12 @@ li {
   height: 100px;
   width: 100px;
   margin-left: 15px;
+  overflow: hidden;
+}
+
+.photo img {
+  min-height: 100px;
+  min-width: 100px;
 }
 
 .wrong {

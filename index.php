@@ -61,38 +61,28 @@
       </div>
 
       <div id="friends" class="hidden">
-        <div id="friend1" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend2" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend3" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend4" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend5" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend6" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend7" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend8" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend9" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend10" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend11" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend12" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend13" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend14" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend15" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend16" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend17" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend18" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend19" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend20" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>
-        <div id="friend21" data-name="" class="friend"><img src="" class="photo" alt=""><div class="name"></div></div>        
+        <div id="friend1" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend2" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend3" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend4" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend5" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend6" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend7" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend8" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend9" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend10" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend11" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend12" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend13" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend14" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend15" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend16" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend17" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend18" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend19" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend20" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>
+        <div id="friend21" data-name="" class="friend"><div class="photo"><img src="" alt=""></div><div class="name"></div></div>       
       </div>
-
-      <!-- the hack that needs to happen if we can't get appropriately sized square images:
-        <img class="photo"> needs to be in a separate div from the name
-        That div needs this styling: 
-          height:  100px;
-          width:  100px;
-          overflow:  hidden;
-          margin-left:  12px;
-        Remove height/width styling for .photo
-      -->
 
       <?php 
         }

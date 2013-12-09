@@ -198,10 +198,10 @@ function addLeaderboard(type) {
       $.get('db.php', {action: 'topscores'}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
-        var leaderboard = $('#allTimeTable');
+        var leaderboard = $('#allTimeTable').find('tbody');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.find('tbody').append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
@@ -212,10 +212,10 @@ function addLeaderboard(type) {
       $.get('db.php', {action: 'myscores', guesserid: playerInfo[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
-        var leaderboard = $('#playerTable');
+        var leaderboard = $('#playerTable').find('tbody');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.find('tbody').append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
@@ -226,8 +226,7 @@ function addLeaderboard(type) {
       $.get('db.php', {action: 'targetscores', targetid: targetAnswer[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
-        var leaderboard = $('#targetTable');
-        leaderboard.append('')
+        var leaderboard = $('#targetTable').find('tbody');
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
           leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
