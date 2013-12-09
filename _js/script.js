@@ -37,6 +37,10 @@ $(document).ready(function()
       $('#target').html('');
       $('#share').addClass('hidden');
       $('#gameResponse').html("");
+
+      // hide target leaderboard until another game has finished
+      $('#targetTableSection').fadeOut();
+
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
       whoAmIGameStart();
@@ -136,8 +140,7 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
   }, function(data) {
     console.log(data);
 
-    // clear leaderboard and add target leaderboard
-    clearLeaderboards();
+    // add target leaderboard
     addLeaderboard('targetscores');
   });
 }

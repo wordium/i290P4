@@ -98,6 +98,13 @@
 
     <!-- leaderboards go here. both pre and post game ones? -->
     <div id="leaderboards" class="clearfix">
+	    <div id="targetTableSection">
+	      <h2 class="leaderboardTitle">High Scores</h2>
+	      <table class="leaderboardTable" id="targetTable">
+	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+	      </table>
+	    </div>
+
 	    <div id="allTimeSection">
 	      <h2 class="leaderboardTitle">All Time High Scores</h2>
 	      <table class="leaderboardTable" id="allTimeTable">
@@ -108,13 +115,6 @@
 	    <div id="playerTableSection">
 	      <h2 class="leaderboardTitle">Your High Scores</h2>
 	      <table class="leaderboardTable" id="playerTable">
-	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
-	      </table>
-	    </div>
-
-	    <div id="targetTableSection">
-	      <h2 class="leaderboardTitle">High Scores</h2>
-	      <table class="leaderboardTable" id="targetTable">
 	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
 	      </table>
 	    </div>
