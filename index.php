@@ -100,7 +100,7 @@
     <div id="leaderboards">
       <h2 class="leaderboardTitle">All Time High Scores</h2>
       <table class="leaderboardTable">
-        <tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>
+        <tr class="leaderboardHeader"><th>Stalker</th><th>Target</th><th>Score</th></tr>
       </table>
     </div>
 
