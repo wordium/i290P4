@@ -291,8 +291,6 @@ function abortTimer() {
 
 function whoAmIGameStart(){
   var data;
-  // $("#questions").html("<p>Reticulating splines, please wait.</p>");  
-
   $("#loader").removeClass("hidden");
 
   //clearing the fb friends pictures
