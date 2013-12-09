@@ -169,13 +169,11 @@ function getUserInfo() {
     // var str="Facebook login successful!<br> Welcome <b>"+response.name+"</b><br>";
     //var str="<p>Welcome "+response.name+"!";
     playerInfo.push({uid: response.id, name: response.name, link: response.link});
-<<<<<<< HEAD
 
     // now that we're logged in, add My High Scores
     addLeaderboard('myscores');
 
     $("#status").html(str);
-=======
     $('#playerName').text(", " + response.name);
     $('#loginPrompt').addClass('hidden');
     $("#status").append("<input type='button' value='Logout' onclick='Logout();'/>");
@@ -229,7 +227,7 @@ function addLeaderboard(type) {
       break;
 
     case 'targetscores':
-      $.get('db.php', {action: 'myscores', targetid: targetAnswer[0].uid}, function(data) {
+      $.get('db.php', {action: 'targetscores', targetid: targetAnswer[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
         var leaderboard = $('#leaderboards');
