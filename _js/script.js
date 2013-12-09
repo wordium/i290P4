@@ -31,8 +31,6 @@ $(document).ready(function()
 
     $("#go").on("click", function() {
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
-      $('#friends').addClass('hidden'); // hiding the friendGrid again.
-      $('#gameplay').addClass('hidden');
       $('#target').html('');
       $('#share').addClass('hidden');
       $('#gameResponse').html("");
@@ -112,6 +110,9 @@ $(document).ready(function()
 
 // Shows the target and share button; call when the game has ended.
 function showTarget() {
+  $("#questions").html("");
+  $('#gameplay').addClass('hidden');
+  $('#friends').addClass('hidden'); // hiding the friendGrid again.
   $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><img src="' + targetAnswer[2].pic + '">');
   $('#share').removeClass('hidden');
 }
@@ -160,15 +161,20 @@ function Login()
 function getUserInfo() {
   FB.api('/me', function(response) {
     // var str="Facebook login successful!<br> Welcome <b>"+response.name+"</b><br>";
-    var str="Welcome <b>"+response.name+"</b>";
+    //var str="<p>Welcome "+response.name+"!";
     playerInfo.push({uid: response.id, name: response.name, link: response.link});
-    $("#status").html(str);
+    $('#playerName').text(", " + response.name);
+    $('#loginPrompt').addClass('hidden');
+    $("#status").append("<input type='button' value='Logout' onclick='Logout();'/>");
+    $('#playPrompt').removeClass('hidden');
+    //$("#status").html(str);
+    /*
     FB.api('/me/picture?type=normal', function(response) {
       var picture="<img src='"+response.data.url+"'/>";
       // $("#status").append(picture);
-      $("#status").append("<br>How well do you know your friends?");
-      $("#status").append("<br><input type='button' value='Logout' onclick='Logout();'/>");
+      $("#status").append("How well do you know your friends?</p>");
     }); 
+    */
   });
 }
 
@@ -192,7 +198,6 @@ function abortTimer() {
 
 function whoAmIGameStart(){
   var data;
-  $("#questions").html("");
   $("#questions").html("<p>Reticulating splines, please wait.</p>");  
   //clearing the fb friends pictures
   for (var i = 1; i <= 20; i++){
