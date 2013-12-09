@@ -28,7 +28,12 @@
         <span id="playPrompt" class="hidden">How well do you know your friends?</span>
       </p>
     </div>
-    <div id="loginBtnDiv"><input id="login" type="button" value="Login to Facebook"></div>
+    <div id="loginBtnDiv">
+      <input id="login" type="button" value="Login to Facebook">
+      <div id="goBtnDiv" class="hidden">
+	    <input id="go" type="button" value="Play">
+      </div>
+    </div>
     <div id="loadingStatus"></div>
     <?php if (!loggedIn) {
       ?>
@@ -41,9 +46,6 @@
     } else {
      ?>
       <div id="loggedIn">
-        <div id="goBtnDiv">
-          <input id="go" type="button" value="Play">
-        </div>
         <div id="score_board" class="clearfix"></div>
 
         <div id="gameplay" class="hidden">

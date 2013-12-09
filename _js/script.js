@@ -174,11 +174,12 @@ function getUserInfo() {
     // now that we're logged in, add My High Scores
     addLeaderboard('myscores');
 
-    $("#status").html(str);
+    // $("#status").html(str);
     $('#playerName').text(", " + response.name);
     $('#loginPrompt').addClass('hidden');
-    $("#status").append("<input type='button' value='Logout' onclick='Logout();'/>");
+    $("#loginBtnDiv").append("<input type='button' value='Logout' onclick='Logout();'/>");
     $('#playPrompt').removeClass('hidden');
+    $('#goBtnDiv').removeClass('hidden');
     //$("#status").html(str);
     /*
 >>>>>>> 5dc2ceeb8cd1c2a73036115bd77cc9eee3c734a3
