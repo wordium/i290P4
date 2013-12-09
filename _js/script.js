@@ -199,14 +199,12 @@ function addLeaderboard(type) {
         var values = JSON.parse(data);
         var resultshtml = '';
         var leaderboard = $('#leaderboards');
-        leaderboard.append('<h1 class="leaderboardTitle">All Time High Scores</h1><table class="leaderboardTable"><tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>')
         for(var i = 0 ; i < values.length ; ++i) {
           var v = values[i];
-          leaderboard.append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+          leaderboard.find('tbody').append('<tr class="leaderboardRow"><td class="leaderboardGuesser">' + v.guesserusername + '</td>'
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
-        leaderboard.append('</table>')
       });
       break;
 

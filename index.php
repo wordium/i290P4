@@ -97,7 +97,12 @@
     </div>
 
     <!-- leaderboards go here. both pre and post game ones? -->
-    <div id="leaderboards"></div>
+    <div id="leaderboards">
+      <h2 class="leaderboardTitle">All Time High Scores</h2>
+      <table class="leaderboardTable">
+        <tr class="leaderboardHeader"><th>Guesser</th><th>Target</th><th>Score</th></tr>
+      </table>
+    </div>
 
   </div>
 
