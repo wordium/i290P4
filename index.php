@@ -122,7 +122,15 @@
 
   </div>
 
-  <div id="footer">THIS WAS MADE BY US. WE DID THIS. JENTARD LEE, DAN THE MAN TSAI, FUNKWANG JOO, SANDRAWR HELSLEY</div>
+  <div id="footer">
+    <p>
+      THIS WAS MADE BY US. WE DID THIS. 
+      <a href="http://www.jentonlee.com">JENTARD LEE</a>, 
+      <a href="http://www.dantsai.com/‎">DAN THE MAN TSAI</a>, 
+      <a href="http://www.jooddang.com/">FUNKWANG JOO</a>, 
+      <a href="http://www.wordium.com">SANDRAWR HELSLEY</a>
+    </p>
+  </div>
 </body>
 
 </html>
