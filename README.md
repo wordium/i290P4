@@ -8,7 +8,7 @@ Team members and roles:
  - Jenton Lee: PHP, HTML, JavaScript. Facebook and data scraping.
  - Eunkwang Joo: CSS, HTML, JavaScript. Scoring.
  - Dan Tsai: PHP and MySQL backend, JavaScript. Leaderboards.
- - Sandra Helsley: CSS, HTML, JavaScript. Friend grid, prettiness, and code police.
+ - Sandra Helsley: CSS, HTML, JavaScript. Friend grid, prettiness, code police, nonsensical commit message writer.
  - Everybody: a little bit of everything!
 
 Technologies used: HTML, CSSS, JavaScript (and jQuery), PHP, MySQL, Facebook API

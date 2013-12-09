@@ -100,7 +100,7 @@ $(document).ready(function()
           $('#life' + scoring['trial']).addClass('wrong');
           updateScore();
           abortTimer();
-          $("#target").html("<p>You failed to find the person! Looks like you don't know " + targetAnswer[1].name + ' as well as you thought. Maybe you should <a href="' + targetAnswer[4].profile_url + '">unfriend them?</a></p>');
+          $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href='" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought. Maybe you should unfriend them?</p>');
           showTarget();
           postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
         }
@@ -118,7 +118,7 @@ function showTarget() {
   $("#questions").html("");
   $('#gameplay').addClass('hidden');
   $('#friends').addClass('hidden'); // hiding the friendGrid again.
-  $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><img src="' + targetAnswer[2].pic + '">');
+  $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><img src="' + targetAnswer[2].pic + '" class="photo">');
   $('#share').removeClass('hidden');
 }
 
@@ -177,7 +177,7 @@ function getUserInfo() {
     // $("#status").html(str);
     $('#playerName').text(", " + response.name);
     $('#loginPrompt').addClass('hidden');
-    $("#loginBtnDiv").append("<input type='button' value='Logout' onclick='Logout();'/>");
+    $("#loginBtnDiv").prepend("<input type='button' value='Logout' onclick='Logout();'/>");
     $('#playPrompt').removeClass('hidden');
     $('#goBtnDiv').removeClass('hidden');
     //$("#status").html(str);

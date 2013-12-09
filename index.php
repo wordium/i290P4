@@ -52,6 +52,7 @@
           <div id="score"></div>
           <div id="timeBonus"></div>
           <div id="lives">
+            <p>Number of guesses left:</p>
             <img src="_img/heart.png" id="life1">
             <img src="_img/heart.png" id="life2">
             <img src="_img/heart.png" id="life3">
@@ -92,11 +93,11 @@
 
       <!-- user profile link goes here -->
       <div id="target"></div>
-      <div id="share" class="hidden"><input type='button' value='Share to Facebook'></div>
+      <div id="share" class="hidden"><input type='button' value='Share on Facebook'></div>
     </div>
 
     <!-- leaderboards go here. both pre and post game ones? -->
-    <div id="leaderboards">
+    <div id="leaderboards" class="clearfix">
 	    <div id="allTimeSection">
 	      <h2 class="leaderboardTitle">All Time High Scores</h2>
 	      <table class="leaderboardTable" id="allTimeTable">
@@ -121,7 +122,7 @@
 
   </div>
 
-  <div id="footer"></div>
+  <div id="footer">THIS WAS MADE BY US. WE DID THIS. JENTARD LEE, DAN THE MAN TSAI, FUNKWANG JOO, SANDRAWR HELSLEY</div>
 </body>
 
 </html>
