@@ -125,7 +125,7 @@
   <div id="footer">
     <p>
       THIS WAS MADE BY US. WE DID THIS. 
-      <a href="http://www.jentonlee.com">JENTARD LEE</a>, 
+      <a href="http://www.jentonlee.com">JENTRON LEE</a>, 
       <a href="http://www.dantsai.com/">DAN THE MAN TSAI</a>, 
       <a href="http://www.jooddang.com/">FUNKWANG JOO</a>, 
       <a href="http://www.wordium.com">SANDRAWR HELSLEY</a>
