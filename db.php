@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 
 	if($_GET['action'] == 'topscores') {
-		$result = mysqli_query($con,"SELECT * FROM facebook ORDER BY score DESC LIMIT 10");
+		$result = mysqli_query($con,"SELECT * FROM facebook ORDER BY score DESC LIMIT 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -29,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if($_GET['action'] == 'myscores') {
 		$guesserid = $_GET['guesserid'];
-		$result = mysqli_query($con,"SELECT * FROM facebook WHERE guesserid = $guesserid ORDER BY score DESC LIMIT 10");
+		$result = mysqli_query($con,"SELECT * FROM facebook WHERE guesserid = $guesserid ORDER BY score DESC LIMIT 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 
 	if($_GET['action'] == 'toptotals') {
-		$result = mysqli_query($con,"SELECT guesserid, SUM(score) as score FROM facebook GROUP BY guesserid order by SUM(score) desc limit 10");
+		$result = mysqli_query($con,"SELECT guesserid, SUM(score) as score FROM facebook GROUP BY guesserid order by SUM(score) desc limit 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
