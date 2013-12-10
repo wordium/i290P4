@@ -161,7 +161,6 @@ table {
   position: relative;
 }
 
-
 img#loader {
   position: absolute;
   margin-left: 10px;
@@ -186,6 +185,10 @@ img#loader {
   width: 80%;
   text-align: center;
   background-color: #eee;
+}
+
+#questions {
+  margin-bottom: 5px;
 }
 
 /******** Friend Grid **********/
