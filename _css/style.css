@@ -261,6 +261,24 @@ img#loader {
   margin: 10px auto;
 }
 
+#error {
+  margin: 15px;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+
+#error p {
+  color: #F92770;
+}
+
+#error.show {
+  opacity: 1;
+}
+
 /******** Leaderboards ********/
 td, th {
   padding-right: 40px;

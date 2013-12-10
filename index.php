@@ -65,6 +65,9 @@
         <div id="overlay" class="hidden"></div>
         <div id="progressbar"></div>
         <div id="questions"></div>
+
+        <div id="error"><p>You are incorrect. Please keep guessing.</p></div>
+
       </div>
 
       <div id="friends" class="hidden">

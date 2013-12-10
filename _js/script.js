@@ -100,7 +100,8 @@ $(document).ready(function()
           // first try
           scoring['trial'] += 1;
 
-          $("#target").html("<p>You are incorrect. Please keep guessing.</p>");
+          $("#error").addClass('show');
+          setTimeout(removeError, 3000);
           $(this).addClass('wrong');
           $(this).find('span').addClass('wrongoverlay');
           $('#life' + scoring['trial']).addClass('wrong');
@@ -111,7 +112,8 @@ $(document).ready(function()
           // second try
           scoring['trial'] += 1;
 
-          $("#target").append("<p>You are incorrect. Please keep guessing.</p>");
+          $("#error").addClass('show');
+          setTimeout(removeError, 3000);
           $(this).addClass('wrong');
           $(this).find('span').addClass('wrongoverlay');
           $('#life' + scoring['trial']).addClass('wrong');
@@ -137,7 +139,10 @@ $(document).ready(function()
             updateScore(0, 0);
           }
           abortTimer();
+
+          $('#error').removeClass('show');
           $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought.</p></p>Maybe you should unfriend them?</p>');
+
           showTarget();
           postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
         }
@@ -318,6 +323,10 @@ function clearLeaderboards(type) {
       });
       break;
   }
+}
+
+function removeError() {
+  $('#error').removeClass('show');
 }
 
 function nameToInitials(name) {
