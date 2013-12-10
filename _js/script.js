@@ -157,7 +157,7 @@ $(document).ready(function()
 
 // Shows the target and share button; call when the game has ended.
 function showTarget() {
-  $("#questions").html("");
+  // $("#questions").html("");
   $('#gameplay').addClass('hidden');
   $('#friends').addClass('hidden'); // hiding the friendGrid again.
   $('#target').append('<a target="_blank" href="' + targetAnswer[4].profile_url + '"><img src="' + targetAnswer[2].pic + '" class="photo"></a>');
