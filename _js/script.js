@@ -64,13 +64,13 @@ $(document).ready(function()
 
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
-        $("#target").html("<p>You've guessed correctly!</p");
+        $("#target").html("<p>You've guessed <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + "</a> correctly!</p");
         showTarget();
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
         if (scoring['trial'] == 0) {
-          updateScore(300, scoring['score']);
-          scoring['score'] += 300;
+          updateScore(400, scoring['score']);
+          scoring['score'] += 400;
         } else if (scoring['trial'] == 1) {
           updateScore(200, scoring['score']);
           scoring['score'] += 200;
@@ -296,9 +296,8 @@ function nameToInitials(name) {
 
 
 function timerCode() {
-  // subtract 1pt per second
   if (scoring['score'] > 0) {
-    scoring['score'] -= 1;
+    scoring['score'] -= 5;
   } else {
     scoring['score'] = 0;
   }
@@ -309,7 +308,7 @@ function updateScore(guess_score, bonus_score) {
   if (guess_score !== undefined) {
     $('#score_board').html('<p>Your total score is ' + (guess_score + bonus_score) + '</p>');
     if (guess_score !== 0) {
-      $('#score_board').append('<p>' + guess_score + ' + ' + bonus_score + '(bonus)</p>');
+      $('#score_board').append('<p>' + guess_score + ' + ' + bonus_score + ' (time bonus)</p>');
     }
   } else {
     $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
@@ -420,9 +419,9 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
 
         // when game starts, timer for scoring starts as well.
         abortTimer();
-        scoring['score'] = 100;
+        scoring['score'] = 600;
         scoring['trial'] = 0;
-        scoring['timer'] = setInterval(timerCode, 1000);
+        scoring['timer'] = setInterval(timerCode, 333);
       });
       
       }
