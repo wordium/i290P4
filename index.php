@@ -13,18 +13,24 @@
 
 <body>
   <div id="header">
-    <h1>Stalkerbook</h1>
+    <!--h1>Stalkerbook</h1-->
+    <img src="_img/stalkerbook.png" alt="STALKERBOOK">
   </div>
 
   <div id="main" class="content">
     <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
     <div id="fb-root"></div>
     <div id="status">
-      <p>
-        Welcome<span id="playerName"></span>!
-        <span id="loginPrompt">Log in with Facebook to play!</span>
-        <span id="playPrompt" class="hidden">How well do you know your friends?</span>
-      </p>
+      <p>Welcome<span id="playerName"></span>!</p>
+      <div id="loginPrompt">
+        <p>Log in with Facebook to play!</p>
+        <p>Stalkerbook grabs your contacts and shows you three clues about them.</p>
+        <p>Can you guess who the person is within three tries?</p>
+      </div>
+      <div id="playPrompt" class="hidden">
+        <p>How well do you know your friends?</p>
+        <p>Can you guess who the person is within three tries?</p>
+      </div>
     </div>
     <div id="loginBtnDiv">
       <input id="login" type="button" value="Login to Facebook">

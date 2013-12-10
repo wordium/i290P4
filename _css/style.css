@@ -143,10 +143,6 @@ table {
   /*background: none;*/
 }
 
-#status p {
-  margin-bottom: 12px;
-}
-
 #share input[type="button"] {
   background-color: white;
   padding: 5px;
