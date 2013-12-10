@@ -452,6 +452,11 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         scoring['score'] = 500;
         scoring['trial'] = 0;
         scoring['timer'] = setInterval(timerCode, 500);
+
+        // reset the height  
+        var ulHeight = $('#questions ul').height();
+        $('#questions').height(ulHeight);
+
       });
       
       }
