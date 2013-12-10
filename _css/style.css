@@ -235,7 +235,7 @@ img#loader {
 
 /******** Leaderboards ********/
 td, th {
-  padding-right: $0px;
+  padding-right: 40px;
   font-size: 0.9em;
   border-bottom: 1px solid #333;
   max-width: 140px;
