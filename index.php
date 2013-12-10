@@ -108,7 +108,7 @@
     <div id="targetTableSection" class="content">
       <h3 class="leaderboardTitle">High Scores</h3>
       <table class="leaderboardTable" id="targetTable">
-        <tr class="leaderboardHeader"><th>Rank</th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
       </table>
     </div>
 
