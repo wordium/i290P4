@@ -36,6 +36,7 @@ $(document).ready(function()
 
     $("#go").on("click", function() {
       $('.wrong').removeClass('wrong');  // resetting any greyed out images
+      $('.wrongoverlay').removeClass('wrongoverlay');
       $('#target').html('');
       $('#share').addClass('hidden');
       $('#gameResponse').html("");
@@ -93,7 +94,7 @@ $(document).ready(function()
         abortTimer();
         postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
-      else if (!$(this).hasClass('wrong')){
+      else if (!$(this).hasClass('wrong')){ // don't double count double wrong guesses
         // when user got wrong, subtract points.
         if (scoring['trial'] == 0) {
           // first try
@@ -101,6 +102,7 @@ $(document).ready(function()
 
           $("#target").html("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
+          $(this).find('span').addClass('wrongoverlay');
           $('#life' + scoring['trial']).addClass('wrong');
 
           // append another hint
@@ -111,6 +113,7 @@ $(document).ready(function()
 
           $("#target").append("<p>You are incorrect. Please keep guessing.</p>");
           $(this).addClass('wrong');
+          $(this).find('span').addClass('wrongoverlay');
           $('#life' + scoring['trial']).addClass('wrong');
           // append another hint
           whoAmIAddHint();
@@ -126,6 +129,7 @@ $(document).ready(function()
           scoring['trial'] += 1;
           scoring['score'] = 0;
           $('#life' + scoring['trial']).addClass('wrong');
+
 
           if(combobreaker) {
             updateScore(0, 0, true);
