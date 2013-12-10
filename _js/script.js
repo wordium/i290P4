@@ -220,6 +220,9 @@ function addLeaderboard(type) {
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
+        if(values.length == 0) {
+          leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
+        }
         $('#allTimeSection').fadeIn();
       });
       break;
@@ -235,6 +238,10 @@ function addLeaderboard(type) {
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
+        if(values.length == 0) {
+          leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
+        }
+
         $('#playerTableSection').fadeIn();
       });
       break;
@@ -251,6 +258,10 @@ function addLeaderboard(type) {
             + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
             + '<td class="leaderboardScore">' + v.score + '</td></tr>');
         }
+        if(values.length == 0) {
+          leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
+        }
+
         $('#targetTableSection').fadeIn();
       });
       break;
