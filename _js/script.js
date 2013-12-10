@@ -1,6 +1,8 @@
 var questions = [];
 var APP_TOKEN = "CAACev9gswDsBAA0xAa2KTcluFFw6wuUSZARKEYJ14CVLiPGULnDi3zNjqZCMJS4ah8JGPjT3mld2m7mHeuaryk5ZATRSOT2icFkPRJS0GWbJyAIRxhTAxuP0goaQElC8wezR5cP3nEdQIuiabLTiewZBkmcOCc8kYLx9rpeBf2qSG2TE38ZCEDQ6K1QfYljvOr8xQZC7tkiAZDZD";
 var randomFriendID;
+var combo = 0;
+var multiplier = 1;
 
 //uid, name, pic_square, work, education are pulled by default
 var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "sports", "tv"];
@@ -64,20 +66,30 @@ $(document).ready(function()
 
       console.log('Your guess is: ' + friend + '.');
       if (uidGuess == targetAnswer[0].uid){
+        combo++;
+
         $("#target").html("<p>You've guessed <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + "</a> correctly!</p");
         showTarget();
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
+
+        // get a score multiplier of +2% every correct answer you score in a row after the first one
+        if(combo > 1) {
+          multiplier += 0.02;
+        }
+
         if (scoring['trial'] == 0) {
-          updateScore(400, scoring['score']);
+          updateScore(500, scoring['score']);
           scoring['score'] += 400;
         } else if (scoring['trial'] == 1) {
-          updateScore(250, scoring['score']);
+          updateScore(300, scoring['score']);
           scoring['score'] += 200;
         } else if (scoring['trial'] == 2) {
           updateScore(100, scoring['score']);
           scoring['score'] += 100;
         }
+        scoring['score'] = Math.round(scoring['score'] * multiplier);
+
         abortTimer();
         postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
       } 
@@ -104,10 +116,22 @@ $(document).ready(function()
           whoAmIAddHint();
         } else {
           // game over. YOU LOST!!
+          combo = 0;
+          var combobreaker = false;
+          if(multiplier > 1) {
+            combobreaker = true;
+          }
+          multiplier = 1;
+
           scoring['trial'] += 1;
           scoring['score'] = 0;
           $('#life' + scoring['trial']).addClass('wrong');
-          updateScore(0, 0);
+
+          if(combobreaker) {
+            updateScore(0, 0, true);
+          } else {
+            updateScore(0, 0);
+          }
           abortTimer();
           $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought. Maybe you should unfriend them?</p>');
           showTarget();
@@ -306,14 +330,18 @@ function timerCode() {
   updateScore();
 }
 
-function updateScore(guess_score, bonus_score) {
+function updateScore(guess_score, bonus_score, combobreaker) {
+  $('#score_board').empty();
   if (guess_score !== undefined) {
-    $('#score_board').html('<p>Your total score is ' + (guess_score + bonus_score) + '</p>');
     if (guess_score !== 0) {
-      $('#score_board').append('<p>' + guess_score + ' + ' + bonus_score + ' (time bonus)</p>');
+      $('#score_board').append('<p>Score: ' + guess_score + '. Time Bonus: ' + bonus_score + '. Combo Multiplier: ' + multiplier + 'x</p>');
     }
+    if(combobreaker) {
+      $('#score_board').append('<p>C-C-C-COMBO BREAKER! Multiplier reset to 1x!</p>');
+    }
+    $('#score_board').append('<p>Your total score is ' + Math.round((guess_score + bonus_score)*multiplier) + '</p>');
   } else {
-    $('#score_board').html('<p>Your current time bonus is ' + scoring['score'] + '</p>');
+    $('#score_board').append('<p>Your current time bonus is ' + scoring['score'] + '</p>');
   }
 }
 
@@ -421,9 +449,9 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
 
         // when game starts, timer for scoring starts as well.
         abortTimer();
-        scoring['score'] = 600;
+        scoring['score'] = 500;
         scoring['trial'] = 0;
-        scoring['timer'] = setInterval(timerCode, 333);
+        scoring['timer'] = setInterval(timerCode, 500);
       });
       
       }
