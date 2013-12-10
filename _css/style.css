@@ -300,7 +300,7 @@ th:last-of-type, td:last-of-type {
   }
 
   #targetTableSection, #allTimeSection {
-    display: block;
+    float: none;
     margin: auto auto;
   }
 
@@ -328,7 +328,7 @@ th:last-of-type, td:last-of-type {
   }
 
   #targetTableSection, #allTimeSection {
-    display: block;
+    float: none;
     margin: auto auto;
   }
 
