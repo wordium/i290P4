@@ -239,7 +239,7 @@ img#loader {
 /******** Leaderboards ********/
 td, th {
   padding-right: 40px;
-  font-size: 0.9em;
+  font-size: 0.5em;
   border-bottom: 1px solid #333;
   max-width: 125px;
   vertical-align: bottom;
@@ -265,15 +265,14 @@ th:last-of-type, td:last-of-type {
 .leaderboardTable {
   text-transform: uppercase;
   font-family: "Press Start 2P", monospace;
-  font-size: 0.3em;
 }
 
 .leaderboardRow {
-  font-size: 1em;
+  /*font-size: 1em;*/
 }
 
 .leaderboardTitle {
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 
