@@ -299,6 +299,10 @@ th:last-of-type, td:last-of-type {
   text-align: right;
 }
 
+td:first-child {
+  padding-right: 7px;
+}
+
 #allTimeSection, #playerTableSection {
   /*max-width: 45%;*/
 }
