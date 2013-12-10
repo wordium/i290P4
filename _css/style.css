@@ -299,7 +299,7 @@ th:last-of-type, td:last-of-type {
     width: 860px;
   }
 
-  #targetTableSection, #allTimeSection {
+  #playerTableSection, #targetTableSection, #allTimeSection {
     float: none;
     margin: auto auto;
   }
@@ -327,7 +327,7 @@ th:last-of-type, td:last-of-type {
     width: 860px;
   }
 
-  #targetTableSection, #allTimeSection {
+  #playerTableSection, #targetTableSection, #allTimeSection {
     float: none;
     margin: auto auto;
   }
