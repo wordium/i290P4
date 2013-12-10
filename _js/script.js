@@ -139,8 +139,10 @@ $(document).ready(function()
             updateScore(0, 0);
           }
           abortTimer();
+
           $('#error').removeClass('show');
-          $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought. Maybe you should unfriend them?</p>');
+          $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought.</p></p>Maybe you should unfriend them?</p>');
+
           showTarget();
           postNewScore(playerInfo[0].uid, playerInfo[0].name, targetAnswer[0].uid, targetAnswer[1].name);
         }
