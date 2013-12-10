@@ -130,10 +130,12 @@
   <div id="footer">
     <p>
       THIS WAS MADE BY US. WE DID THIS. 
-      <a href="http://www.jentonlee.com">JENTRON LEE</a>, 
+    </p>
+    <p>
       <a href="http://www.dantsai.com/">DANTOS</a>, 
-      <a href="http://www.jooddang.com/">FUNKWANG JOO</a>, 
-      <a href="http://www.wordium.com">SANDRAWR HELSLEY</a>
+      <a href="http://www.jooddang.com/">FUNKWANG</a>, 
+      <a href="http://www.jentonlee.com">JENTRON</a>, 
+      <a href="http://www.wordium.com">SANDRAWR</a>
     </p>
   </div>
 </body>
