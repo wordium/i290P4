@@ -147,6 +147,10 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
 
     // add target leaderboard
     addLeaderboard('targetscores');
+
+    // reload myscores
+    clearLeaderboards('myscores');
+    setTimeout("addLeaderboard('myscores')", 200);
   });
 }
 
@@ -253,10 +257,26 @@ function addLeaderboard(type) {
   }
 }
 
-function clearLeaderboards() {
-  $('#leaderboards').children().fadeOut(250, function() {
-    // $('#leaderboards').children().remove();
-  });
+function clearLeaderboards(type) {
+  switch(type) {
+    case 'topscores':
+      $('#allTimeSection .leaderboardRow').fadeOut(200, function() {
+        $(this).remove();
+      });
+      break;
+
+    case 'myscores':
+      $('#playerTableSection .leaderboardRow').fadeOut(200, function() {
+        $(this).remove();
+      });
+      break;
+
+    case 'targetscores':
+      $('#targetTableSection .leaderboardRow').fadeOut(200, function() {
+        $(this).remove();
+      });
+      break;
+  }
 }
 
 function nameToInitials(name) {
