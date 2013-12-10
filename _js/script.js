@@ -15,8 +15,8 @@ $(document).ready(function()
 {
   // on page load, show the all time individual high score leaderboard
   addLeaderboard('topscores');
-  $('#playerTableSection').hide();
-  $('#targetTableSection').hide();
+  $('#playerTableSection').addClass('hidden');
+  $('#targetTableSection').addClass('hidden');
 
   $("#go").prop("disabled",true);
     //reference: http://hayageek.com/facebook-javascript-sdk/
@@ -41,7 +41,7 @@ $(document).ready(function()
       $('#gameResponse').html("");
 
       // hide target leaderboard until another game has finished
-      $('#targetTableSection').fadeOut();
+      $('#targetTableSection').addClass('hidden');
 
       //disables the 'Go' button until the game is ready to play
       $(this).prop("disabled",true);
@@ -249,7 +249,7 @@ function addLeaderboard(type) {
         if(values.length == 0) {
           leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
         }
-        $('#allTimeSection').fadeIn();
+        $('#allTimeSection').removeClass('hidden');
       });
       break;
 
@@ -268,7 +268,7 @@ function addLeaderboard(type) {
           leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
         }
 
-        $('#playerTableSection').fadeIn();
+        $('#playerTableSection').removeClass('hidden');
       });
       break;
 
@@ -288,7 +288,7 @@ function addLeaderboard(type) {
           leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
         }
 
-        $('#targetTableSection').fadeIn();
+        $('#targetTableSection').removeClass('hidden');
       });
       break;
   }
