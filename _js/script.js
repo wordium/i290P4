@@ -444,7 +444,7 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
 
         targetAnswer = friendTargetInfo;
         $("#go").prop("disabled", false);
-        $("#go").prop('value', 'Start Over');
+        $("#go").prop('value', 'Try Again!');
         $("#loader").addClass("hidden");
 
         // when game starts, timer for scoring starts as well.

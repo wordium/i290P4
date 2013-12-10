@@ -118,8 +118,7 @@ li {
 }
 
 #main, #leaderboards {
-
-  width: 80%;
+  width: 1005px;
   margin: auto auto;
 }
 
@@ -238,7 +237,8 @@ td, th {
   padding-right: 40px;
   font-size: 0.9em;
   border-bottom: 1px solid #333;
-  max-width: 140px;
+  max-width: 125px;
+  vertical-align: bottom;
 }
 
 th:last-of-type, td:last-of-type {
@@ -252,9 +252,10 @@ th:last-of-type, td:last-of-type {
 }
 
 #allTimeSection, #playerTableSection {
-  margin-left: 25px;
+  margin-left: 45px;
   margin-bottom: 2em;
   float: left;
+  max-width: 45%;
 }
 
 #playerTableSection {
@@ -268,8 +269,11 @@ th:last-of-type, td:last-of-type {
 }
 
 .leaderboardRow {
-  /*font-family: "frucade", "Arimo", "Arial", sans-serif;*/
   font-size: 1em;
+}
+
+#leaderboards h3 {
+  text-align: center;
 }
 
 
@@ -291,6 +295,15 @@ th:last-of-type, td:last-of-type {
     min-width: 75px;
   }
 
+  #main, #leaderboards {
+    width: 860px;
+  }
+
+  #targetTableSection, #allTimeSection {
+    display: block;
+    margin: auto auto;
+  }
+
 }
 
 
@@ -309,4 +322,14 @@ th:last-of-type, td:last-of-type {
     min-height: 90px;
     min-width: 90px;
   }
+
+  #main, #leaderboards {
+    width: 860px;
+  }
+
+  #targetTableSection, #allTimeSection {
+    display: block;
+    margin: auto auto;
+  }
+
 }
