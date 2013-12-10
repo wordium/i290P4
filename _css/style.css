@@ -265,7 +265,7 @@ img#loader {
 }
 
 #error {
-  margin: 15px;
+  margin: 12px auto;
   text-align: center;
   opacity: 0;
   -webkit-transition: opacity 0.15s linear;
@@ -275,7 +275,13 @@ img#loader {
 }
 
 #error p {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background: #e6e6e6;
+  padding: 3px;
   color: #F92770;
+  width: 400px;
 }
 
 #error.show {
