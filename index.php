@@ -16,7 +16,7 @@
     <h1>Stalkerbook</h1>
   </div>
 
-  <div id="main">
+  <div id="main" class="content">
     <!-- added these two divs in as per a demo I read: http://hayageek.com/facebook-javascript-sdk/ -->
     <div id="fb-root"></div>
     <div id="status">
@@ -101,28 +101,30 @@
     </div>
 
     <!-- leaderboards go here. both pre and post game ones? -->
-    <div id="leaderboards" class="clearfix">
+
+    <div id="targetTableSection" class="content">
+      <h3 class="leaderboardTitle">High Scores</h3>
+      <table class="leaderboardTable" id="targetTable">
+        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+      </table>
+    </div>
+
+    <div id="leaderboards" class="clearfix content">
+
+      <div id="allTimeSection">
+        <h3 class="leaderboardTitle">All Time High Scores</h3>
+        <table class="leaderboardTable" id="allTimeTable">
+          <tr class="leaderboardHeader"><th>Rank</th><th>Stalker</th><th>Target</th><th>Score</th></tr>
+        </table>
+      </div>
 
       <div id="playerTableSection">
-        <h2 class="leaderboardTitle">Your High Scores</h2>
+        <h3 class="leaderboardTitle">Your High Scores</h3>
         <table class="leaderboardTable" id="playerTable">
           <tr class="leaderboardHeader"><th>Rank</th><th>Guesser</th><th>Target</th><th>Score</th></tr>
         </table>
       </div>
 
-	    <div id="targetTableSection">
-	      <h2 class="leaderboardTitle">High Scores</h2>
-	      <table class="leaderboardTable" id="targetTable">
-	        <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
-	      </table>
-	    </div>
-
-	    <div id="allTimeSection">
-	      <h2 class="leaderboardTitle">All Time High Scores</h2>
-	      <table class="leaderboardTable" id="allTimeTable">
-	        <tr class="leaderboardHeader"><th>Rank</th><th>Stalker</th><th>Target</th><th>Score</th></tr>
-	      </table>
-	    </div>
     </div>
 
   </div>
