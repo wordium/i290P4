@@ -150,7 +150,9 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
 
     // reload myscores
     clearLeaderboards('myscores');
+    clearLeaderboards('topscores');
     setTimeout("addLeaderboard('myscores')", 200);
+    setTimeout("addLeaderboard('topscores')", 200);
   });
 }
 
