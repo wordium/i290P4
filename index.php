@@ -52,9 +52,9 @@
           <div id="timeBonus"></div>
           <div id="lives">
             <p>Number of guesses left:</p>
-            <img src="_img/heart.png" id="life1">
-            <img src="_img/heart.png" id="life2">
-            <img src="_img/heart.png" id="life3">
+            <img src="_img/heart.png" id="life3" class="life">
+            <img src="_img/heart.png" id="life2" class="life">
+            <img src="_img/heart.png" id="life1" class="life">
           </div>
           <!--div id="guessNotification">
             <h3>GUESS AGAIN!</h3>
