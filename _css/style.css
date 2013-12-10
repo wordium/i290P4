@@ -87,6 +87,10 @@ li {
   list-style-type: circle;
 }
 
+table {
+  margin-bottom: 20px;
+}
+
 .clearfix:after {
     content: " ";
     display: table;
@@ -117,7 +121,7 @@ li {
   background-color: rgba(249, 39, 112, 0.25);
 }
 
-#main, #leaderboards {
+.content {
   width: 1005px;
   margin: auto auto;
 }
@@ -260,7 +264,7 @@ img#loader {
 /******** Leaderboards ********/
 td, th {
   padding-right: 40px;
-  font-size: 0.9em;
+  font-size: 0.5em;
   border-bottom: 1px solid #333;
   max-width: 125px;
   vertical-align: bottom;
@@ -271,66 +275,33 @@ th:last-of-type, td:last-of-type {
   text-align: right;
 }
 
-#targetTableSection {
-  margin-left: 25px;
-  margin-bottom: 2em;
-}
-
 #allTimeSection, #playerTableSection {
-  margin-left: 45px;
-  margin-bottom: 2em;
-  float: left;
   max-width: 45%;
 }
 
+#allTimeSection {
+  float: left;
+}
+
 #playerTableSection {
-  padding-right: 60px;
+  float: right;
 }
 
 .leaderboardTable {
   text-transform: uppercase;
   font-family: "Press Start 2P", monospace;
-  font-size: 0.3em;
 }
 
 .leaderboardRow {
-  font-size: 1em;
+  /*font-size: 1em;*/
 }
 
-#leaderboards h3 {
-  text-align: center;
+.leaderboardTitle {
+  padding-bottom: 10px;
 }
 
 
 /****** fixes for smaller screen sizes ******/
-
-@media screen and (min-width:480px) and (max-width:999px) {
-  .friend {
-    width: 100px;
-    height: 120px;
-  }
-
-  .photo {
-    height: 75px;
-    width: 75px;
-  }
-
-  .photo img {
-    min-height: 75px;
-    min-width: 75px;
-  }
-
-  #main, #leaderboards {
-    width: 860px;
-  }
-
-  #playerTableSection, #targetTableSection, #allTimeSection {
-    float: none;
-    margin: auto auto;
-  }
-
-}
-
 
 @media screen and (min-width:100px) and (max-width:1199px) {
   .friend {
@@ -348,13 +319,38 @@ th:last-of-type, td:last-of-type {
     min-width: 90px;
   }
 
-  #main, #leaderboards {
+  .content {
     width: 860px;
+  }
+
+  #playerTableSection {
+    padding-left: 0;
   }
 
   #playerTableSection, #targetTableSection, #allTimeSection {
     float: none;
     margin: auto auto;
+    max-width: 50%;
+    padding-bottom: 25px;
   }
 
 }
+
+@media screen and (min-width:480px) and (max-width:999px) {
+  .friend {
+    width: 100px;
+    height: 120px;
+  }
+
+  .photo {
+    height: 75px;
+    width: 75px;
+  }
+
+  .photo img {
+    min-height: 75px;
+    min-width: 75px;
+  }
+
+}
+
