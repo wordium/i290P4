@@ -300,7 +300,7 @@ th:last-of-type, td:last-of-type {
 }
 
 #allTimeSection, #playerTableSection {
-  max-width: 45%;
+  /*max-width: 45%;*/
 }
 
 #allTimeSection {

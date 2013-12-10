@@ -117,14 +117,14 @@
       <div id="allTimeSection">
         <h3 class="leaderboardTitle">All Time High Scores</h3>
         <table class="leaderboardTable" id="allTimeTable">
-          <tr class="leaderboardHeader"><th>Rank</th><th>Stalker</th><th>Target</th><th>Score</th></tr>
+          <tr class="leaderboardHeader"><th></th><th>Stalker</th><th>Target</th><th>Score</th></tr>
         </table>
       </div>
 
       <div id="playerTableSection">
         <h3 class="leaderboardTitle">Your High Scores</h3>
         <table class="leaderboardTable" id="playerTable">
-          <tr class="leaderboardHeader"><th>Rank</th><th>Guesser</th><th>Target</th><th>Score</th></tr>
+          <tr class="leaderboardHeader"><th></th><th>Guesser</th><th>Target</th><th>Score</th></tr>
         </table>
       </div>
 
