@@ -73,9 +73,9 @@ $(document).ready(function()
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
 
-        // get a score multiplier of +2% every correct answer you score in a row after the first one
+        // get a score multiplier of +5% every correct answer you score in a row after the first one
         if(combo > 1) {
-          multiplier += 0.02;
+          multiplier += 0.05;
         }
 
         if (scoring['trial'] == 0) {
