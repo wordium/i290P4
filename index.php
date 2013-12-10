@@ -10,7 +10,7 @@
   <script type="text/javascript" src="_js/script.js"></script>
   <script type="text/javascript" src="_js/dbtest.js"></script>
 
-  <title>Who Am I? A Facebook Quiz Game</title>
+  <title>Stalkerbook: A Facebook Quiz Game</title>
 </head>
 
 <body>
