@@ -72,7 +72,7 @@ $(document).ready(function()
           updateScore(400, scoring['score']);
           scoring['score'] += 400;
         } else if (scoring['trial'] == 1) {
-          updateScore(200, scoring['score']);
+          updateScore(250, scoring['score']);
           scoring['score'] += 200;
         } else if (scoring['trial'] == 2) {
           updateScore(100, scoring['score']);
