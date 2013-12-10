@@ -127,7 +127,7 @@ function showTarget() {
   $("#questions").html("");
   $('#gameplay').addClass('hidden');
   $('#friends').addClass('hidden'); // hiding the friendGrid again.
-  $('#target').append('<p>You were looking for: ' + targetAnswer[1].name + '</p><a target="_blank" href="' + targetAnswer[4].profile_url + '"><img src="' + targetAnswer[2].pic + '" class="photo"></a>');
+  $('#target').append('<a target="_blank" href="' + targetAnswer[4].profile_url + '"><img src="' + targetAnswer[2].pic + '" class="photo"></a>');
   $('#share').removeClass('hidden');
 }
 
