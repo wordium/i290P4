@@ -80,10 +80,10 @@ $(document).ready(function()
 
         if (scoring['trial'] == 0) {
           updateScore(500, scoring['score']);
-          scoring['score'] += 400;
+          scoring['score'] += 500;
         } else if (scoring['trial'] == 1) {
           updateScore(300, scoring['score']);
-          scoring['score'] += 200;
+          scoring['score'] += 300;
         } else if (scoring['trial'] == 2) {
           updateScore(100, scoring['score']);
           scoring['score'] += 100;
@@ -334,7 +334,7 @@ function updateScore(guess_score, bonus_score, combobreaker) {
   $('#score_board').empty();
   if (guess_score !== undefined) {
     if (guess_score !== 0) {
-      $('#score_board').append('<p>Score: ' + guess_score + '. Time Bonus: ' + bonus_score + '. Combo Multiplier: ' + multiplier + 'x</p>');
+      $('#score_board').append('<p>Score: ' + guess_score + '. Time Bonus: ' + bonus_score + '. Combo Multiplier: ' + multiplier.toFixed(2) + 'x</p>');
     }
     if(combobreaker) {
       $('#score_board').append('<p>C-C-C-COMBO BREAKER! Multiplier reset to 1x!</p>');
