@@ -69,7 +69,7 @@ $(document).ready(function()
       if (uidGuess == targetAnswer[0].uid){
         combo++;
 
-        $("#target").html("<p>You've guessed <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + "</a> correctly!</p");
+        $("#target").html("<p>You've guessed <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + "</a> correctly! Win multiple games in a row to get combo bonuses!</p");
         showTarget();
 
         //Once the correct friend is clicked, a database call is made to record the guesser's ID, the guesser's username, the target ID, the target username, and the score
