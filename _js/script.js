@@ -3,7 +3,7 @@ var APP_TOKEN = "CAACev9gswDsBAA0xAa2KTcluFFw6wuUSZARKEYJ14CVLiPGULnDi3zNjqZCMJS
 var randomFriendID;
 var combo = 0;
 var multiplier = 1;
-
+var errorTimer;
 //uid, name, pic_square, work, education are pulled by default
 var FIELDS_WHOAMI = ["activities", "birthday","birthday_date","books", "hometown_location", "interests", "languages", "movies", "music", "mutual_friend_count", "political", "relationship_status", "religion", "sports", "tv"];
 
@@ -100,8 +100,9 @@ $(document).ready(function()
           // first try
           scoring['trial'] += 1;
 
+          $('#error').html('<p>You are incorrect. Please keep guessing.</p>');
           $("#error").addClass('show');
-          setTimeout(removeError, 3000);
+          errorTimer = setTimeout(removeError, 3000);
           $(this).addClass('wrong');
           $(this).find('span').addClass('wrongoverlay');
           $('#life' + scoring['trial']).addClass('wrong');
@@ -112,8 +113,9 @@ $(document).ready(function()
           // second try
           scoring['trial'] += 1;
 
+          $('#error').html('<p>You are incorrect. Please keep guessing.</p>');
           $("#error").addClass('show');
-          setTimeout(removeError, 3000);
+          errorTimer = setTimeout(removeError, 3000);
           $(this).addClass('wrong');
           $(this).find('span').addClass('wrongoverlay');
           $('#life' + scoring['trial']).addClass('wrong');
@@ -140,7 +142,6 @@ $(document).ready(function()
           }
           abortTimer();
 
-          $('#error').removeClass('show');
           $("#target").html("<p>You failed to find the person!</p><p>Looks like you don't know <a href=\"" + targetAnswer[4].profile_url + '">' + targetAnswer[1].name + '</a> as well as you thought.</p></p>Maybe you should unfriend them?</p>');
 
           showTarget();
@@ -350,7 +351,14 @@ function updateScore(guess_score, bonus_score, combobreaker) {
       $('#score_board').append('<p>Score: ' + guess_score + '. Time Bonus: ' + bonus_score + '. Combo Multiplier: ' + multiplier.toFixed(2) + 'x</p>');
     }
     if(combobreaker) {
-      $('#score_board').append('<p>C-C-C-COMBO BREAKER! Multiplier reset to 1x!</p>');
+
+      if($('#error').hasClass('show')) {
+        // error window already showing. cancel hiding and reset
+        clearInterval(errorTimer);
+      }
+      $('#error').html('<p>C-C-C-COMBO BREAKER! Multiplier reset to 1x!</p>');
+      $('#error').addClass('show');
+      setTimeout(removeError, 5000);
     }
     $('#score_board').append('<p>Your total score is ' + Math.round((guess_score + bonus_score)*multiplier) + '</p>');
   } else {

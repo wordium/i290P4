@@ -258,7 +258,7 @@ img#loader {
 }
 
 #error {
-  margin: 12px auto;
+  margin: 13px auto;
   text-align: center;
   opacity: 0;
   -webkit-transition: opacity 0.15s linear;
