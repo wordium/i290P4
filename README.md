@@ -20,4 +20,5 @@ Known bugs:
  - Sometimes if somebody has a really long clue (e.g., TONS of interests) it can sometimes hide underneath the friend grid or make the wrong guess alert looks ugly. This is primarily cosmetic and most people have fairly short clues, so we left it.
  - While we tried our best to make it mobile-friendly, it really doesn't look good if your screen is less than 900px wide, primarily because of the friend grid. Twenty-one options are probably too many to make a good game on a phone, anyhow.
  - On some computers and browser configurations, the tables can look somewhat wonky. That's a technical term.
+ - Profile photo displayed on game ending is a little wonky. Still a technical term.
  - No Kohl's API integration.
