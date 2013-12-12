@@ -1,7 +1,7 @@
 <?php
 // connects to my ischool mysql database. username: jenton, password: qwerty, database: jenton
-//$con = mysqli_connect("localhost", "dantos_ischool", "o2lb_awsIS", "dantos_dantsai");
-$con = mysqli_connect("localhost", "jenton", "qwerty", "jenton");
+$con = mysqli_connect("localhost", "dantos_ischool", "o2lb_awsIS", "dantos_dantsai");
+// $con = mysqli_connect("localhost", "jenton", "qwerty", "jenton");
  
 // Failure check
 if (mysqli_connect_errno($con))
@@ -49,6 +49,15 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if($_GET['action'] == 'toptotals') {
 		$result = mysqli_query($con,"SELECT guesserid, SUM(score) as score FROM facebook GROUP BY guesserid order by SUM(score) desc limit 20");
+		$rows = array();
+		while($r = mysqli_fetch_assoc($result)) {
+			$rows[] = $r;
+		}
+		echo json_encode($rows);
+	}
+
+	if($_GET['action'] == 'recentscores') {
+		$result = mysqli_query($con,"SELECT * FROM facebook ORDER BY scoreid desc limit 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;

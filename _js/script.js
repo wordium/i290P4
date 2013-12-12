@@ -15,14 +15,16 @@ $(document).ready(function()
 {
   // on page load, show the all time individual high score leaderboard
   addLeaderboard('topscores');
-  $('#playerTableSection').addClass('hidden');
+  addLeaderboard('recentscores');
+
   $('#targetTableSection').addClass('hidden');
 
   $("#go").prop("disabled",true);
     //reference: http://hayageek.com/facebook-javascript-sdk/
     window.fbAsyncInit = function() {
       FB.init({
-      appId      : 174546802753595, // App ID
+      appId      : 174546802753595, // App ID for dantsai.com
+      // appId      : 557483724338002, // App ID for people.ischool.berkeley.edu
       //channelUrl : 'YOUR_WEBSITE_CHANNEL_URL',
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
@@ -169,7 +171,7 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
   if (scoring['score'] < 0) {
     scoring['score'] = 0;
   }
-  $.post('db.php', {
+  $.post('http://dantsai.com/stalkerbook/db.php', {
     action: 'newscore',
     guesserid: guesserid,
     guesserusername: guesserusername,
@@ -221,6 +223,7 @@ function getUserInfo() {
     playerInfo.push({uid: response.id, name: response.name, link: response.link});
 
     // now that we're logged in, add My High Scores
+    clearLeaderboards('myscores');
     addLeaderboard('myscores');
 
     // $("#status").html(str);
@@ -246,7 +249,7 @@ function getUserInfo() {
 function addLeaderboard(type) {
   switch(type) {
     case 'topscores':
-      $.get('db.php', {action: 'topscores'}, function(data) {
+      $.get('http://dantsai.com/stalkerbook/db.php', {action: 'topscores'}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
         var leaderboard = $('#allTimeTable').find('tbody');
@@ -264,7 +267,7 @@ function addLeaderboard(type) {
       break;
 
     case 'myscores':
-      $.get('db.php', {action: 'myscores', guesserid: playerInfo[0].uid}, function(data) {
+      $.get('http://dantsai.com/stalkerbook/db.php', {action: 'myscores', guesserid: playerInfo[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
         var leaderboard = $('#playerTable').find('tbody');
@@ -278,12 +281,14 @@ function addLeaderboard(type) {
           leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
         }
 
+        $('#playerTableSection h3').text('Your High Scores');
+
         $('#playerTableSection').removeClass('hidden');
       });
       break;
 
     case 'targetscores':
-      $.get('db.php', {action: 'targetscores', targetid: targetAnswer[0].uid}, function(data) {
+      $.get('http://dantsai.com/stalkerbook/db.php', {action: 'targetscores', targetid: targetAnswer[0].uid}, function(data) {
         var values = JSON.parse(data);
         var resultshtml = '';
         var leaderboard = $('#targetTable').find('tbody');
@@ -299,6 +304,30 @@ function addLeaderboard(type) {
         }
 
         $('#targetTableSection').removeClass('hidden');
+      });
+      break;
+
+
+    // yeah, we SHOULD put this in a totally different table, but that takes more time.
+    case 'recentscores':
+      $.get('http://dantsai.com/stalkerbook/db.php', {action: 'recentscores'}, function(data) {
+        var values = JSON.parse(data);
+        var resultshtml = '';
+        var leaderboard = $('#playerTable').find('tbody');
+        leaderboard.find('.leaderboardRow').remove();
+        for(var i = 0 ; i < values.length ; ++i) {
+          var v = values[i];
+          leaderboard.append('<tr class="leaderboardRow"><td>' + (i+1) + '<td class="leaderboardGuesser">' + v.guesserusername + '</td>'
+            + '<td class="leaderboardTarget">' + v.targetusername + '</td>'
+            + '<td class="leaderboardScore">' + v.score + '</td></tr>');
+        }
+        if(values.length == 0) {
+          leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
+        }
+
+        $('#playerTableSection h3').text('Recent High Scores');
+
+        $('#playerTableSection').removeClass('hidden');
       });
       break;
   }
