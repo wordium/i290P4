@@ -151,7 +151,7 @@ $(document).ready(function()
         // guessing an incorrect guess that they already guessed before
         console.log("double guessed");
       }
-      console.log(targetAnswer);
+      //console.log(targetAnswer);
     });
 
 });
@@ -177,7 +177,7 @@ function postNewScore(guesserid, guesserusername, targetid, targetusername) {
     targetusername: targetusername,
     score: scoring['score']
   }, function(data) {
-    console.log(data);
+    //console.log(data);
 
     // add target leaderboard
     addLeaderboard('targetscores');
@@ -420,10 +420,10 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
       var gameData = whoAmICreateQuestions(response.data);
       questions = gameData[0];
       friendTargetInfo = gameData[1];
-      console.log("Game Questions:");
+      /*console.log("Game Questions:");
       console.log(questions);
       console.log("Target Friend Info:");
-      console.log(friendTargetInfo);
+      console.log(friendTargetInfo);*/
 
       //this is the query to get 21 random fb profile pictures
       var getFriendsGridQuery = "SELECT uid, name, pic_square, pic, profile_url FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) ORDER BY rand() limit 21";
@@ -442,8 +442,8 @@ function whoAmIGenerateRandomFields(fields, friendsUidList){
         }
         //adding the target profile picture into the friendsgrid
         friendsGrid.push({"uid" : friendTargetInfo[0].uid, "name" : friendTargetInfo[1].name, "pic" : friendTargetInfo[2].pic, "pic_square" : friendTargetInfo[3].pic_square, "profile_url" : friendTargetInfo[4].profile_url, "answer" : 1});
-        console.log("this is the friends grid and the info in contains");
-        console.log(friendsGrid);
+        /*console.log("this is the friends grid and the info in contains");
+        console.log(friendsGrid);*/
 
         //randomize the friends grid
         friendsGrid.sort( function() {return 0.5 - Math.random() });
