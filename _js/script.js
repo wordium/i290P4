@@ -325,7 +325,7 @@ function addLeaderboard(type) {
           leaderboard.append('<tr class="leaderboardRow"><td><td class="leaderboardGuesser">(none)</td><td class="leaderboardTarget"></td><td class="leaderboardScore"></td></tr>');          
         }
 
-        $('#playerTableSection h3').text('Recent High Scores');
+        $('#playerTableSection h3').text('Recent Scores');
 
         $('#playerTableSection').removeClass('hidden');
       });
