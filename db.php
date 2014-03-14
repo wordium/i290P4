@@ -11,7 +11,7 @@ if (mysqli_connect_errno($con))
 
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if($_GET['action'] == 'getall') {
-		$result = mysqli_query($con,"SELECT * FROM facebook");
+		$result = mysqli_query($con,"SELECT * FROM facebook WHERE disabled = 0");
 		echo "scoreid guesserid targetid score targetusername guesserusername<br>";
 		while($row = mysqli_fetch_array($result)) {
 			echo $row[0] . ' ' . $row[1] . ' ' . $row[2] . ' ' . $row[3] . ' ' . $row[4] . '<br>';
@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 
 	if($_GET['action'] == 'topscores') {
-		$result = mysqli_query($con,"SELECT * FROM facebook ORDER BY score DESC LIMIT 20");
+		$result = mysqli_query($con,"SELECT * FROM facebook WHERE disabled = 0 ORDER BY score DESC LIMIT 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -29,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if($_GET['action'] == 'myscores') {
 		$guesserid = $_GET['guesserid'];
-		$result = mysqli_query($con,"SELECT * FROM facebook WHERE guesserid = $guesserid ORDER BY score DESC LIMIT 20");
+		$result = mysqli_query($con,"SELECT * FROM facebook WHERE guesserid = $guesserid and disabled = 0 ORDER BY score DESC LIMIT 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -39,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if($_GET['action'] == 'targetscores') {
 		$targetid = $_GET['targetid'];
-		$result = mysqli_query($con,"SELECT * FROM facebook WHERE targetid = $targetid ORDER BY score DESC LIMIT 10");
+		$result = mysqli_query($con,"SELECT * FROM facebook WHERE targetid = $targetid and disabled = 0 ORDER BY score DESC LIMIT 10");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 
 	if($_GET['action'] == 'toptotals') {
-		$result = mysqli_query($con,"SELECT guesserid, SUM(score) as score FROM facebook GROUP BY guesserid order by SUM(score) desc limit 20");
+		$result = mysqli_query($con,"SELECT guesserid, SUM(score) as score FROM facebook WHERE disabled = 0 GROUP BY guesserid order by SUM(score) desc limit 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -57,7 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 
 	if($_GET['action'] == 'recentscores') {
-		$result = mysqli_query($con,"SELECT * FROM facebook ORDER BY scoreid desc limit 20");
+		$result = mysqli_query($con,"SELECT * FROM facebook WHERE disabled = 0 ORDER BY scoreid desc limit 20");
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
 			$rows[] = $r;
@@ -72,7 +72,7 @@ if($_POST['action'] == 'newscore') {
 	$targetid = $_POST['targetid'];
 	$targetusername = $_POST['targetusername'];
 	$score = $_POST['score'];
-	$query = "INSERT INTO facebook (guesserid, targetid, score, targetusername, guesserusername) VALUES ('$guesserid', '$targetid', '$score', '$targetusername', '$guesserusername')";
+	$query = "INSERT INTO facebook (guesserid, targetid, score, targetusername, guesserusername, disabled) VALUES ('$guesserid', '$targetid', '$score', '$targetusername', '$guesserusername', 0)";
 	$result = mysqli_query($con,$query);
 	echo $query;
 }
